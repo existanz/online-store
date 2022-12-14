@@ -1,1 +1,3 @@
-console.log('Its Strart!')
+console.log('Its Strart!');
+
+const func = (param: string): number => param.length;
