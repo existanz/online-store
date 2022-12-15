@@ -1,0 +1,27 @@
+//helpers
+
+@mixin circle($radius, $bgcolor) {
+	width: $radius;
+	height: $radius;
+	border-radius: 50%;
+	background: $bgcolor;
+	overflow: hidden;
+}
+
+@mixin size($width:100%, $height: 100%) {
+	width: $width;
+	height: $height;	
+}
+
+%cover {
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+%centered {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
