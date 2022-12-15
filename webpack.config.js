@@ -61,6 +61,11 @@ const baseConfig = {
     }),
     new EslingPlugin({ extensions: 'ts' })
   ],
+  resolve: {
+    alias: {
+      '@': path.join(__dirname, './src')
+    },
+  },
 };
 
 module.exports = ({ mode }) => {
