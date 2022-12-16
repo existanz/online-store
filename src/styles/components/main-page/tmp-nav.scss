@@ -1,0 +1,12 @@
+.tmp-nav {
+  display: flex;
+  align-items: center;
+}
+
+.tmp-nav__item {
+  margin-right: 15px;
+    
+    &:nth-last-child() {
+      margin-right: 0;
+    }
+}

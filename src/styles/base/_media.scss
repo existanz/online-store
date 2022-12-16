@@ -1,0 +1,22 @@
+@function rem($px) {
+	@return calc($px / 16px) + 0rem;
+}
+
+
+@mixin laptop() {
+	@media screen and (max-width: 1300px) {
+			@content;
+	}
+}
+
+@mixin tablets() {
+	@media screen and (max-width: 768px) {
+			@content;
+	}
+}
+
+@mixin phones() {
+	@media screen and (max-width: 600px) {
+			@content;
+	} 
+}

@@ -1,0 +1,96 @@
+// анимации для бургера
+@keyframes burg2top {
+	0% {
+	}
+	20% {
+		margin-top: 0em;
+		transform: rotate(0deg);
+	}
+	60% {
+		margin-top: 0em;
+		transform: rotate(55deg);
+	}
+	100% {
+		margin-top: 0em;
+		transform: rotate(45deg);
+	}
+}
+
+@keyframes burg2bottom {
+	0% {
+	}
+	20% {
+		margin-top: 0em;
+		transform: rotate(0deg);
+	}
+	60% {
+		margin-top: 0em;
+		transform: rotate(-55deg);
+	}
+	100% {
+		margin-top: 0em;
+		transform: rotate(-45deg);
+	}
+}
+
+@keyframes burg2topReset {
+	0% {
+		margin-top: 0em;
+		transform: rotate(45deg);
+	}
+	20% {
+		transform: rotate(0deg);
+	}
+	60% {
+		margin-top: 6px;
+		transform: rotate(0deg);
+	}
+	100% {
+		margin-top: 4px;
+		transform: rotate(0deg);
+	}
+}
+
+@keyframes burg2bottomReset {
+	0% {
+		margin-top: 0em;
+		transform: rotate(-45deg);
+	}
+	20% {
+		transform: rotate(0deg);
+	}
+	60% {
+		margin-top: -6px;
+		transform: rotate(0deg);
+	}
+	100% {
+		margin-top: -4px;
+		transform: rotate(0deg);
+	}
+}
+
+
+// анимация попап
+
+@keyframes zoomIn {
+  0% {
+    opacity: 0;
+   -webkit-transform: scale3d(0.3, 0.3, 0.3);
+   transform: scale3d(0.3, 0.3, 0.3);
+ }
+ 50% {
+    opacity: 1;
+ }
+}
+
+// слейдер 
+
+// @keyframes moveLeft {
+//   from {}
+//   to {}
+// }
+
+// @keyframes moveRight {
+//   from {}
+//   to {}
+// }
