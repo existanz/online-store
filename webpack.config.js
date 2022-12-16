@@ -10,7 +10,7 @@ const isProd = process.env.mode === 'prod' ? true : false;
 const idDev = !isProd;
 
 const baseConfig = {
-  entry: path.resolve(__dirname, './src/index'),
+  entry: path.resolve(__dirname, './src/application/index.ts'),
   mode: 'development',
   optimization: {
     usedExports: false,
@@ -52,7 +52,7 @@ const baseConfig = {
       chunkFilename: '[id].css'
     }),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, './src/index.html'),
+      template: path.resolve(__dirname, './src/application/index.html'),
       filename: 'index.html',
     }),
     new CleanWebpackPlugin(),
