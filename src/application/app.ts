@@ -1,3 +1,4 @@
+
 class App {
     public start() {
         console.log('start');
