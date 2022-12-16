@@ -1,3 +1,5 @@
+import App from './application/app/app';
 import './styles/index.scss';
 
-console.log('Its Strart!');
+const app = new App();
+app.start();

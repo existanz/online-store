@@ -4,30 +4,52 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>online-store</title>
 </head>
 <body>
   <div class="wrapper">
-    <header>
-      <div class="container">
-        <ul class="tmp-nav">
-          <li class="tmp-nav__item">
-            <a href="#" class="tpm-nav__link">main</a>
-          </li>
-          <li class="tmp-nav__item">
-            <a href="#" class="tpm-nav__link">cart</a>
-          </li>
-          <li class="tmp-nav__item">
-            <a href="#" class="tpm-nav__link">404</a>
-          </li>
-          <li class="tmp-nav__item">
-            <a href="#" class="tpm-nav__link">item-page</a>
-          </li>
-        </ul>
+    <header class="header">
+      <div class="container header__container">
+        <div class="header__logo">
+          <a href="/" class="logo">Store</a>
+        </div>
+        <div class="header__navigation">
+          <ul class="tmp-nav">
+            <li class="tmp-nav__item">
+              <a href="#" class="tpm-nav__link">main</a>
+            </li>
+            <li class="tmp-nav__item">
+              <a href="#" class="tpm-nav__link">cart</a>
+            </li>
+            <li class="tmp-nav__item">
+              <a href="#" class="tpm-nav__link">404</a>
+            </li>
+            <li class="tmp-nav__item">
+              <a href="#" class="tpm-nav__link">item-page</a>
+            </li>
+          </ul>
+        </div>
+        <div class="header__buttons">
+          <div class="total-price"></div>
+          <div class="cart-counter">
+
+          </div>
+        </div>
       </div>
     </header>
-    <main></main>
-    <footer></footer>
+    <main class="main">
+      <div class="container">
+        <div id="app">
+        </div>
+        <img src="./assets//images/example.png" alt="example">
+        <div class="example"></div>
+      </div>
+    </main>
+    <footer class="footer">
+      <div class="container">
+
+      </div>
+    </footer>
   </div>
 </body>
 </html>

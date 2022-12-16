@@ -1,9 +1,9 @@
 *{
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html {
-  @include font-default;
+  @include font-regular();
 	font-size: 16px;
 }
 
@@ -36,14 +36,6 @@ body {
     display: flex;
     // flex-direction: column;
 		position: relative;
-
-      @include laptop {
-        width: 94%;
-      }
-
-      @include phones {
-        width: 93%;
-      }
   }
 
 h1,h2,h3,h4,h5,h6 {

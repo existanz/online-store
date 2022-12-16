@@ -1,10 +1,32 @@
-$red: red;
+//vars
+@import "abstracts/variables.scss";
 
-.tmp-nav {
-  color: $red;
-}
 
-a {
-  text-decoration: none;
-  list-style: none;
+//media
+@import "base/_media.scss";
+
+
+//normalize 
+
+@import "base/_normalize.scss";
+
+
+//setups
+
+@import "base/_mixins.scss";
+@import "base/_fonts.scss";
+@import "base/_layout.scss";
+@import "base/_keyframes.scss";
+@import "base/_icons.scss";
+
+
+// основная страница ( хедер + футер )
+@import "./components/main-page/header.scss";
+@import "./components/main-page/tmp-nav.scss";
+@import "./components/main-page/logo.scss";
+
+.example {
+  width: 300px;
+  height: 300px;
+  background: url('./../assets/images/example.png') center center / cover no-repeat;
 }
