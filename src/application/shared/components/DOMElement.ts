@@ -1,13 +1,27 @@
-export class DOMElement {
-    public node: HTMLElement;
+interface Options {
+  tagName: keyof HTMLElementTagNameMap;
+  classList?: string[];
+  content?: string;
+  href?: string;
+}
 
-    constructor(parentNode: HTMLElement | null, tagName = 'div', classList: string[] = [], content = '') {
-        const el = document.createElement(tagName);
-        el.classList.add(...classList);
-        el.textContent = content;
-        if (parentNode) {
-            parentNode.appendChild(el);
-        }
-        this.node = el;
+export class DOMElement {
+  public node: HTMLElement;
+
+  constructor(parentNode: HTMLElement | null, options: Options) {
+    const el = document.createElement(options.tagName);
+    if (options.classList) {
+      el.classList.add(...options.classList);
     }
+    if (options.content) {
+      el.textContent = options.content;
+    }
+    if (parentNode) {
+      parentNode.appendChild(el);
+    }
+    if (options.href) {
+      el.setAttribute('href', options.href);
+    }
+    this.node = el;
+  }
 }
