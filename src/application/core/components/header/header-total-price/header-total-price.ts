@@ -1,4 +1,5 @@
-import { DOMElement } from '../../../../shared/components/DOMElement';
+import './header-total-price.scss';
+import { DOMElement } from '../../../../shared/components/dom-element';
 
 export class TotalPrice {
   private text: DOMElement;

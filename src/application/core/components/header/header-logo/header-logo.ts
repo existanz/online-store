@@ -1,4 +1,5 @@
-import { DOMElement } from '../../../../shared/components/DOMElement';
+import './header-logo.scss';
+import { DOMElement } from '../../../../shared/components/dom-element';
 
 export class Logo {
   private link: DOMElement;
