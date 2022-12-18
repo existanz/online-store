@@ -1,5 +1,5 @@
 import './header-logo.scss';
-import { DOMElement } from '../../../../shared/components/dom-element';
+import { DOMElement } from '../../../../shared/components/base-elements/dom-element';
 
 export class Logo {
   private link: DOMElement;

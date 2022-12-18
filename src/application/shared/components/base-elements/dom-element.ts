@@ -1,9 +1,4 @@
-interface Options {
-  tagName: keyof HTMLElementTagNameMap;
-  classList?: string[];
-  content?: string;
-  href?: string;
-}
+import { Options } from "../../models/base-elements";
 
 export class DOMElement {
   public node: HTMLElement;
