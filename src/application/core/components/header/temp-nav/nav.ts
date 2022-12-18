@@ -1,5 +1,6 @@
 import './nav.scss';
 import { DOMElement } from '../../../../shared/components/base-elements/dom-element';
+import { LinkElement } from '../../../../shared/components/base-elements/link-element';
 
 export class Navigation {
   private list: DOMElement;
@@ -36,7 +37,7 @@ export class Navigation {
         tagName: 'li',
         classList: ['tmp-nav__item'],
       });
-      link = new DOMElement(item.node, {
+      link = new LinkElement(item.node, {
         tagName: 'a',
         classList: ['tmp-nav__link'],
         href: this.linksInfo[i].href,

@@ -1,5 +1,6 @@
 import './footer.scss';
 import { DOMElement } from '../../../shared/components/base-elements/dom-element';
+import { LinkElement } from '../../../shared/components/base-elements/link-element';
 import { SVG } from '../../../shared/components/svg-icons';
 
 export class Footer extends DOMElement {
@@ -8,11 +9,11 @@ export class Footer extends DOMElement {
   private year: DOMElement;
   private footerSchoolLogo: DOMElement;
 
-  private gitHub1: DOMElement;
-  private gitHub2: DOMElement;
+  private gitHub1: LinkElement;
+  private gitHub2: LinkElement;
   private githubUser1: DOMElement;
   private githubUser2: DOMElement;
-  private rsschool: DOMElement;
+  private rsschool: LinkElement;
 
   constructor(parentNode: HTMLElement) {
     super(parentNode, {
@@ -30,7 +31,7 @@ export class Footer extends DOMElement {
       classList: ['footer-links'],
     });
 
-    this.gitHub1 = new DOMElement(this.footerLinx.node, {
+    this.gitHub1 = new LinkElement(this.footerLinx.node, {
       tagName: 'a',
       href: 'https://github.com/chervyakov-vladislav',
       classList: ['footer-links__item'],
@@ -44,7 +45,7 @@ export class Footer extends DOMElement {
       content: 'Vladislav Chervyakov',
     });
 
-    this.gitHub2 = new DOMElement(this.footerLinx.node, {
+    this.gitHub2 = new LinkElement(this.footerLinx.node, {
       tagName: 'a',
       href: 'https://github.com/EXisTAnZ',
       classList: ['footer-links__item'],
@@ -69,7 +70,7 @@ export class Footer extends DOMElement {
       classList: ['footer__shcool-logo'],
     });
 
-    this.rsschool = new DOMElement(this.footerSchoolLogo.node, {
+    this.rsschool = new LinkElement(this.footerSchoolLogo.node, {
       tagName: 'a',
       href: 'https://rs.school/',
       classList: ['shcool-logo'],

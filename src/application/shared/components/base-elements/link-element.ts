@@ -1,8 +1,8 @@
 import { DOMElement } from './dom-element';
-import { Options } from '../../models/base-elements';
+import { LinkOptions } from '../../models/base-elements';
 
 export class LinkElement extends DOMElement {
-  constructor(parentNode: HTMLElement | null, options: Options) {
+  constructor(parentNode: HTMLElement | null, options: LinkOptions) {
     super(parentNode, {
       tagName: options.tagName,
       classList: options.classList,

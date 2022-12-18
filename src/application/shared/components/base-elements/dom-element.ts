@@ -14,12 +14,6 @@ export class DOMElement {
     if (parentNode) {
       parentNode.appendChild(el);
     }
-    if (options.href) {
-      el.setAttribute('href', options.href);
-    }
-    if (options.target) {
-      el.setAttribute('target', options.target);
-    }
     this.node = el;
   }
 }

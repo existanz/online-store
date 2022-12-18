@@ -1,8 +1,9 @@
 import './header-cart.scss';
 import { DOMElement } from '../../../../shared/components/base-elements/dom-element';
+import { LinkElement } from '../../../../shared/components/base-elements/link-element';
 import { SVG } from '../../../../shared/components/svg-icons';
 
-export class Cart extends DOMElement {
+export class Cart extends LinkElement {
   private counter: DOMElement;
   private text: DOMElement;
 
