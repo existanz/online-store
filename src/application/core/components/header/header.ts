@@ -5,34 +5,39 @@ import { TotalPrice } from './header-total-price/header-total-price';
 import { Cart } from './header-cart/header-cart';
 
 export class Header extends DOMElement {
+  private container: DOMElement;
+  private headerLogo: DOMElement;
+  private nav: DOMElement;
+  private headerTotalPrice: DOMElement;
+  private headerCart: DOMElement;
+  private logo: Logo;
+  private price: TotalPrice;
+  private cart: Cart;
+
   constructor(parentNode: HTMLElement) {
     super(parentNode, { tagName: 'header', classList: ['header'] });
-    this.render();
-  }
-
-  private render(): void {
-    const container = new DOMElement(this.node, {
+    this.container = new DOMElement(this.node, {
       tagName: 'div',
       classList: ['container', 'header__container'],
     });
-    const headerLogo = new DOMElement(container.node, {
+    this.headerLogo = new DOMElement(this.container.node, {
       tagName: 'div',
       classList: ['header__logo'],
     });
-    const nav = new DOMElement(container.node, {
+    this.nav = new DOMElement(this.container.node, {
       tagName: 'div',
       classList: ['header__navigation'],
     });
-    const headerTotalPrice = new DOMElement(container.node, {
+    this.headerTotalPrice = new DOMElement(this.container.node, {
       tagName: 'div',
       classList: ['header__total-price'],
     });
-    const headerCart = new DOMElement(container.node, {
+    this.headerCart = new DOMElement(this.container.node, {
       tagName: 'div',
       classList: ['header__cart'],
     });
-    const logo = new Logo(headerLogo.node);
-    const price = new TotalPrice(headerTotalPrice.node);
-    const cart = new Cart(headerCart.node);
+    this.logo = new Logo(this.headerLogo.node);
+    this.price = new TotalPrice(this.headerTotalPrice.node);
+    this.cart = new Cart(this.headerCart.node);
   }
 }
