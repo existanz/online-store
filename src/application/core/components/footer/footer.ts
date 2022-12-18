@@ -27,5 +27,6 @@ export class Footer extends DOMElement {
     this.gitHub2 = new SVGLink(this.footerLinx.node, 'https://github.com/EXisTAnZ', 'Magomed Oziev', this.ghSVG);
     this.year = new DOMElement(this.container.node, 'p', ['footer__year'], '2023');
     this.rsschool = new SVGLink(this.container.node, 'https://rs.school/js/', '', this.rsschoolSVG);
+    this.rsschool.node.classList.add('footer__rsschool');
   }
 }
