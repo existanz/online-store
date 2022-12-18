@@ -9,7 +9,6 @@ html {
 
 html,body {
   min-height: 100vh;
-  height: 100%;
 }
 
 body {
@@ -20,6 +19,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
 
 //если закомменчено, значит вынесено в другой блок для наглядной реализации функционала
