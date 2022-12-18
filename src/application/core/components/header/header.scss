@@ -1,6 +1,6 @@
 .header {
-  height: 70px;
-  margin-top: 30px;
+  height: 100px;
+  padding-top: 30px;
 }
 
 .header__container {
@@ -9,11 +9,9 @@
 }
 
 .header__logo {
-  flex: 1;
+  flex: .7;
 }
 
 .header__total-price {
-  margin-right: 60px;
-  max-width: 150px;
-  width: 100%;
+  flex: .3;
 }

@@ -1,4 +1,4 @@
-import { Options } from "../../models/base-elements";
+import { Options } from '../../models/base-elements';
 
 export class DOMElement {
   public node: HTMLElement;

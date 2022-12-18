@@ -18,7 +18,7 @@ export class TotalPrice {
     this.price = new DOMElement(this.totalPrice.node, {
       tagName: 'span',
       classList: ['total-price__price'],
-      content: '$9999',
+      content: '$9999999',
     });
   }
 

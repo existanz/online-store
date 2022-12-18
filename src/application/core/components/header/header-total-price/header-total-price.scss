@@ -1,5 +1,7 @@
 .total-price {
   width: 100%;
-  display: flex;
-  justify-content: space-between;
+}
+
+.total-price__text {
+  margin-right: 10px;
 }

@@ -4,5 +4,5 @@ export interface Options {
   content?: string;
   href?: string;
   src?: string;
-  target?: string; 
+  target?: string;
 }

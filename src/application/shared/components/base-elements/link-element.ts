@@ -1,14 +1,13 @@
-import { DOMElement } from "./dom-element";
-import { Options } from "../../models/base-elements";
+import { DOMElement } from './dom-element';
+import { Options } from '../../models/base-elements';
 
 export class LinkElement extends DOMElement {
-
   constructor(parentNode: HTMLElement | null, options: Options) {
-    super(parentNode, { 
+    super(parentNode, {
       tagName: options.tagName,
       classList: options.classList,
-      content: options.content
-    })
+      content: options.content,
+    });
 
     if (options.href) {
       this.node.setAttribute('href', options.href);
@@ -17,6 +16,5 @@ export class LinkElement extends DOMElement {
     if (options.target) {
       this.node.setAttribute('target', options.target);
     }
-    
   }
 }
