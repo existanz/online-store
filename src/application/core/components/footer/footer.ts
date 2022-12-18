@@ -71,7 +71,7 @@ export class Footer extends DOMElement {
 
     this.rsschool = new DOMElement(this.footerSchoolLogo.node, {
       tagName: 'a',
-      href: 'https://github.com/chervyakov-vladislav',
+      href: 'https://rs.school/',
       classList: ['shcool-logo'],
       target: '_blank',
     });
