@@ -6,7 +6,7 @@
   padding: 10px;
 
     &:hover {
-      .cart-counter__icon {
+      .bug-icon {
         stroke: #000;
       }
 
@@ -35,7 +35,7 @@
     }
 }
 
-.cart-counter__icon {
+.bug-icon {
   transition: .3s;
   stroke: #4B5563;
 }

@@ -5,7 +5,7 @@ import { SVG } from '../../../../shared/components/svg-icons';
 export class Cart extends DOMElement {
   private counter: DOMElement;
   private text: DOMElement;
-  private bugIcon: string = SVG.bugSVG;
+  private bugIcon: string = SVG.bug;
 
   constructor(parentNode: HTMLElement) {
     super(parentNode, {
