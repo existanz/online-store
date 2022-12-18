@@ -18,6 +18,8 @@ body {
     color: $font-color;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    display: flex;
+    flex-direction: column;
 }
 
 //если закомменчено, значит вынесено в другой блок для наглядной реализации функционала

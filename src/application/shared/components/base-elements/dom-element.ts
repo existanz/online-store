@@ -17,6 +17,9 @@ export class DOMElement {
     if (options.href) {
       el.setAttribute('href', options.href);
     }
+    if (options.target) {
+      el.setAttribute('target', options.target);
+    }
     this.node = el;
   }
 }
