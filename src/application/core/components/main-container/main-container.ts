@@ -2,8 +2,8 @@ import './main-container.scss';
 import { DOMElement } from '../../../shared/components/base-elements/dom-element';
 
 export class Main {
-  private main: DOMElement;
-  private container: DOMElement;
+  public main: DOMElement;
+  public container: DOMElement;
 
   constructor(parentNode: HTMLElement) {
     this.main = new DOMElement(parentNode, {

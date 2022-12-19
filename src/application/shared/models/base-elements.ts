@@ -8,3 +8,7 @@ export interface LinkOptions extends Options {
   target?: string;
   href?: string;
 }
+
+export interface RouteOptions extends Options {
+  id?: string;
+}
