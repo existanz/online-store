@@ -1,0 +1,14 @@
+.store-page {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  grid-template-rows: 100px 1fr;
+  gap: 20px;
+}
+
+.store-page__top-filters {
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
