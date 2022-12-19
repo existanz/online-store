@@ -62,7 +62,7 @@ export class Footer extends DOMElement {
     this.year = new DOMElement(this.container.node, {
       tagName: 'p',
       classList: ['footer__year'],
-      content: '2023',
+      content: new Date().getFullYear().toString(),
     });
 
     this.footerSchoolLogo = new DOMElement(this.container.node, {
