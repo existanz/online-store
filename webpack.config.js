@@ -4,7 +4,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const EslingPlugin = require('eslint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
 
 const isProd = process.env.mode === 'prod' ? true : false;
 const idDev = !isProd;
@@ -70,9 +69,6 @@ const baseConfig = {
       filename: 'index.html',
     }),
     new CleanWebpackPlugin(),
-    new CopyPlugin({
-      patterns: [{ from: 'src/assets', to: 'assets' }]
-    }),
     new EslingPlugin({ extensions: 'ts' })
   ]
 };
