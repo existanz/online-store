@@ -1,21 +1,13 @@
-
 .footer {
-  display: flex;
-  justify-content: center;
-  position: fixed;
-  z-index: 2;
-  width: 100%;
-  height: 50px;
-  left: 0px;
-  bottom: 0px;
+  height: 70px;
   color: #fff;
-  background-color: black;
+  background-color: #111827;
+  font-size: 14px;
 }
 
 .footer__container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  justify-content: space-between;
   align-items: center;
 }
 
@@ -24,27 +16,47 @@
   justify-content: space-between;
 }
 
-.footer__link {
+.footer-links__item {
   display: flex;
   align-items: center;
+
+    &:hover {
+      .footer-links__text {
+        opacity: 1;
+      }
+
+      .github-icon {
+        opacity: 1;
+      }
+    }
+}
+
+.footer-links__text {
   color: #fff;
-  fill: #fff;
+  margin-left: 10px;
+  opacity: .85;
+  transition: .3s;
+}
+
+.footer__shcool-logo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  opacity: .85;
+  transition: .3s;
+
+    &:hover {
+      opacity: 1;
+    }
 }
 
 .footer__year {
   margin: 0 auto;
+  opacity: .9;
 }
 
-.footer__rsschool {
-  display: flex;
-  justify-content: right;
-}
-
-.footer__link:hover {
-  color:#30c5ff;
-  fill:#30c5ff;
-}
-
-.footer__names {
-  padding-left: 10px;
+.github-icon {
+  fill: #fff;
+  opacity: .85;
+  transition: .3s;
 }
