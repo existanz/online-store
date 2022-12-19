@@ -37,6 +37,20 @@ const baseConfig = {
           }
         ]
       },
+      {
+        test: /\.(woff|woff2|ttf|otf|eot)$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/fonts/[name][ext]'
+        } 
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg|ico)$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/images/[name][ext]'
+        } 
+      }
     ],
   },
   resolve: {
