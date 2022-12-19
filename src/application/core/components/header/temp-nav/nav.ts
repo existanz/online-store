@@ -37,13 +37,14 @@ export class Navigation {
         tagName: 'li',
         classList: ['tmp-nav__item'],
       });
+
       link = new LinkElement(item.node, {
         tagName: 'a',
         classList: ['tmp-nav__link'],
         href: this.linksInfo[i].href,
         content: this.linksInfo[i].content,
       });
-      console.log(link.node.tabIndex);
+      link.node.addEventListener('click', (e) => e.preventDefault());
     }
   }
 }
