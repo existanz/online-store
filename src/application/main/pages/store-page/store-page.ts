@@ -2,6 +2,7 @@ import './store-page.scss';
 import { Page } from '../../../shared/components/page';
 import { DOMElement } from '../../../shared/components/base-elements/dom-element';
 import { TopFilters } from '../../components/store-page/top-filters/top-filters';
+import { LeftFilters } from '../../components/store-page/left-filters/left-filters';
 
 export class StorePage extends Page {
   private storeTopFilters: DOMElement;
@@ -9,6 +10,7 @@ export class StorePage extends Page {
   private storeItems: DOMElement;
 
   private topFilters: TopFilters;
+  private leftFilters: LeftFilters;
 
   constructor(id: string) {
     super(id);
@@ -29,5 +31,6 @@ export class StorePage extends Page {
     });
 
     this.topFilters = new TopFilters(this.storeTopFilters.node);
+    this.leftFilters = new LeftFilters(this.storeAsideFilters.node);
   }
 }

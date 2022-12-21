@@ -22,7 +22,7 @@ export const enum SVG {
     <path class="bug-icon" d="M0.888916 7.11162H28.8889" stroke="#1F2937" stroke-linejoin="round"/>
     <path class="bug-icon" d="M21.1111 13.3331C21.1111 14.9833 20.4556 16.566 19.2887 17.7329C18.1218 18.8998 16.5391 19.5553 14.8889 19.5553C13.2387 19.5553 11.656 18.8998 10.4891 17.7329C9.32224 16.566 8.66669 14.9833 8.66669 13.3331" stroke="#1F2937" stroke-linejoin="round"/>
     </svg>`,
-  listView = `<svg  width="25" height="26" viewBox="0 0 25 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+  listView = `<svg  width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path class="list-view-icon" d="M21.875 3.33377H7.8125V6.26346H21.875V3.33377Z" fill="black"/>
     <path class="list-view-icon" d="M6.25 3.33377H3.125V6.26346H6.25V3.33377Z" fill="black"/>
     <path class="list-view-icon" d="M6.25 18.9588H3.125V21.8885H6.25V18.9588Z" fill="black"/>
@@ -33,7 +33,7 @@ export const enum SVG {
     <path class="list-view-icon" d="M21.875 8.54373H7.8125V11.4734H21.875V8.54373Z" fill="black"/>
     </svg>
     `,
-  gridView = `<svg width="25" height="26" viewBox="0 0 25 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+  gridView = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path class="grid-view-icon" d="M6.25 3.33377H3.125V6.26346H6.25V3.33377Z" fill="black"/>
     <path class="grid-view-icon" d="M6.25 18.9588H3.125V21.8885H6.25V18.9588Z" fill="black"/>
     <path class="grid-view-icon" d="M6.25 13.7488H3.125V16.6785H6.25V13.7488Z" fill="black"/>
