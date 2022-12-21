@@ -29,6 +29,14 @@ export class InputElement extends DOMElement {
       (this.node as HTMLOptionElement).selected = true;
     }
 
+    if (options.min) {
+      this.node.setAttribute('min', options.min);
+    }
+
+    if (options.max) {
+      this.node.setAttribute('max', options.max);
+    }
+
     if (options.value) {
       this.node.setAttribute('value', options.value);
     }

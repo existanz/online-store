@@ -59,9 +59,16 @@
   display: flex;
   margin-bottom: 10px;
   align-items: center;
+  font-size: 14px;
 
   &:last-child {
     margin-bottom: 0;
+  }
+
+  &:hover {
+    .checkbox-filter__custom-check::after{
+      opacity: 1;
+    } 
   }
 }
 

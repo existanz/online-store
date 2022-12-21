@@ -37,6 +37,7 @@ export class CheckboxFilter {
     this.checkboxName = null;
     this.checkboxCount = null;
 
+    // временный вызов из консруктора, метод публичный
     this.render(6);
   }
 

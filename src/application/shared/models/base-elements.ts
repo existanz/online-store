@@ -29,4 +29,6 @@ export interface InputOptions extends Options {
   required?: boolean;
   value?: string;
   selected?: boolean;
+  min?: string;
+  max?: string;
 }
