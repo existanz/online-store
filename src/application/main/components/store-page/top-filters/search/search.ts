@@ -1,3 +1,4 @@
+import './search.scss';
 import { DOMElement } from '../../../../../shared/components/base-elements/dom-element';
 import { InputElement } from '../../../../../shared/components/base-elements/input-element';
 import { ButtonElement } from '../../../../../shared/components/base-elements/button-element';

@@ -1,3 +1,4 @@
+import './toggle-grid.scss';
 import { DOMElement } from '../../../../../shared/components/base-elements/dom-element';
 import { ButtonElement } from '../../../../../shared/components/base-elements/button-element';
 import { SVG } from '../../../../../shared/components/svg-icons';
