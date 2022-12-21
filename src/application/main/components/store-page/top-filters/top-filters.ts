@@ -24,17 +24,17 @@ export class TopFilters {
     this.topFilters.node.addEventListener('click', (e) => e.preventDefault());
 
     this.topFiltersToggle = new DOMElement(this.topFilters.node, {
-      tagName: 'label',
+      tagName: 'div',
       classList: ['top-filters__toggle'],
     });
 
     this.topFiltersSearch = new DOMElement(this.topFilters.node, {
-      tagName: 'label',
+      tagName: 'div',
       classList: ['top-filters__search'],
     });
 
     this.topFiltersSelect = new DOMElement(this.topFilters.node, {
-      tagName: 'label',
+      tagName: 'div',
       classList: ['top-filters__select'],
     });
 
