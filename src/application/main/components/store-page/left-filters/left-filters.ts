@@ -2,6 +2,8 @@ import './left-filters.scss';
 import { DOMElement } from '../../../../shared/components/base-elements/dom-element';
 import { CheckboxFilter } from './checkbox-filters/checkbox-filter';
 import { RangeFilter } from './range-filters/range-filter';
+import { WhiteButton } from '../../../../shared/components/buttons/white-button';
+import { BlueButton } from '../../../../shared/components/buttons/blue-button';
 
 export class LeftFilters {
   private leftFilters: DOMElement;
@@ -10,6 +12,7 @@ export class LeftFilters {
   public checkboxBrand: CheckboxFilter;
   public rangePrice: RangeFilter;
   public rangeStock: RangeFilter;
+  public whiteButton: WhiteButton;
 
   constructor(parentNode: HTMLElement) {
     this.leftFilters = new DOMElement(parentNode, {
@@ -35,6 +38,18 @@ export class LeftFilters {
     this.rangeStock = new RangeFilter(this.leftFilters.node, {
       title: 'Stock',
       data: '123',
+    });
+
+    this.whiteButton = new WhiteButton(this.leftFilters.node, {
+      tagName: 'button',
+      id: 'copy-query',
+      content: 'Copy',
+    });
+
+    this.whiteButton = new BlueButton(this.leftFilters.node, {
+      tagName: 'button',
+      id: 'reset-filters',
+      content: 'Reset',
     });
   }
 }

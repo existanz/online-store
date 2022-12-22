@@ -1,12 +1,11 @@
 import './top-filters.scss';
 import { DOMElement } from '../../../../shared/components/base-elements/dom-element';
-import { FormElement } from '../../../../shared/components/base-elements/form-element';
 import { ToggleGrid } from './toggle-grid/toggle-grid';
 import { Search } from './search/search';
 import { SelectSort } from './select-sort/select-sort';
 
 export class TopFilters {
-  private topFilters: FormElement;
+  private topFilters: DOMElement;
   private topFiltersToggle: DOMElement;
   private topFiltersSearch: DOMElement;
   private topFiltersSelect: DOMElement;
@@ -16,10 +15,9 @@ export class TopFilters {
   private select: SelectSort;
 
   constructor(parentNode: HTMLElement) {
-    this.topFilters = new FormElement(parentNode, {
-      tagName: 'form',
+    this.topFilters = new DOMElement(parentNode, {
+      tagName: 'div',
       classList: ['top-filters'],
-      action: '#',
     });
     this.topFilters.node.addEventListener('click', (e) => e.preventDefault());
 
