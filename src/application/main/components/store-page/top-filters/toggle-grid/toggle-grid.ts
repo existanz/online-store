@@ -5,7 +5,8 @@ import { SVG } from '../../../../../shared/components/svg-icons';
 
 export class ToggleGrid {
   private toggleGrid: DOMElement;
-  private toggleGridItem: ButtonElement;
+  public toggleGridItemGrid: ButtonElement;
+  public toggleGridItemList: ButtonElement;
 
   constructor(parentNode: HTMLElement) {
     this.toggleGrid = new DOMElement(parentNode, {
@@ -13,16 +14,16 @@ export class ToggleGrid {
       classList: ['toggle-grid'],
     });
 
-    this.toggleGridItem = new ButtonElement(this.toggleGrid.node, {
+    this.toggleGridItemGrid = new ButtonElement(this.toggleGrid.node, {
       tagName: 'button',
       classList: ['toggle-grid__item'],
     });
-    this.toggleGridItem.node.innerHTML = SVG.gridView;
+    this.toggleGridItemGrid.node.innerHTML = SVG.gridView;
 
-    this.toggleGridItem = new ButtonElement(this.toggleGrid.node, {
+    this.toggleGridItemList = new ButtonElement(this.toggleGrid.node, {
       tagName: 'button',
       classList: ['toggle-grid__item'],
     });
-    this.toggleGridItem.node.innerHTML = SVG.listView;
+    this.toggleGridItemList.node.innerHTML = SVG.listView;
   }
 }

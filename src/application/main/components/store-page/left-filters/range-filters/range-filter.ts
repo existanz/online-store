@@ -96,7 +96,7 @@ export class RangeFilter {
     const checkMinInput = this.inputMin.node;
     const constMax = parseInt((inputs[0] as HTMLInputElement).max);
 
-    const priceGap = 1;
+    const priceGap = 1000;
 
     inputs.forEach((input) => {
       input.addEventListener('input', (e: Event) => {
