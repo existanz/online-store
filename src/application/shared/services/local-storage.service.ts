@@ -13,7 +13,7 @@ export default class LocalStorageSvc {
 
   private load(): void {
     for (let i = 0; i < localStorage.length; i++) {
-      const key: string = localStorage.key(i) as string;
+      const key: string | null = localStorage.key(i);
       if (key) {
         this.records[key] = localStorage.getItem(key) as string;
       } else {
