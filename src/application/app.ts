@@ -4,13 +4,16 @@ import { Main } from './core/components/main-container/main-container';
 import LocalStorageSvc from './shared/services/local-storage.service';
 
 class App {
-  private header: Header = new Header(document.body);
-  private main: Main = new Main(document.body);
-  private footer: Footer = new Footer(document.body);
-  public localStorageSvc = new LocalStorageSvc();
+  private header: Header;
+  private main: Main;
+  private footer: Footer;
+  public localStorageSvc;
 
   constructor() {
-    console.log(this.localStorageSvc.getRecordObj('ages'));
+    this.header = new Header(document.body);
+    this.main = new Main(document.body);
+    this.footer = new Footer(document.body);
+    this.localStorageSvc = new LocalStorageSvc();
   }
 
   private render(): void {
