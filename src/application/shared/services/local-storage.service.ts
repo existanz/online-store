@@ -5,13 +5,13 @@ export default class LocalStorageSvc {
     this.records = {};
     this.load();
   }
-  private save() {
+  private save(): void {
     Object.keys(this.records).forEach((key) => {
       localStorage.setItem(key, this.records[key]);
     });
   }
 
-  private load() {
+  private load(): void {
     for (let i = 0; i < localStorage.length; i++) {
       const key: string = localStorage.key(i) as string;
       if (key) {
@@ -22,12 +22,12 @@ export default class LocalStorageSvc {
     }
   }
 
-  public getRecord(key: string) {
+  public getRecord(key: string): string {
     return this.records[key];
   }
 
-  public getRecordObj(key: string) {
-    return JSON.parse(this.getRecord(key));
+  public getRecordObj(key: string): object {
+    return <object>JSON.parse(this.getRecord(key));
   }
 
   public setRecord(key: string, value: unknown): void {
