@@ -1,0 +1,14 @@
+.product-page {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  margin: 50px 0 30px;
+}
+
+.product-page__breadcrumbs {
+  width: 100%;
+}
+
+.product-page__gallary, .product-page__description {
+  width: 50%;
+}
