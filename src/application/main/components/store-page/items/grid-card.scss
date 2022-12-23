@@ -1,0 +1,19 @@
+.grid-card {
+  max-width: 195px;
+  width: 100%;
+}
+
+.grid-card__image-container {
+  max-width: 195px;
+  max-height: 195px;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.grid-card__image {
+  // не придумал нормальное позиционирование
+  width: 110%;
+  height: 110%;
+  transform: translate(-4%, -4%);
+}

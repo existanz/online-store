@@ -32,3 +32,8 @@ export interface InputOptions extends Options {
   min?: string;
   max?: string;
 }
+
+export interface ImageOptions extends Options {
+  src: string;
+  alt?: string;
+}
