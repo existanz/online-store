@@ -1,16 +1,21 @@
 import { Header } from './core/components/header/header';
 import { Footer } from './core/components/footer/footer';
 import { Main } from './core/components/main-container/main-container';
-import { StorePage } from './main/pages/store-page/store-page';
 import { ProductPage } from './main/pages/product-page/product-page';
 
 class App {
-  private header: Header = new Header(document.body);
-  private main: Main = new Main(document.body);
-  private footer: Footer = new Footer(document.body);
+  private header: Header;
+  private main: Main;
+  private footer: Footer;
 
-  private store: StorePage = new StorePage('store-page');
-  private productPage: ProductPage = new ProductPage('product-page');
+  private productPage: ProductPage;
+
+  constructor() {
+    this.header = new Header(document.body);
+    this.main = new Main(document.body);
+    this.footer = new Footer(document.body);
+    this.productPage = new ProductPage('product-page');
+  }
 
   private render(): void {
     this.main.container.node.append(this.productPage.container.node);

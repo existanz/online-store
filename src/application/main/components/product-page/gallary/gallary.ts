@@ -2,9 +2,9 @@ import { DOMElement } from '../../../../shared/components/base-elements/dom-elem
 import { ImageElement } from '../../../../shared/components/base-elements/image-element';
 import { ProductsData } from '../../../../shared/models/response-data';
 
-interface Data {
-  [key: string]: string
-}
+// interface Data {
+//   [key: string]: string;
+// }
 
 export class Gallary {
   private gallary: DOMElement;
@@ -26,29 +26,29 @@ export class Gallary {
     this.element = null;
     this.image = null;
 
-    this.render(data.images);
+    // this.render(data.images);
   }
 
-  private render(images: string[]) {
-    let element = this.element;
-    let image = this.image;
-    const container = this.gallaryList;
-    const imagesSet: string[] = this.getSetOfImages(images);
-    imagesSet.forEach((item) => {
-      element = new DOMElement(container.node, {
-        tagName: 'li',
-        classList: ['gallary__item'],
-      });
+  // private render(images: string[]) {
+  //   // let element = this.element;
+  //   // let image = this.image;
+  //   // const container = this.gallaryList;
+  //   // const imagesSet: string[] = this.getSetOfImages(images);
+  //   // imagesSet.forEach((item) => {
+  //   //   element = new DOMElement(container.node, {
+  //   //     tagName: 'li',
+  //   //     classList: ['gallary__item'],
+  //   //   });
 
-      image = new ImageElement(element.node, {
-        tagName: 'img',
-        classList: ['gallary__small-image'],
-        src: item,
-      });
-    });
-  }
+  //   //   image = new ImageElement(element.node, {
+  //   //     tagName: 'img',
+  //   //     classList: ['gallary__small-image'],
+  //   //     src: item,
+  //   //   });
+  //   // });
+  // }
 
-  private getSetOfImages(array: string[]) {
-    //функция сравнения размера через Content-Length
-  }
+  // private getSetOfImages(array: string[]) {
+  //   //функция сравнения размера через Content-Length
+  // }
 }
