@@ -1,0 +1,25 @@
+.top-filters {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.top-filters__toggle {
+  display: flex;
+  align-items: center;
+}
+
+.top-filters__search {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.top-filters__select {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  align-items: center;
+}
