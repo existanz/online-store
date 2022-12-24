@@ -1,7 +1,7 @@
 import './checkbox-filter.scss';
 import { DOMElement } from '../../../../../shared/components/base-elements/dom-element';
 import { InputElement } from '../../../../../shared/components/base-elements/input-element';
-import { Options } from '../../../../../shared/models/store-page';
+import { StorePageOptions } from '../../../../../shared/models/store-page';
 
 export class CheckboxFilter {
   private container: DOMElement;
@@ -14,7 +14,7 @@ export class CheckboxFilter {
 
   private input: InputElement | null;
 
-  constructor(parentNode: HTMLElement, checkboxOptions: Options) {
+  constructor(parentNode: HTMLElement, checkboxOptions: StorePageOptions) {
     this.container = new DOMElement(parentNode, {
       tagName: 'div',
       classList: ['checkbox-filter'],

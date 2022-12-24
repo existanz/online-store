@@ -4,11 +4,19 @@ import { Main } from './core/components/main-container/main-container';
 import { StorePage } from './main/pages/store-page/store-page';
 
 class App {
-  private header: Header = new Header(document.body);
-  private main: Main = new Main(document.body);
-  private footer: Footer = new Footer(document.body);
+  private header: Header;
+  private main: Main;
+  private footer: Footer;
 
-  private store: StorePage = new StorePage('store-page');
+  private store: StorePage;
+
+  constructor() {
+    this.header = new Header(document.body);
+    this.main = new Main(document.body);
+    this.footer = new Footer(document.body);
+
+    this.store = new StorePage('store-page');
+  }
 
   private render(): void {
     this.main.container.node.append(this.store.container.node);
