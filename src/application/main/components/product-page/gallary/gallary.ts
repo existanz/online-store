@@ -2,6 +2,10 @@ import { DOMElement } from '../../../../shared/components/base-elements/dom-elem
 import { ImageElement } from '../../../../shared/components/base-elements/image-element';
 import { ProductsData } from '../../../../shared/models/response-data';
 
+interface Data {
+  [key: string]: string
+}
+
 export class Gallary {
   private gallary: DOMElement;
   private gallaryList: DOMElement;
@@ -29,8 +33,7 @@ export class Gallary {
     let element = this.element;
     let image = this.image;
     const container = this.gallaryList;
-    const imagesSet = [...new Set(images)];
-    console.log(imagesSet);
+    const imagesSet: string[] = this.getSetOfImages(images);
     imagesSet.forEach((item) => {
       element = new DOMElement(container.node, {
         tagName: 'li',
@@ -45,7 +48,7 @@ export class Gallary {
     });
   }
 
-  private checkValidity() {
-    
+  private getSetOfImages(array: string[]) {
+    //функция сравнения размера через Content-Length
   }
 }
