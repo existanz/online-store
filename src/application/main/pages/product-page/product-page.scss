@@ -3,12 +3,15 @@
   width: 100%;
   flex-wrap: wrap;
   margin: 50px 0 30px;
+  gap: 15px;
+  justify-content: space-between;
 }
 
 .product-page__breadcrumbs {
   width: 100%;
+  margin-bottom: 15px;
 }
 
 .product-page__gallary, .product-page__description {
-  width: 50%;
+  width: 48%;
 }
