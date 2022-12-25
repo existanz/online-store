@@ -5,7 +5,6 @@ import { ResponseData } from '../../../../../shared/models/response-data';
 import './pagination.scss';
 
 export class Pagination extends DOMElement {
-
   private title: DOMElement;
   private paginationContainer: DOMElement;
   private paginationText: DOMElement;
@@ -65,7 +64,9 @@ export class Pagination extends DOMElement {
     this.totalPages = new DOMElement(this.paginationContainer.node, {
       tagName: 'p',
       classList: ['pagination__total-page'],
-      content: `of ${Math.ceil(data.products.length / parseInt(this.productOnPage.node.getAttribute('value') as string))}`,
-    })
+      content: `of ${Math.ceil(
+        data.products.length / parseInt(this.productOnPage.node.getAttribute('value') as string)
+      )}`,
+    });
   }
 }
