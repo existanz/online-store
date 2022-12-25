@@ -1,0 +1,20 @@
+.description__title {
+  font-size: 25px;
+  font-family: "WorkSans-SemiBold";
+  margin-bottom: 20px;
+}
+
+.description__prop {
+  margin-bottom: 12px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+}
+
+.description__buttons {
+  margin-top: 70px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
