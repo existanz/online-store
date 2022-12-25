@@ -1,0 +1,24 @@
+.breadcrumbs {
+  display: flex;
+  font-family: "WorkSans-SemiBold";
+  margin-left: 50px;
+  color: #111827;
+}
+
+.breadcrumbs > div {
+  position: relative;
+  margin-left: 60px;
+}
+
+.breadcrumbs > div::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-left: 2px solid #111827;
+  border-bottom: 2px solid #111827;
+  position: absolute;
+  left: -40px;
+  top: 50%;
+  transform: translateY(60%);
+  rotate: -135deg;
+}
