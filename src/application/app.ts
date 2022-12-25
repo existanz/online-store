@@ -22,16 +22,18 @@ class App {
     this.routerSvc = new RouterSvc();
     this.store = new StorePage('store-page');
     this.localStorageSvc = new LocalStorageSvc();
-    window.addEventListener('hashchange', this.routerSvc.routChange);
     this.productPage = new ProductPage('product-page');
   }
 
   private render(): void {
-    this.main.container.node.append(this.productPage.container.node);
+    if (this.routerSvc.routChange().idPage == 'store') this.main.container.node.append(this.store.container.node);
+    if (this.routerSvc.routChange().idPage == 'product')
+      this.main.container.node.append(this.productPage.container.node);
   }
 
   public start(): void {
     this.render();
+    window.addEventListener('hashchange', this.routerSvc.routChange);
   }
 }
 

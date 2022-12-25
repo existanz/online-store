@@ -4,19 +4,20 @@ export default class RouterSvc {
   private path: string;
 
   constructor() {
-    this.idPage = '#main';
-    this.query = '$options';
+    this.idPage = 'store';
+    this.query = '$options=true';
     this.path = this.idPage + this.query;
     this.routChange();
   }
 
   public routChange() {
     console.log('hash is changed');
-    const fullHash = window.location.hash.slice(1).split('?');
-    this.idPage = fullHash[0];
+    const fullHash = window.location.hash.slice(1);
+    this.idPage = fullHash.indexOf('?') ? fullHash.split('?')[0] : fullHash;
     this.query = fullHash[1];
     const options: string[] = this.query.split('&');
     this.path = this.idPage + this.query;
     console.log(this.idPage, options);
+    return { idPage: this.idPage, query: this.query };
   }
 }
