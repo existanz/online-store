@@ -2,13 +2,16 @@ import './cart-page.scss';
 import { DOMElement } from '../../../shared/components/base-elements/dom-element';
 import { Page } from '../../../shared/components/page';
 import { ProductsData, ResponseData } from '../../../shared/models/response-data';
+import { CartItems } from '../../components/cart-page/items/items';
 
 export class CartPage extends Page {
   private productData: ProductsData | null;
   public response: ResponseData | null;
 
-  private items: DOMElement;
+  private itemsContainer: DOMElement;
   private summary: DOMElement;
+
+  private items: CartItems | null;
 
   constructor(id: string, productData?: ProductsData) {
     super(id);
@@ -18,7 +21,7 @@ export class CartPage extends Page {
     this.response = null;
     this.loadTmpData();
 
-    this.items = new DOMElement(this.container.node, {
+    this.itemsContainer = new DOMElement(this.container.node, {
       tagName: 'div',
       classList: ['cart-page__items'],
     });
@@ -27,6 +30,7 @@ export class CartPage extends Page {
       tagName: 'div',
       classList: ['cart-page__summary'],
     });
+    this.items = null;
   }
 
   private async loadTmpData() {
@@ -34,5 +38,6 @@ export class CartPage extends Page {
     await fetch(url)
       .then((res) => res.json())
       .then((data: ResponseData) => (this.response = data));
+    this.items = new CartItems(this.itemsContainer.node, this.response as ResponseData);
   }
 }
