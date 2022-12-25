@@ -9,12 +9,16 @@ export default class RouterSvc {
   }
 
   public routChange() {
-    console.log('hash is changed');
-    const hash = window.location.hash.slice(1);
-    this.idPage = hash.indexOf('?') ? hash.split('?')[0] : hash;
-    this.query = hash[1];
-    const options: string[] = this.query.split('&');
-    console.log(this.idPage, options);
+    const hash: string = window.location.hash.slice(1);
+    if (hash.indexOf('?')) {
+      this.idPage = hash.split('?')[0];
+      this.query = hash.split('?')[1];
+    } else {
+      this.idPage = hash;
+    }
+
+    //const options: string[] = this.query.split('&');
+    console.log(this.idPage, this.query);
     return { idPage: this.idPage, query: this.query };
   }
 }
