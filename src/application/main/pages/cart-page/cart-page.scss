@@ -1,0 +1,13 @@
+.cart-page {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.cart-page__items {
+  width: 68%;
+}
+
+.cart-page__summary {
+  width: 30%;
+}
