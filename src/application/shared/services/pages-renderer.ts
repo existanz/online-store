@@ -13,7 +13,7 @@ export default class PageRenderer {
   constructor(parentNode: HTMLElement) {
     this.store = new StorePage('store-page');
     this.product = new ProductPage('product-page');
-    this.notFoundPage = new NotFoundPage('404-page');
+    this.notFoundPage = new NotFoundPage('not-found-page');
     this.cart = new CartPage('cart-page');
     this.parentNode = parentNode;
   }
