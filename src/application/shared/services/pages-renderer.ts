@@ -20,9 +20,21 @@ export default class PageRenderer {
 
   public render(idPage: string) {
     this.parentNode.innerHTML = '';
-    if (idPage === 'store' || idPage === '') this.parentNode.append(this.store.container.node);
-    if (idPage === 'product') this.parentNode.append(this.product.container.node);
-    if (idPage === 'cart') this.parentNode.append(this.cart.container.node);
-    if (idPage === '404') this.parentNode.append(this.notFoundPage.container.node);
+    switch (idPage) {
+      case 'store':
+        this.parentNode.append(this.store.container.node);
+        break;
+      case '':
+        this.parentNode.append(this.store.container.node);
+        break;
+      case 'product':
+        this.parentNode.append(this.product.container.node);
+        break;
+      case 'cart':
+        this.parentNode.append(this.cart.container.node);
+        break;
+      default:
+        this.parentNode.append(this.notFoundPage.container.node);
+    }
   }
 }
