@@ -1,5 +1,5 @@
 import './list-view.scss';
-import { DOMElement } from '../../../shared/components/base-elements/dom-element';
+import { DOMElement } from '../../../../../shared/components/base-elements/dom-element';
 
 export class ListView {
   private listView: DOMElement;

@@ -1,7 +1,7 @@
 import './grid-view.scss';
-import { DOMElement } from '../../../shared/components/base-elements/dom-element';
-import { ResponseData } from '../../../shared/models/response-data';
-import { GridCard } from '../../components/store-page/items/grid-card';
+import { DOMElement } from '../../../../../shared/components/base-elements/dom-element';
+import { ResponseData } from '../../../../../shared/models/response-data';
+import { GridCard } from '../grid-card';
 
 export class GridView {
   private gridView: DOMElement;

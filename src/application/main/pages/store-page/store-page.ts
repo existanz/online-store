@@ -3,8 +3,8 @@ import { Page } from '../../../shared/components/page';
 import { DOMElement } from '../../../shared/components/base-elements/dom-element';
 import { TopFilters } from '../../components/store-page/top-filters/top-filters';
 import { LeftFilters } from '../../components/store-page/left-filters/left-filters';
-import { GridView } from '../grid-view/grid-view';
-import { ListView } from '../list-view/list-view';
+import { GridView } from '../../components/store-page/items/grid-view/grid-view';
+import { ListView } from '../../components/store-page/items/list-view/list-view';
 import { ResponseData } from '../../../shared/models/response-data';
 
 export class StorePage extends Page {
