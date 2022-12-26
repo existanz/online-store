@@ -21,6 +21,8 @@ export class GridCard {
       classList: ['grid-card'],
     });
 
+    this.card.node.addEventListener('click', () => (location.href = '/#product?idProd=' + product?.id));
+
     this.imageContainer = new DOMElement(this.card.node, {
       tagName: 'div',
       classList: ['grid-card__image-container'],

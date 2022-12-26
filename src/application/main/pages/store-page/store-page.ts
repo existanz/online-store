@@ -47,7 +47,7 @@ export class StorePage extends Page {
   }
 
   private async loadTmpData() {
-    const url = 'https://dummyjson.com/products?limit=10';
+    const url = 'https://dummyjson.com/products?limit=16';
     await fetch(url)
       .then((res) => res.json())
       .then((data: ResponseData) => (this.response = data));
