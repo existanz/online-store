@@ -19,7 +19,7 @@ export class GallaryService {
         }
         return arr;
       }, []);
-    }, 500);
+    }, 1000);
 
     return result;
   }
