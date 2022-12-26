@@ -1,4 +1,4 @@
-export default class RouterSvc {
+export default class RouterService {
   public idPage: string;
   private query: string;
 
@@ -17,8 +17,6 @@ export default class RouterSvc {
       this.idPage = hash;
     }
 
-    //const options: string[] = this.query.split('&');
-    console.log(this.idPage, this.query);
     return { idPage: this.idPage, query: this.query };
   }
 }

@@ -43,7 +43,6 @@ export class Gallary extends DOMElement {
   }
 
   private render(images: string[]) {
-    console.log(images);
     images.forEach((item) => {
       this.element = new DOMElement(this.gallaryList.node, {
         tagName: 'li',

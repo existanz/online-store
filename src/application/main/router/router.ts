@@ -2,20 +2,30 @@ import { NotFoundPage } from '../../main/pages/not-found/not-found';
 import { ProductPage } from '../../main/pages/product-page/product-page';
 import { StorePage } from '../../main/pages/store-page/store-page';
 import { CartPage } from '../../main/pages/cart-page/cart-page';
+import RouterService from '../../shared/services/router.service';
 
-export default class PageRenderer {
+export class Router {
+  private parentNode: HTMLElement;
+
   private store: StorePage;
   private product: ProductPage;
   private notFoundPage: NotFoundPage;
   private cart: CartPage;
-  private parentNode: HTMLElement;
+
+  private routerService: RouterService;
 
   constructor(parentNode: HTMLElement) {
+    this.parentNode = parentNode;
+
     this.store = new StorePage('store-page');
     this.product = new ProductPage('product-page');
     this.notFoundPage = new NotFoundPage('not-found-page');
     this.cart = new CartPage('cart-page');
-    this.parentNode = parentNode;
+
+    this.routerService = new RouterService();
+
+    this.render(this.routerService.routChange().idPage);
+    window.addEventListener('hashchange', () => this.render(this.routerService.routChange().idPage));
   }
 
   public render(idPage: string) {
