@@ -22,19 +22,19 @@ export default class PageRenderer {
     this.parentNode.innerHTML = '';
     switch (idPage) {
       case 'store':
-        this.parentNode.append(this.store.container.node);
+        this.parentNode.append(this.store.node);
         break;
       case '':
-        this.parentNode.append(this.store.container.node);
+        this.parentNode.append(this.store.node);
         break;
       case 'product':
-        this.parentNode.append(this.product.container.node);
+        this.parentNode.append(this.product.node);
         break;
       case 'cart':
-        this.parentNode.append(this.cart.container.node);
+        this.parentNode.append(this.cart.node);
         break;
       default:
-        this.parentNode.append(this.notFoundPage.container.node);
+        this.parentNode.append(this.notFoundPage.node);
     }
   }
 }

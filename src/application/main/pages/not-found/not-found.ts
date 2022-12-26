@@ -9,13 +9,13 @@ export class NotFoundPage extends Page {
   constructor(id: string) {
     super(id);
 
-    this.title = new DOMElement(this.container.node, {
+    this.title = new DOMElement(this.node, {
       tagName: 'h3',
       classList: ['not-found-page__title'],
       content: 'No results',
     });
 
-    this.subtitle = new DOMElement(this.container.node, {
+    this.subtitle = new DOMElement(this.node, {
       tagName: 'p',
       classList: ['not-found-page__subtitle'],
       content: 'something went wrong',

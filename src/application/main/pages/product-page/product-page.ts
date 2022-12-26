@@ -21,17 +21,17 @@ export class ProductPage extends Page {
   constructor(id: string, productData?: ProductsData) {
     super(id);
 
-    this.breadcrumbsContainer = new DOMElement(this.container.node, {
+    this.breadcrumbsContainer = new DOMElement(this.node, {
       tagName: 'div',
       classList: ['product-page__breadcrumbs'],
     });
 
-    this.gallaryContainer = new DOMElement(this.container.node, {
+    this.gallaryContainer = new DOMElement(this.node, {
       tagName: 'div',
       classList: ['product-page__gallary'],
     });
 
-    this.descriptionContainer = new DOMElement(this.container.node, {
+    this.descriptionContainer = new DOMElement(this.node, {
       tagName: 'div',
       classList: ['product-page__description'],
     });

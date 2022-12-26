@@ -1,10 +1,8 @@
 import { RouteElement } from './base-elements/route-element';
 
-export abstract class Page {
-  public container: RouteElement;
-
+export abstract class Page extends RouteElement {
   constructor(id: string) {
-    this.container = new RouteElement(null, {
+    super(null, {
       tagName: 'div',
       classList: [id],
       id: id,

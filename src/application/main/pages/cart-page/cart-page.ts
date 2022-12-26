@@ -23,12 +23,12 @@ export class CartPage extends Page {
     this.response = null;
     this.loadTmpData();
 
-    this.itemsContainer = new DOMElement(this.container.node, {
+    this.itemsContainer = new DOMElement(this.node, {
       tagName: 'div',
       classList: ['cart-page__items'],
     });
 
-    this.summaryContainer = new DOMElement(this.container.node, {
+    this.summaryContainer = new DOMElement(this.node, {
       tagName: 'div',
       classList: ['cart-page__summary'],
     });

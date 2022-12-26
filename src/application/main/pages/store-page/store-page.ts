@@ -21,17 +21,17 @@ export class StorePage extends Page {
   constructor(id: string) {
     super(id);
 
-    this.storeTopFilters = new DOMElement(this.container.node, {
+    this.storeTopFilters = new DOMElement(this.node, {
       tagName: 'div',
       classList: ['store-page__top-filters'],
     });
 
-    this.storeAsideFilters = new DOMElement(this.container.node, {
+    this.storeAsideFilters = new DOMElement(this.node, {
       tagName: 'div',
       classList: ['store-page__aside-filters'],
     });
 
-    this.storeItems = new DOMElement(this.container.node, {
+    this.storeItems = new DOMElement(this.node, {
       tagName: 'div',
       classList: ['store-page__store-items'],
     });

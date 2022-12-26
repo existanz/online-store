@@ -19,7 +19,7 @@ class App {
     this.footer = new Footer(document.body);
     this.routerSvc = new RouterSvc();
     this.localStorageSvc = new LocalStorageSvc();
-    this.pageRenderer = new PageRenderer(this.main.container.node);
+    this.pageRenderer = new PageRenderer(this.main.container);
   }
 
   private render(): void {

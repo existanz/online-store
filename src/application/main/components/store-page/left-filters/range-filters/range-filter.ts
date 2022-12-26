@@ -4,8 +4,7 @@ import { StorePageOptions } from '../../../../../shared/models/store-page';
 import { DOMElement } from '../../../../../shared/components/base-elements/dom-element';
 import { InputElement } from '../../../../../shared/components/base-elements/input-element';
 
-export class RangeFilter {
-  private container: DOMElement;
+export class RangeFilter extends DOMElement {
   private title: DOMElement;
   private wrapper: DOMElement;
   private rangeField: DOMElement;
@@ -18,18 +17,18 @@ export class RangeFilter {
   public inputMax: InputElement;
 
   constructor(parentNode: HTMLElement, rangeOptions: StorePageOptions) {
-    this.container = new DOMElement(parentNode, {
+    super(parentNode, {
       tagName: 'div',
       classList: ['range-filter'],
     });
 
-    this.title = new DOMElement(this.container.node, {
+    this.title = new DOMElement(this.node, {
       tagName: 'span',
       classList: ['range-filter__title'],
       content: rangeOptions.title,
     });
 
-    this.wrapper = new DOMElement(this.container.node, {
+    this.wrapper = new DOMElement(this.node, {
       tagName: 'div',
       classList: ['range-filter__container'],
     });
