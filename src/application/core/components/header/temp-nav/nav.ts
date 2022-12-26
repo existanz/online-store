@@ -40,12 +40,11 @@ export class Navigation {
 
       link = new LinkElement(item.node, {
         tagName: 'a',
-        classList: ['tmp-nav__link'],
         href: this.linksInfo[i].href,
         content: this.linksInfo[i].content,
       });
-      console.log(link);
-      //link.node.addEventListener('click', (e) => e.preventDefault());
+      // no used vars bug
+      link.node.classList.add('tmp-nav__link');
     }
   }
 }
