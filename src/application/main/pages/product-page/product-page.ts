@@ -48,7 +48,7 @@ export class ProductPage extends Page {
     const url = 'https://dummyjson.com/products?limit=100';
     await fetch(url)
       .then((res) => res.json())
-      .then((data: ResponseData) => (this.productData = data.products[0]));
+      .then((data: ResponseData) => (this.productData = data.products[2]));
     this.breadcrumbs = new Breadcrumbs(this.breadcrumbsContainer.node, this.productData as ProductsData);
     this.gallary = new Gallary(this.gallaryContainer.node, this.productData as ProductsData);
     this.description = new Description(this.descriptionContainer.node, this.productData as ProductsData);

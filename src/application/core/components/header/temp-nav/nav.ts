@@ -8,19 +8,19 @@ export class Navigation {
   private linksInfo = [
     {
       content: 'main page',
-      href: '/',
+      href: '/#store',
     },
     {
       content: 'item page',
-      href: '/item',
+      href: '/#product',
     },
     {
       content: 'cart',
-      href: '/cart',
+      href: '/#cart',
     },
     {
       content: '404',
-      href: '/404',
+      href: '/#404',
     },
   ];
 
@@ -44,7 +44,8 @@ export class Navigation {
         href: this.linksInfo[i].href,
         content: this.linksInfo[i].content,
       });
-      link.node.addEventListener('click', (e) => e.preventDefault());
+      console.log(link);
+      //link.node.addEventListener('click', (e) => e.preventDefault());
     }
   }
 }
