@@ -20,7 +20,7 @@ export class Navigation {
     },
     {
       content: '404',
-      href: '/404',
+      href: '/#404',
     },
   ];
 
