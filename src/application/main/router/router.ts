@@ -2,7 +2,7 @@ import { NotFoundPage } from '../../main/pages/not-found/not-found';
 import { ProductPage } from '../../main/pages/product-page/product-page';
 import { StorePage } from '../../main/pages/store-page/store-page';
 import { CartPage } from '../../main/pages/cart-page/cart-page';
-import RouterService from '../../shared/services/router.service';
+import RouterService from '../services/router.service';
 
 export class Router {
   private parentNode: HTMLElement;
