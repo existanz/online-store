@@ -1,18 +1,20 @@
 import './main-container.scss';
 import { DOMElement } from '../../../shared/components/base-elements/dom-element';
 
-export class Main {
-  public main: DOMElement;
-  public container: DOMElement;
+export class Main extends DOMElement {
+  private mainContainer: DOMElement;
+  public container: HTMLElement;
 
   constructor(parentNode: HTMLElement) {
-    this.main = new DOMElement(parentNode, {
+    super(parentNode, {
       tagName: 'main',
       classList: ['main'],
     });
-    this.container = new DOMElement(this.main.node, {
+
+    this.mainContainer = new DOMElement(this.node, {
       tagName: 'div',
       classList: ['container', 'main__container'],
     });
+    this.container = this.mainContainer.node;
   }
 }

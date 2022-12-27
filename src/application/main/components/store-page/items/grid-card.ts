@@ -4,8 +4,7 @@ import { DOMElement } from '../../../../shared/components/base-elements/dom-elem
 import { ImageElement } from '../../../../shared/components/base-elements/image-element';
 import { ButtonElement } from '../../../../shared/components/base-elements/button-element';
 
-export class GridCard {
-  private card: DOMElement;
+export class GridCard extends DOMElement {
   private imageContainer: DOMElement;
   private image: ImageElement;
   private description: DOMElement;
@@ -16,14 +15,14 @@ export class GridCard {
   private price: DOMElement;
 
   constructor(parentNode: HTMLElement, product: ProductsData | null) {
-    this.card = new DOMElement(parentNode, {
+    super(parentNode, {
       tagName: 'div',
       classList: ['grid-card'],
     });
 
-    this.card.node.addEventListener('click', () => (location.href = '/#product?idProd=' + product?.id));
+    this.node.addEventListener('click', () => (location.href = '/#product?idProd=' + product?.id));
 
-    this.imageContainer = new DOMElement(this.card.node, {
+    this.imageContainer = new DOMElement(this.node, {
       tagName: 'div',
       classList: ['grid-card__image-container'],
     });
@@ -35,7 +34,7 @@ export class GridCard {
       alt: `${product?.title}`,
     });
 
-    this.description = new DOMElement(this.card.node, {
+    this.description = new DOMElement(this.node, {
       tagName: 'div',
       classList: ['grid-card__description'],
     });

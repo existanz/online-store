@@ -3,8 +3,7 @@ import { DOMElement } from '../../../../../shared/components/base-elements/dom-e
 import { InputElement } from '../../../../../shared/components/base-elements/input-element';
 import { StorePageOptions } from '../../../../../shared/models/store-page';
 
-export class CheckboxFilter {
-  private container: DOMElement;
+export class CheckboxFilter extends DOMElement {
   private title: DOMElement;
   private list: DOMElement;
   private label: DOMElement | null;
@@ -15,18 +14,18 @@ export class CheckboxFilter {
   private input: InputElement | null;
 
   constructor(parentNode: HTMLElement, checkboxOptions: StorePageOptions) {
-    this.container = new DOMElement(parentNode, {
+    super(parentNode, {
       tagName: 'div',
       classList: ['checkbox-filter'],
     });
 
-    this.title = new DOMElement(this.container.node, {
+    this.title = new DOMElement(this.node, {
       tagName: 'span',
       classList: ['checkbox-filter__title'],
       content: checkboxOptions.title,
     });
 
-    this.list = new DOMElement(this.container.node, {
+    this.list = new DOMElement(this.node, {
       tagName: 'div',
       classList: ['checkbox-filter__container'],
     });

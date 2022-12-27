@@ -1,34 +1,27 @@
 import { Header } from './core/components/header/header';
 import { Footer } from './core/components/footer/footer';
 import { Main } from './core/components/main-container/main-container';
-import LocalStorageSvc from './shared/services/local-storage.service';
-import RouterSvc from './shared/services/router-service';
-import PageRenderer from './shared/services/pages-renderer';
+import { Router } from './main/router/router';
+import { State } from './shared/services/state.service';
 
 class App {
   private header: Header;
   private main: Main;
   private footer: Footer;
-  public localStorageSvc: LocalStorageSvc;
-  public routerSvc: RouterSvc;
-  private pageRenderer: PageRenderer;
+
+  private router: Router | null;
 
   constructor() {
     this.header = new Header(document.body);
     this.main = new Main(document.body);
     this.footer = new Footer(document.body);
-    this.routerSvc = new RouterSvc();
-    this.localStorageSvc = new LocalStorageSvc();
-    this.pageRenderer = new PageRenderer(this.main.container.node);
+
+    this.router = null;
   }
 
-  private render(): void {
-    this.pageRenderer.render(this.routerSvc.routChange().idPage);
-  }
-
-  public start(): void {
-    this.render();
-    window.addEventListener('hashchange', () => this.render());
+  public async start() {
+    await State.load();
+    this.router = new Router(this.main.container);
   }
 }
 

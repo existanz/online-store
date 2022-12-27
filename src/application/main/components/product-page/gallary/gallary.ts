@@ -28,7 +28,7 @@ export class Gallary extends DOMElement {
     this.images = GallaryService.checkUniqueImg(data.images);
     setTimeout(() => {
       this.render(this.images);
-    }, 500);
+    }, 2000);
 
     this.mainImage = new DOMElement(this.node, {
       tagName: 'div',
@@ -43,7 +43,6 @@ export class Gallary extends DOMElement {
   }
 
   private render(images: string[]) {
-    console.log(images);
     images.forEach((item) => {
       this.element = new DOMElement(this.gallaryList.node, {
         tagName: 'li',

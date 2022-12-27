@@ -4,8 +4,7 @@ import { ToggleGrid } from './toggle-grid/toggle-grid';
 import { Search } from './search/search';
 import { SelectSort } from './select-sort/select-sort';
 
-export class TopFilters {
-  private topFilters: DOMElement;
+export class TopFilters extends DOMElement {
   private topFiltersToggle: DOMElement;
   private topFiltersSearch: DOMElement;
   private topFiltersSelect: DOMElement;
@@ -15,23 +14,22 @@ export class TopFilters {
   private select: SelectSort;
 
   constructor(parentNode: HTMLElement) {
-    this.topFilters = new DOMElement(parentNode, {
+    super(parentNode, {
       tagName: 'div',
       classList: ['top-filters'],
     });
-    this.topFilters.node.addEventListener('click', (e) => e.preventDefault());
 
-    this.topFiltersToggle = new DOMElement(this.topFilters.node, {
+    this.topFiltersToggle = new DOMElement(this.node, {
       tagName: 'div',
       classList: ['top-filters__toggle'],
     });
 
-    this.topFiltersSearch = new DOMElement(this.topFilters.node, {
+    this.topFiltersSearch = new DOMElement(this.node, {
       tagName: 'div',
       classList: ['top-filters__search'],
     });
 
-    this.topFiltersSelect = new DOMElement(this.topFilters.node, {
+    this.topFiltersSelect = new DOMElement(this.node, {
       tagName: 'div',
       classList: ['top-filters__select'],
     });

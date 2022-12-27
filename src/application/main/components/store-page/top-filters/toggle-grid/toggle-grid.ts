@@ -3,24 +3,23 @@ import { DOMElement } from '../../../../../shared/components/base-elements/dom-e
 import { ButtonElement } from '../../../../../shared/components/base-elements/button-element';
 import { SVG } from '../../../../../shared/components/svg-icons';
 
-export class ToggleGrid {
-  private toggleGrid: DOMElement;
+export class ToggleGrid extends DOMElement {
   public toggleGridItemGrid: ButtonElement;
   public toggleGridItemList: ButtonElement;
 
   constructor(parentNode: HTMLElement) {
-    this.toggleGrid = new DOMElement(parentNode, {
+    super(parentNode, {
       tagName: 'div',
       classList: ['toggle-grid'],
     });
 
-    this.toggleGridItemGrid = new ButtonElement(this.toggleGrid.node, {
+    this.toggleGridItemGrid = new ButtonElement(this.node, {
       tagName: 'button',
       classList: ['toggle-grid__item'],
     });
     this.toggleGridItemGrid.node.innerHTML = SVG.gridView;
 
-    this.toggleGridItemList = new ButtonElement(this.toggleGrid.node, {
+    this.toggleGridItemList = new ButtonElement(this.node, {
       tagName: 'button',
       classList: ['toggle-grid__item'],
     });

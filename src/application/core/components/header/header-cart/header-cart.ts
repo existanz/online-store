@@ -10,7 +10,7 @@ export class Cart extends LinkElement {
   constructor(parentNode: HTMLElement) {
     super(parentNode, {
       tagName: 'a',
-      href: '#',
+      href: '/#cart',
       classList: ['cart-counter'],
     });
 

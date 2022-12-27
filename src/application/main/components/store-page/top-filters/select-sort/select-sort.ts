@@ -2,8 +2,7 @@ import './select-sort.scss';
 import { DOMElement } from '../../../../../shared/components/base-elements/dom-element';
 import { InputElement } from '../../../../../shared/components/base-elements/input-element';
 
-export class SelectSort {
-  private select: DOMElement;
+export class SelectSort extends DOMElement {
   private selectHeader: DOMElement;
   private selectContainer: DOMElement;
   private arrow: DOMElement;
@@ -12,18 +11,18 @@ export class SelectSort {
   private option: InputElement;
 
   constructor(parentNode: HTMLElement) {
-    this.select = new DOMElement(parentNode, {
+    super(parentNode, {
       tagName: 'div',
       classList: ['select-sort'],
     });
 
-    this.selectHeader = new DOMElement(this.select.node, {
+    this.selectHeader = new DOMElement(this.node, {
       tagName: 'span',
       classList: ['select-sort__header'],
       content: 'Sort by:',
     });
 
-    this.selectContainer = new DOMElement(this.select.node, {
+    this.selectContainer = new DOMElement(this.node, {
       tagName: 'div',
       classList: ['select-sort__container'],
     });
