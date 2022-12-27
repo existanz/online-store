@@ -5,7 +5,7 @@ import { TopFilters } from '../../components/store-page/top-filters/top-filters'
 import { LeftFilters } from '../../components/store-page/left-filters/left-filters';
 import { GridView } from '../../components/store-page/items/grid-view/grid-view';
 import { ListView } from '../../components/store-page/items/list-view/list-view';
-import { ResponseData } from '../../../shared/models/response-data';
+import { ProductsData } from '../../../shared/models/response-data';
 
 export class StorePage extends Page {
   private storeTopFilters: DOMElement;
@@ -16,9 +16,8 @@ export class StorePage extends Page {
   private leftFilters: LeftFilters;
   private gridView: GridView | null;
   private listView: ListView | null;
-  public response: ResponseData | null;
 
-  constructor(id: string) {
+  constructor(id: string, data: ProductsData[]) {
     super(id);
 
     this.storeTopFilters = new DOMElement(this.node, {
@@ -40,17 +39,7 @@ export class StorePage extends Page {
     this.leftFilters = new LeftFilters(this.storeAsideFilters.node);
 
     // временный запрос данных
-    this.response = null;
-    this.gridView = null;
+    this.gridView = new GridView(this.storeItems.node, data);
     this.listView = null;
-    this.loadTmpData();
-  }
-
-  private async loadTmpData() {
-    const url = 'https://dummyjson.com/products?limit=16';
-    await fetch(url)
-      .then((res) => res.json())
-      .then((data: ResponseData) => (this.response = data));
-    this.gridView = new GridView(this.storeItems.node, this.response);
   }
 }
