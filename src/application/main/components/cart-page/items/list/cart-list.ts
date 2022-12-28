@@ -44,6 +44,8 @@ export class CartList extends DOMElement {
 
   public render(data: ResponseData) {
     data.products.map((product, index) => {
+      this.node.addEventListener('click', () => (location.href = '/#product?idProd=' + product?.id));
+
       this.item = new DOMElement(this.node, {
         tagName: 'li',
         classList: ['cart-list__item'],
