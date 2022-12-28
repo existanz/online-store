@@ -3,6 +3,8 @@ import { DOMElement } from '../../../../shared/components/base-elements/dom-elem
 import { ProductsData } from '../../../../shared/models/response-data';
 import { WhiteButton } from '../../../../shared/components/buttons/white-button';
 import { BlueButton } from '../../../../shared/components/buttons/blue-button';
+import { State } from '../../../../shared/services/state.service';
+import Cart from '../../../services/cart-page/cart.service';
 
 export class Description extends DOMElement {
   private title: DOMElement;
@@ -63,9 +65,18 @@ export class Description extends DOMElement {
       content: 'Add to bag',
     });
 
+    this.bagButton.node.addEventListener('click', () => {
+      Cart.addToCart(data);
+      console.log(State.cart);
+    });
+
     this.buyButton = new BlueButton(this.buttons.node, {
       tagName: 'button',
       content: 'Buy now',
+    });
+
+    this.buyButton.node.addEventListener('click', () => {
+      Cart.removeFromCart(data);
     });
   }
 }
