@@ -1,7 +1,7 @@
 import { ButtonElement } from '../../../../../shared/components/base-elements/button-element';
 import { DOMElement } from '../../../../../shared/components/base-elements/dom-element';
 import { ImageElement } from '../../../../../shared/components/base-elements/image-element';
-import { ResponseData } from '../../../../../shared/models/response-data';
+import { ProductsData } from '../../../../../shared/models/response-data';
 import './cart-list.scss';
 
 export class CartList extends DOMElement {
@@ -18,7 +18,7 @@ export class CartList extends DOMElement {
   private plus: ButtonElement | null;
   private itemCount: DOMElement | null;
 
-  constructor(parentNode: HTMLElement, data?: ResponseData) {
+  constructor(parentNode: HTMLElement, data?: ProductsData[]) {
     super(parentNode, {
       tagName: 'ul',
       classList: ['cart-list'],
@@ -42,8 +42,8 @@ export class CartList extends DOMElement {
     }
   }
 
-  public render(data: ResponseData) {
-    data.products.map((product, index) => {
+  public render(data: ProductsData[]) {
+    data.map((product, index) => {
       this.node.addEventListener('click', () => (location.href = '/#product?idProd=' + product?.id));
 
       this.item = new DOMElement(this.node, {

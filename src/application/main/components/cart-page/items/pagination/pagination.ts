@@ -1,7 +1,7 @@
 import { ButtonElement } from '../../../../../shared/components/base-elements/button-element';
 import { DOMElement } from '../../../../../shared/components/base-elements/dom-element';
 import { InputElement } from '../../../../../shared/components/base-elements/input-element';
-import { ResponseData } from '../../../../../shared/models/response-data';
+import { ProductsData } from '../../../../../shared/models/response-data';
 import './pagination.scss';
 
 export class Pagination extends DOMElement {
@@ -14,7 +14,7 @@ export class Pagination extends DOMElement {
   private rightButton: ButtonElement;
   private totalPages: DOMElement;
 
-  constructor(parentNode: HTMLElement, data: ResponseData) {
+  constructor(parentNode: HTMLElement, data: ProductsData[]) {
     super(parentNode, {
       tagName: 'div',
       classList: ['pagination'],
@@ -64,9 +64,7 @@ export class Pagination extends DOMElement {
     this.totalPages = new DOMElement(this.paginationContainer.node, {
       tagName: 'p',
       classList: ['pagination__total-page'],
-      content: `of ${Math.ceil(
-        data.products.length / parseInt(this.productOnPage.node.getAttribute('value') as string)
-      )}`,
+      content: `of ${Math.ceil(data.length / parseInt(this.productOnPage.node.getAttribute('value') as string))}`,
     });
   }
 }
