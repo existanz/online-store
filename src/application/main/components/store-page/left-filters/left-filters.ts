@@ -5,8 +5,8 @@ import { RangeFilter } from './range-filters/range-filter';
 import { WhiteButton } from '../../../../shared/components/buttons/white-button';
 import { BlueButton } from '../../../../shared/components/buttons/blue-button';
 import { ProductsData } from '../../../../shared/models/response-data';
-import { CheckboxFilterService } from '../../../services/store-page/checkbox-filters.service';
-import { RangeFilterService } from '../../../services/store-page/range-filters.service';
+import { CheckboxFilterService } from '../../../services/store-page/filters/checkbox-filters.service';
+import { RangeFilterService } from '../../../services/store-page/filters/range-filters.service';
 
 export class LeftFilters extends DOMElement {
   public checkboxCategory: CheckboxFilter;

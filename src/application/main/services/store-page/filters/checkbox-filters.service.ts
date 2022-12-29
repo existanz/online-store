@@ -1,11 +1,12 @@
-import { ProductsData } from '../../../shared/models/response-data';
-import { CheckboxInterface, ReduceValue } from '../../../shared/models/store-page';
+import { ProductsData } from '../../../../shared/models/response-data';
+import { CheckboxInterface, ReduceValue } from '../../../../shared/models/store-page';
 
 export abstract class CheckboxFilterService {
   static categoryState: CheckboxInterface[] = [];
   static brandState: CheckboxInterface[] = [];
 
   static pickCategory(data: ProductsData[]) {
+    data.forEach((item) => item.category.toLowerCase());
     const params = data.reduce((value: ReduceValue, key) => {
       key.category = this.formatText(key.category);
       value[key.category] = (value[key.category] || 0) + 1;
@@ -42,7 +43,7 @@ export abstract class CheckboxFilterService {
   private static formatText(text: string) {
     return text
       .split('-')
-      .map((item, index) => (index === 0 ? item[0].toUpperCase() + item.slice(1) : item))
+      .map((item, index) => (index === 0 ? item[0].toUpperCase() + item.slice(1).toLowerCase() : item.toLowerCase()))
       .join(' ');
   }
 
