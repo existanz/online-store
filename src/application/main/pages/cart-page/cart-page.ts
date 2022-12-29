@@ -6,8 +6,8 @@ import { CartItems } from '../../components/cart-page/items/items';
 import { Summary } from '../../components/cart-page/summary/summary';
 
 export class CartPage extends Page {
-  private productData: ProductsData | null;
-  public response: ResponseData | null;
+  private productData: ProductsData[] | null;
+  public response: ProductsData[] | null;
 
   private itemsContainer: DOMElement;
   private summaryContainer: DOMElement;
@@ -15,7 +15,7 @@ export class CartPage extends Page {
   private items: CartItems | null;
   private summary: Summary | null;
 
-  constructor(id: string, productData?: ProductsData) {
+  constructor(id: string, productData?: ProductsData[]) {
     super(id);
 
     // временно присваиваем productData null и загружаем через метод данные
@@ -40,8 +40,8 @@ export class CartPage extends Page {
     const url = 'https://dummyjson.com/products?limit=10';
     await fetch(url)
       .then((res) => res.json())
-      .then((data: ResponseData) => (this.response = data));
-    this.items = new CartItems(this.itemsContainer.node, this.response as ResponseData);
+      .then((data: ResponseData) => (this.response = data.products));
+    this.items = new CartItems(this.itemsContainer.node, this.response as ProductsData[]);
     this.summary = new Summary(this.summaryContainer.node);
   }
 }

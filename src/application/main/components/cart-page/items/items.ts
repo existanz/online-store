@@ -1,5 +1,5 @@
 import { DOMElement } from '../../../../shared/components/base-elements/dom-element';
-import { ResponseData } from '../../../../shared/models/response-data';
+import { ProductsData } from '../../../../shared/models/response-data';
 import './items.scss';
 import { CartList } from './list/cart-list';
 import { Pagination } from './pagination/pagination';
@@ -8,7 +8,7 @@ export class CartItems extends DOMElement {
   private pagination: Pagination;
   private list: CartList;
 
-  constructor(parentNode: HTMLElement, data: ResponseData) {
+  constructor(parentNode: HTMLElement, data: ProductsData[]) {
     super(parentNode, {
       tagName: 'div',
       classList: ['cart-items'],
