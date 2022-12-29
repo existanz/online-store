@@ -2,6 +2,7 @@ import './checkbox-filter.scss';
 import { DOMElement } from '../../../../../shared/components/base-elements/dom-element';
 import { InputElement } from '../../../../../shared/components/base-elements/input-element';
 import { CheckboxInterface, CheckboxOptions } from '../../../../../shared/models/store-page';
+import { CheckboxFilterService } from '../../../../services/store-page/filters/checkbox-filters.service';
 
 export class CheckboxFilter extends DOMElement {
   private title: DOMElement;
@@ -16,7 +17,7 @@ export class CheckboxFilter extends DOMElement {
   constructor(parentNode: HTMLElement, checkboxOptions: CheckboxOptions) {
     super(parentNode, {
       tagName: 'div',
-      classList: ['checkbox-filter'],
+      classList: ['checkbox-filter', `${checkboxOptions.title.toLowerCase()}`],
     });
 
     this.title = new DOMElement(this.node, {
@@ -29,6 +30,8 @@ export class CheckboxFilter extends DOMElement {
       tagName: 'div',
       classList: ['checkbox-filter__container'],
     });
+
+    this.list.node.addEventListener('click', CheckboxFilterService.updateCheckbox);
 
     this.label = null;
     this.input = null;

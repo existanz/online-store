@@ -4,6 +4,8 @@ import { CheckboxInterface, ReduceValue } from '../../../../shared/models/store-
 export abstract class CheckboxFilterService {
   static categoryState: CheckboxInterface[] = [];
   static brandState: CheckboxInterface[] = [];
+  static checkedCategories: string[] = [];
+  static checkedBrands: string[] = [];
 
   static pickCategory(data: ProductsData[]) {
     data.forEach((item) => item.category.toLowerCase());
@@ -56,5 +58,22 @@ export abstract class CheckboxFilterService {
       }
       return 1;
     });
+  }
+
+  static updateCheckbox(e: Event) {
+    const target: HTMLElement = e.target as HTMLElement;
+    if (target.closest('.brand')) {
+      const value: string = target.parentNode
+        ?.querySelector('.checkbox-filter__category-name')
+        ?.innerHTML.toLowerCase()
+        .split(' ')
+        .join('-') as string;
+      // console.log(value);
+      // this.checkedBrand.push(value);
+      // if (!this.checkedBrand.includes(value)) {
+      //   this.checkedBrand.push(value);
+      // }
+      console.log(value);
+    }
   }
 }
