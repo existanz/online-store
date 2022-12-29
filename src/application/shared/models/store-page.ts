@@ -1,3 +1,13 @@
 export interface StorePageOptions {
-  [key: string]: string;
+  title: string;
+  data: CheckboxInterface[];
+}
+
+export interface CheckboxInterface {
+  name: string;
+  count: number;
+}
+
+export interface ReduceValue {
+  [key: string]: number;
 }

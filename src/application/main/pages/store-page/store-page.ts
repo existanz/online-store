@@ -36,7 +36,7 @@ export class StorePage extends Page {
     });
 
     this.topFilters = new TopFilters(this.storeTopFilters.node);
-    this.leftFilters = new LeftFilters(this.storeAsideFilters.node);
+    this.leftFilters = new LeftFilters(this.storeAsideFilters.node, data);
 
     // временный запрос данных
     this.gridView = new GridView(this.storeItems.node, data);

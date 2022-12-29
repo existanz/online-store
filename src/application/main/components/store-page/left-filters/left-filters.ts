@@ -4,6 +4,8 @@ import { CheckboxFilter } from './checkbox-filters/checkbox-filter';
 import { RangeFilter } from './range-filters/range-filter';
 import { WhiteButton } from '../../../../shared/components/buttons/white-button';
 import { BlueButton } from '../../../../shared/components/buttons/blue-button';
+import { ProductsData } from '../../../../shared/models/response-data';
+import { CheckboxFilterService } from '../../../services/store-page/checkbox-filters.service';
 
 export class LeftFilters extends DOMElement {
   public checkboxCategory: CheckboxFilter;
@@ -12,7 +14,7 @@ export class LeftFilters extends DOMElement {
   public rangeStock: RangeFilter;
   public whiteButton: WhiteButton;
 
-  constructor(parentNode: HTMLElement) {
+  constructor(parentNode: HTMLElement, data: ProductsData[]) {
     super(parentNode, {
       tagName: 'aside',
       classList: ['left-filters'],
@@ -20,12 +22,12 @@ export class LeftFilters extends DOMElement {
 
     this.checkboxCategory = new CheckboxFilter(this.node, {
       title: 'Category',
-      data: 'какие-то данные для рендера',
+      data: CheckboxFilterService.pickCategory(data),
     });
 
     this.checkboxBrand = new CheckboxFilter(this.node, {
       title: 'Brand',
-      data: 'какие-то данные для рендера',
+      data: CheckboxFilterService.pickBrand(data),
     });
 
     this.rangePrice = new RangeFilter(this.node, {

@@ -1,7 +1,7 @@
 import './checkbox-filter.scss';
 import { DOMElement } from '../../../../../shared/components/base-elements/dom-element';
 import { InputElement } from '../../../../../shared/components/base-elements/input-element';
-import { StorePageOptions } from '../../../../../shared/models/store-page';
+import { CheckboxInterface, StorePageOptions } from '../../../../../shared/models/store-page';
 
 export class CheckboxFilter extends DOMElement {
   private title: DOMElement;
@@ -36,14 +36,11 @@ export class CheckboxFilter extends DOMElement {
     this.checkboxName = null;
     this.checkboxCount = null;
 
-    // временный вызов из консруктора, метод публичный
-    this.render(6);
+    this.render(checkboxOptions.data);
   }
 
-  public render(count: number): void {
-    // рендерим чекбоксы, которые есть в data
-    // временный рендер
-    for (let i = 0; i < count; i++) {
+  public render(data: CheckboxInterface[]): void {
+    for (let i = 0; i < data.length; i++) {
       this.label = new DOMElement(this.list.node, {
         tagName: 'label',
         classList: ['checkbox-filter__label'],
@@ -63,13 +60,13 @@ export class CheckboxFilter extends DOMElement {
       this.checkboxName = new DOMElement(this.label.node, {
         tagName: 'p',
         classList: ['checkbox-filter__category-name'],
-        content: `category-${i + 1}`,
+        content: `${data[i].name}`,
       });
 
       this.checkboxCount = new DOMElement(this.label.node, {
         tagName: 'span',
         classList: ['checkbox-filter__category-count'],
-        content: '3333',
+        content: `${data[i].count}`,
       });
     }
   }
