@@ -1,11 +1,21 @@
-export interface StorePageOptions {
+export interface CheckboxOptions {
   title: string;
   data: CheckboxInterface[];
+}
+
+export interface RangeSliderOptions {
+  title: string;
+  data: RangeSliderInterFace;
 }
 
 export interface CheckboxInterface {
   name: string;
   count: number;
+}
+
+export interface RangeSliderInterFace {
+  min: number;
+  max: number;
 }
 
 export interface ReduceValue {

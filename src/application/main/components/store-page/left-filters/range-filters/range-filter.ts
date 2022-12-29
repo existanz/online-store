@@ -1,6 +1,6 @@
 import './range-filter.scss';
 
-import { StorePageOptions } from '../../../../../shared/models/store-page';
+import { RangeSliderOptions } from '../../../../../shared/models/store-page';
 import { DOMElement } from '../../../../../shared/components/base-elements/dom-element';
 import { InputElement } from '../../../../../shared/components/base-elements/input-element';
 
@@ -16,7 +16,7 @@ export class RangeFilter extends DOMElement {
   public inputMin: InputElement;
   public inputMax: InputElement;
 
-  constructor(parentNode: HTMLElement, rangeOptions: StorePageOptions) {
+  constructor(parentNode: HTMLElement, rangeOptions: RangeSliderOptions) {
     super(parentNode, {
       tagName: 'div',
       classList: ['range-filter'],
@@ -52,18 +52,18 @@ export class RangeFilter extends DOMElement {
       tagName: 'input',
       classList: ['range-filter__range-input-min'],
       type: 'range',
-      min: '0',
-      max: '10000',
-      value: '0',
+      min: `${rangeOptions.data.min}`,
+      max: `${rangeOptions.data.max}`,
+      value: `${rangeOptions.data.min}`,
     });
 
     this.rangeInputMax = new InputElement(this.rangeField.node, {
       tagName: 'input',
       classList: ['range-filter__range-input-max'],
       type: 'range',
-      min: '0',
-      max: '10000',
-      value: '10000',
+      min: `${rangeOptions.data.min}`,
+      max: `${rangeOptions.data.max}`,
+      value: `${rangeOptions.data.max}`,
     });
 
     this.inputField = new DOMElement(this.wrapper.node, {
@@ -75,14 +75,14 @@ export class RangeFilter extends DOMElement {
       tagName: 'input',
       type: 'number',
       classList: ['range-filter__input'],
-      value: '0',
+      value: `${rangeOptions.data.min}`,
     });
 
     this.inputMax = new InputElement(this.inputField.node, {
       tagName: 'input',
       type: 'number',
       classList: ['range-filter__input'],
-      value: '10000',
+      value: `${rangeOptions.data.max}`,
     });
 
     this.changeRange();
@@ -95,7 +95,7 @@ export class RangeFilter extends DOMElement {
     const checkMinInput = this.inputMin.node;
     const constMax = parseInt((rangeinputs[0] as HTMLInputElement).max);
 
-    const priceGap = 1000;
+    const priceGap = 10;
 
     rangeinputs.forEach((input) => {
       input.addEventListener('input', (e: Event) => {

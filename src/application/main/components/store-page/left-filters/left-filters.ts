@@ -6,6 +6,7 @@ import { WhiteButton } from '../../../../shared/components/buttons/white-button'
 import { BlueButton } from '../../../../shared/components/buttons/blue-button';
 import { ProductsData } from '../../../../shared/models/response-data';
 import { CheckboxFilterService } from '../../../services/store-page/checkbox-filters.service';
+import { RangeFilterService } from '../../../services/store-page/range-filters.service';
 
 export class LeftFilters extends DOMElement {
   public checkboxCategory: CheckboxFilter;
@@ -32,12 +33,12 @@ export class LeftFilters extends DOMElement {
 
     this.rangePrice = new RangeFilter(this.node, {
       title: 'Price',
-      data: '123',
+      data: RangeFilterService.pickPrice(data),
     });
 
     this.rangeStock = new RangeFilter(this.node, {
       title: 'Stock',
-      data: '123',
+      data: RangeFilterService.pickStock(data),
     });
 
     this.whiteButton = new WhiteButton(this.node, {
