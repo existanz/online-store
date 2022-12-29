@@ -19,14 +19,7 @@ export abstract class CheckboxFilterService {
       });
     }
 
-    return this.categoryState;
-  }
-
-  static formatText(text: string) {
-    return text
-      .split('-')
-      .map((item, index) => (index === 0 ? item[0].toUpperCase() + item.slice(1) : item))
-      .join(' ');
+    return this.alphabetOrder(this.categoryState);
   }
 
   static pickBrand(data: ProductsData[]) {
@@ -43,6 +36,24 @@ export abstract class CheckboxFilterService {
       });
     }
 
-    return this.brandState;
+    return this.alphabetOrder(this.brandState);
+  }
+
+  private static formatText(text: string) {
+    return text
+      .split('-')
+      .map((item, index) => (index === 0 ? item[0].toUpperCase() + item.slice(1) : item))
+      .join(' ');
+  }
+
+  private static alphabetOrder(data: CheckboxInterface[]) {
+    return data.sort((a, b) => {
+      if (a.name.toLowerCase() < b.name.toLowerCase()) {
+        return -1;
+      } else if (a.name.toLowerCase() < b.name.toLowerCase()) {
+        return 1;
+      }
+      return 1;
+    });
   }
 }
