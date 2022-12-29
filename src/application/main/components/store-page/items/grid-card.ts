@@ -3,6 +3,7 @@ import { ProductsData } from '../../../../shared/models/response-data';
 import { DOMElement } from '../../../../shared/components/base-elements/dom-element';
 import { ImageElement } from '../../../../shared/components/base-elements/image-element';
 import { ButtonElement } from '../../../../shared/components/base-elements/button-element';
+import Cart from '../../../services/cart-page/cart.service';
 
 export class GridCard extends DOMElement {
   private imageContainer: DOMElement;
@@ -20,7 +21,15 @@ export class GridCard extends DOMElement {
       classList: ['grid-card'],
     });
 
-    this.node.addEventListener('click', () => (location.href = '/#product?idProd=' + product?.id));
+    this.node.addEventListener('click', (el) => {
+      if (product) {
+        if (el.target == this.button.node) {
+          Cart.addToCart(product);
+        } else {
+          location.href = '/#product?idProd=' + product?.id;
+        }
+      }
+    });
 
     this.imageContainer = new DOMElement(this.node, {
       tagName: 'div',
