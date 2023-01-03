@@ -16,4 +16,8 @@ export abstract class State {
     // смотрим localStorage присваиваем данные в cart, если нет, то просто присваиваем пустой массив
     this.cart = [];
   }
+
+  static getProductByID(idProd: number): ProductsData | undefined {
+    return this.allData.find((product) => product.id === idProd);
+  }
 }
