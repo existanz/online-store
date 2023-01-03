@@ -45,7 +45,7 @@ export class Summary extends DOMElement {
     this.newPrice = new DOMElement(this.priceContainer.node, {
       classList: ['summary__current-price'],
       tagName: 'p',
-      content: `Current price: $${88888}`,
+      content: `Current price: $${(CartService.getTotalSum() * 90) / 100}`,
     });
 
     this.form = new FormElement(this.node, {
