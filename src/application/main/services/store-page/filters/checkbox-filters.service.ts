@@ -66,6 +66,7 @@ export abstract class CheckboxFilterService {
     let value: string;
 
     if (target.closest('.brand')) {
+      CheckboxFilterService.checkedCategories = [];
       value = target.parentNode
         ?.querySelector('.checkbox-filter__category-name')
         ?.innerHTML.toLowerCase()
@@ -80,6 +81,7 @@ export abstract class CheckboxFilterService {
     }
 
     if (target.closest('.category')) {
+      CheckboxFilterService.checkedBrands = [];
       value = target.parentNode
         ?.querySelector('.checkbox-filter__category-name')
         ?.innerHTML.toLowerCase()

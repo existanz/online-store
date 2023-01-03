@@ -59,16 +59,20 @@ export class LeftFilters extends DOMElement {
   public listen() {
     this.checkboxCategory.list.node.addEventListener('click', (e: Event) => {
       CheckboxFilterService.checkCheckboxValue(e);
-      const newData = UpdateData.update();
-      const brandData = CheckboxFilterService.pickBrand(newData);
+      const newState = UpdateData.update();
+      const brandData = CheckboxFilterService.pickBrand(newState);
+      const categoryData = CheckboxFilterService.pickCategory(newState);
       this.checkboxBrand.render(brandData);
+      this.checkboxCategory.render(categoryData);
     });
 
     this.checkboxBrand.list.node.addEventListener('click', (e: Event) => {
       CheckboxFilterService.checkCheckboxValue(e);
-      const newData = UpdateData.update();
-      const brandData = CheckboxFilterService.pickCategory(newData);
-      this.checkboxCategory.render(brandData);
+      const newState = UpdateData.update();
+      const brandData = CheckboxFilterService.pickBrand(newState);
+      const categoryData = CheckboxFilterService.pickCategory(newState);
+      this.checkboxBrand.render(brandData);
+      this.checkboxCategory.render(categoryData);
     });
   }
 }
