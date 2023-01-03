@@ -7,6 +7,7 @@ import { BlueButton } from '../../../../shared/components/buttons/blue-button';
 import { ProductsData } from '../../../../shared/models/response-data';
 import { CheckboxFilterService } from '../../../services/store-page/filters/checkbox-filters.service';
 import { RangeFilterService } from '../../../services/store-page/filters/range-filters.service';
+import { UpdateData } from '../../../services/store-page/update-view.service';
 
 export class LeftFilters extends DOMElement {
   public checkboxCategory: CheckboxFilter;
@@ -51,6 +52,23 @@ export class LeftFilters extends DOMElement {
       tagName: 'button',
       id: 'reset-filters',
       content: 'Reset',
+    });
+    this.listen();
+  }
+
+  public listen() {
+    this.checkboxCategory.list.node.addEventListener('click', (e: Event) => {
+      CheckboxFilterService.checkCheckboxValue(e);
+      const newData = UpdateData.update();
+      const brandData = CheckboxFilterService.pickBrand(newData);
+      this.checkboxBrand.render(brandData);
+    });
+
+    this.checkboxBrand.list.node.addEventListener('click', (e: Event) => {
+      CheckboxFilterService.checkCheckboxValue(e);
+      const newData = UpdateData.update();
+      const brandData = CheckboxFilterService.pickCategory(newData);
+      this.checkboxCategory.render(brandData);
     });
   }
 }

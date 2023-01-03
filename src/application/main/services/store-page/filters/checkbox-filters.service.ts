@@ -1,6 +1,5 @@
 import { ProductsData } from '../../../../shared/models/response-data';
 import { CheckboxInterface, ReduceValue } from '../../../../shared/models/store-page';
-import { UpdateData } from '../update-view.service';
 
 export abstract class CheckboxFilterService {
   static categoryState: CheckboxInterface[] = [];
@@ -9,6 +8,7 @@ export abstract class CheckboxFilterService {
   static checkedBrands: string[] = [];
 
   static pickCategory(data: ProductsData[]) {
+    this.categoryState = [];
     data.forEach((item) => item.category.toLowerCase());
     const params = data.reduce((value: ReduceValue, key) => {
       key.category = this.formatText(key.category);
@@ -27,6 +27,7 @@ export abstract class CheckboxFilterService {
   }
 
   static pickBrand(data: ProductsData[]) {
+    this.brandState = [];
     const params = data.reduce((value: ReduceValue, key) => {
       key.brand = this.formatText(key.brand);
       value[key.brand] = (value[key.brand] || 0) + 1;
@@ -76,8 +77,6 @@ export abstract class CheckboxFilterService {
       } else {
         CheckboxFilterService.checkedBrands.push(value);
       }
-
-      UpdateData.update();
     }
 
     if (target.closest('.category')) {
@@ -92,8 +91,6 @@ export abstract class CheckboxFilterService {
       } else {
         CheckboxFilterService.checkedCategories.push(value);
       }
-
-      UpdateData.update();
     }
   }
 

@@ -2,11 +2,10 @@ import './checkbox-filter.scss';
 import { DOMElement } from '../../../../../shared/components/base-elements/dom-element';
 import { InputElement } from '../../../../../shared/components/base-elements/input-element';
 import { CheckboxInterface, CheckboxOptions } from '../../../../../shared/models/store-page';
-import { CheckboxFilterService } from '../../../../services/store-page/filters/checkbox-filters.service';
 
 export class CheckboxFilter extends DOMElement {
   private title: DOMElement;
-  private list: DOMElement;
+  public list: DOMElement;
   private label: DOMElement | null;
   private customCheckbox: DOMElement | null;
   private checkboxName: DOMElement | null;
@@ -30,8 +29,6 @@ export class CheckboxFilter extends DOMElement {
       tagName: 'div',
       classList: ['checkbox-filter__container'],
     });
-
-    this.list.node.addEventListener('click', CheckboxFilterService.checkCheckboxValue);
 
     this.label = null;
     this.input = null;

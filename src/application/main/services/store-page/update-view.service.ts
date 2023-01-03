@@ -17,6 +17,6 @@ export abstract class UpdateData {
       );
     }
 
-    console.log(State.current);
+    return State.current;
   }
 }
