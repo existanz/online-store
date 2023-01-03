@@ -17,7 +17,9 @@ export abstract class State {
     this.cart = [];
   }
 
-  static getProductByID(idProd: number): ProductsData | undefined {
-    return this.allData.find((product) => product.id === idProd);
+  static getProductByID(idProd: number): ProductsData {
+    const res = this.allData.find((product) => product.id === idProd);
+    if (res) return res;
+    else return this.current[0];
   }
 }

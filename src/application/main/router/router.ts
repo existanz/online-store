@@ -19,7 +19,7 @@ export class Router {
     this.parentNode = parentNode;
 
     this.store = new StorePage('store-page', State.current);
-    this.product = new ProductPage('product-page');
+    this.product = new ProductPage('product-page', State.current[0]);
     this.notFoundPage = new NotFoundPage('not-found-page');
     this.cart = new CartPage('cart-page');
 
@@ -39,6 +39,8 @@ export class Router {
         this.parentNode.append(this.store.node);
         break;
       case 'product':
+        this.product = new ProductPage('product-page', State.getProductByID(this.routerService.getProdId()));
+        console.log(State.getProductByID(this.routerService.getProdId()));
         this.parentNode.append(this.product.node);
         break;
       case 'cart':
