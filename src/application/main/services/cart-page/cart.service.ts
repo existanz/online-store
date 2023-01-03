@@ -58,8 +58,12 @@ export default abstract class CartService {
     const cartLoad = { cart: [], counts: [] };
     if (this.localStorageSVC.getRecordObj('cart')) {
       Object.assign(cartLoad, this.localStorageSVC.getRecordObj('cart'));
-      cartLoad.cart.forEach((product: ProductsData) => State.cart.push(State.getProductByID(product.id)));
+      cartLoad.cart.forEach((product: ProductsData, id) => {
+        State.cart.push(State.getProductByID(product.id));
+        this.totalSum += product.price * cartLoad.counts[id];
+      });
       this.countsCart = cartLoad.counts;
+      this.totalCount = this.countsCart.reduce((acc, cur) => acc + cur);
     }
   }
 }
