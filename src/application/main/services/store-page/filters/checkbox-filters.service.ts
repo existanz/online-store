@@ -65,7 +65,7 @@ export abstract class CheckboxFilterService {
     const target: HTMLElement = e.target as HTMLElement;
     let value: string;
 
-    if (target.closest('.brand')) {
+    if (target.closest('.brand') && target.closest('.checkbox-filter__label')) {
       CheckboxFilterService.checkedCategories = [];
       value = target.parentNode
         ?.querySelector('.checkbox-filter__category-name')
@@ -80,7 +80,7 @@ export abstract class CheckboxFilterService {
       }
     }
 
-    if (target.closest('.category')) {
+    if (target.closest('.category') && target.closest('.checkbox-filter__label')) {
       CheckboxFilterService.checkedBrands = [];
       value = target.parentNode
         ?.querySelector('.checkbox-filter__category-name')

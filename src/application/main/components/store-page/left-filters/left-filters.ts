@@ -8,6 +8,7 @@ import { ProductsData } from '../../../../shared/models/response-data';
 import { CheckboxFilterService } from '../../../services/store-page/filters/checkbox-filters.service';
 import { RangeFilterService } from '../../../services/store-page/filters/range-filters.service';
 import { UpdateData } from '../../../services/store-page/update-view.service';
+import { State } from '../../../../shared/services/state.service';
 
 export class LeftFilters extends DOMElement {
   public checkboxCategory: CheckboxFilter;
@@ -61,16 +62,24 @@ export class LeftFilters extends DOMElement {
       CheckboxFilterService.checkCheckboxValue(e);
       const newState = UpdateData.update();
       const brandData = CheckboxFilterService.pickBrand(newState);
-      const categoryData = CheckboxFilterService.pickCategory(newState);
       this.checkboxBrand.render(brandData);
+
+      if (!CheckboxFilterService.checkedCategories.length) {
+        const categoryData = CheckboxFilterService.pickCategory(State.allData);
+        this.checkboxCategory.render(categoryData);
+      }
     });
 
     this.checkboxBrand.list.node.addEventListener('click', (e: Event) => {
       CheckboxFilterService.checkCheckboxValue(e);
       const newState = UpdateData.update();
-      const brandData = CheckboxFilterService.pickBrand(newState);
       const categoryData = CheckboxFilterService.pickCategory(newState);
       this.checkboxCategory.render(categoryData);
+
+      if (!CheckboxFilterService.checkedBrands.length) {
+        const brandData = CheckboxFilterService.pickBrand(State.allData);
+        this.checkboxBrand.render(brandData);
+      }
     });
   }
 }
