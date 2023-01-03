@@ -4,7 +4,7 @@ import { ProductsData } from '../../../../shared/models/response-data';
 import { WhiteButton } from '../../../../shared/components/buttons/white-button';
 import { BlueButton } from '../../../../shared/components/buttons/blue-button';
 import { State } from '../../../../shared/services/state.service';
-import Cart from '../../../services/cart-page/cart.service';
+import CartService from '../../../services/cart-page/cart.service';
 
 export class Description extends DOMElement {
   private title: DOMElement;
@@ -66,7 +66,7 @@ export class Description extends DOMElement {
     });
 
     this.bagButton.node.addEventListener('click', () => {
-      Cart.addToCart(data);
+      CartService.addToCart(data);
       console.log(State.cart);
     });
 
@@ -76,7 +76,7 @@ export class Description extends DOMElement {
     });
 
     this.buyButton.node.addEventListener('click', () => {
-      Cart.removeFromCart(data);
+      CartService.removeFromCart(data);
     });
   }
 }

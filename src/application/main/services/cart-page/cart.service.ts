@@ -1,10 +1,12 @@
 import { ProductsData } from '../../../shared/models/response-data';
+import LocalStorageSvc from '../../../shared/services/local-storage.service';
 import { State } from '../../../shared/services/state.service';
 
-export default abstract class Cart {
+export default abstract class CartService {
   static countsCart: number[] = [];
   private static totalCount = 0;
   private static totalSum = 0;
+  private static localStorageSVC = new LocalStorageSvc();
 
   static addToCart(product: ProductsData) {
     const idInCart = State.cart.indexOf(product);
@@ -20,6 +22,8 @@ export default abstract class Cart {
 
     this.totalCount++;
     this.totalSum += product.price;
+    this.localStorageSVC.setRecord('cart', State.cart);
+    this.localStorageSVC.setRecord('cartCounts', this.countsCart);
     console.log(this.getTotalCount(), this.getTotalSum());
   }
 
@@ -36,6 +40,8 @@ export default abstract class Cart {
         console.log('удалил из корзины', State.cart);
       }
     }
+    this.localStorageSVC.setRecord('cart', State.cart);
+    this.localStorageSVC.setRecord('cartCounts', this.countsCart);
   }
 
   static getTotalSum() {
