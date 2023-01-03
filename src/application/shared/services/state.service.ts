@@ -17,14 +17,9 @@ export abstract class State {
     // смотрим квери запрос, обрабатываем allData и присваиваем в current. если запроса нет, то просто присваиваем allData
     this.current = this.allData;
 
-    const cartLoad = { cart: [], counts: [] };
-    Object.assign(cartLoad, this.localStorageSVC.getRecordObj('cart'));
-    if (cartLoad.cart) {
-      this.cart = cartLoad.cart;
-      CartService.countsCart = cartLoad.counts;
-    } else {
-      this.cart = [];
-    }
+    //перенес загрузку корзины в картсервис
+    this.cart = [];
+    CartService.load();
   }
 
   static getProductByID(idProd: number): ProductsData {

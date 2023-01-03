@@ -4,6 +4,7 @@ import { FormElement } from '../../../../shared/components/base-elements/form-el
 import { InputElement } from '../../../../shared/components/base-elements/input-element';
 import { BlueButton } from '../../../../shared/components/buttons/blue-button';
 import { ButtonElement } from '../../../../shared/components/base-elements/button-element';
+import CartService from '../../../services/cart-page/cart.service';
 
 export class Summary extends DOMElement {
   private title: DOMElement;
@@ -38,13 +39,13 @@ export class Summary extends DOMElement {
     this.totalPrice = new DOMElement(this.priceContainer.node, {
       tagName: 'p',
       classList: ['summary__total-price', 'summary__total-price--active'],
-      content: 'Total price: $99999',
+      content: `Total price: $${CartService.getTotalSum()}`,
     });
 
     this.newPrice = new DOMElement(this.priceContainer.node, {
       classList: ['summary__current-price'],
       tagName: 'p',
-      content: 'Current price: $88888',
+      content: `Current price: $${88888}`,
     });
 
     this.form = new FormElement(this.node, {
