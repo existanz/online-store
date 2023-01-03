@@ -63,7 +63,6 @@ export class LeftFilters extends DOMElement {
       const brandData = CheckboxFilterService.pickBrand(newState);
       const categoryData = CheckboxFilterService.pickCategory(newState);
       this.checkboxBrand.render(brandData);
-      this.checkboxCategory.render(categoryData);
     });
 
     this.checkboxBrand.list.node.addEventListener('click', (e: Event) => {
@@ -71,7 +70,6 @@ export class LeftFilters extends DOMElement {
       const newState = UpdateData.update();
       const brandData = CheckboxFilterService.pickBrand(newState);
       const categoryData = CheckboxFilterService.pickCategory(newState);
-      this.checkboxBrand.render(brandData);
       this.checkboxCategory.render(categoryData);
     });
   }

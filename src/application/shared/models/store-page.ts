@@ -11,6 +11,7 @@ export interface RangeSliderOptions {
 export interface CheckboxInterface {
   name: string;
   count: number;
+  checked?: boolean;
 }
 
 export interface RangeSliderInterFace {
