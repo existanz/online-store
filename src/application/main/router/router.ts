@@ -40,7 +40,6 @@ export class Router {
         break;
       case 'product':
         this.product = new ProductPage('product-page', State.getProductByID(this.routerService.getProdId()));
-        console.log(State.getProductByID(this.routerService.getProdId()));
         this.parentNode.append(this.product.node);
         break;
       case 'cart':

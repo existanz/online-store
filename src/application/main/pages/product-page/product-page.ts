@@ -36,7 +36,7 @@ export class ProductPage extends Page {
       tagName: 'div',
       classList: ['product-page__description'],
     });
-    console.log(this.productData);
+
     this.breadcrumbs = new Breadcrumbs(this.breadcrumbsContainer.node, productData);
     this.gallary = new Gallary(this.gallaryContainer.node, productData);
     this.description = new Description(this.descriptionContainer.node, productData);
