@@ -1,9 +1,12 @@
+import CartService from '../../main/services/cart-page/cart.service';
 import { ResponseData, ProductsData } from '../models/response-data';
+import LocalStorageSvc from './local-storage.service';
 
 export abstract class State {
   static allData: ProductsData[];
   static current: ProductsData[];
   static cart: ProductsData[];
+  static localStorageSVC = new LocalStorageSvc();
 
   static async load() {
     const url = 'https://dummyjson.com/products?limit=100';
@@ -13,8 +16,13 @@ export abstract class State {
 
     // смотрим квери запрос, обрабатываем allData и присваиваем в current. если запроса нет, то просто присваиваем allData
     this.current = this.allData;
-    // смотрим localStorage присваиваем данные в cart, если нет, то просто присваиваем пустой массив
-    this.cart = [];
+
+    const cartLoad = { cart: [], counts: [] };
+    Object.assign(cartLoad, this.localStorageSVC.getRecordObj('cart'));
+    console.log(cartLoad.cart, Object.keys(cartLoad)[0]);
+
+    this.cart = cartLoad.cart;
+    CartService.countsCart = cartLoad.counts;
   }
 
   static getProductByID(idProd: number): ProductsData {

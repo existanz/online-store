@@ -22,8 +22,7 @@ export default abstract class CartService {
 
     this.totalCount++;
     this.totalSum += product.price;
-    this.localStorageSVC.setRecord('cart', State.cart);
-    this.localStorageSVC.setRecord('cartCounts', this.countsCart);
+    this.localStorageSVC.setRecord('cart', { cart: State.cart, counts: this.countsCart });
     console.log(this.getTotalCount(), this.getTotalSum());
   }
 
@@ -40,8 +39,7 @@ export default abstract class CartService {
         console.log('удалил из корзины', State.cart);
       }
     }
-    this.localStorageSVC.setRecord('cart', State.cart);
-    this.localStorageSVC.setRecord('cartCounts', this.countsCart);
+    this.localStorageSVC.setRecord('cart', { cart: State.cart, counts: this.countsCart });
   }
 
   static getTotalSum() {
