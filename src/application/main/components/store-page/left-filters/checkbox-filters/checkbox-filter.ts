@@ -31,7 +31,7 @@ export class CheckboxFilter extends DOMElement {
       classList: ['checkbox-filter__container'],
     });
 
-    this.list.node.addEventListener('click', CheckboxFilterService.updateCheckbox);
+    this.list.node.addEventListener('click', CheckboxFilterService.checkCheckboxValue);
 
     this.label = null;
     this.input = null;
@@ -43,6 +43,7 @@ export class CheckboxFilter extends DOMElement {
   }
 
   public render(data: CheckboxInterface[]): void {
+    this.list.node.innerHTML = '';
     for (let i = 0; i < data.length; i++) {
       this.label = new DOMElement(this.list.node, {
         tagName: 'label',
@@ -71,6 +72,13 @@ export class CheckboxFilter extends DOMElement {
         classList: ['checkbox-filter__category-count'],
         content: `${data[i].count}`,
       });
+      this.customCheckbox.node.addEventListener('click', this.stopProp);
+      this.checkboxName.node.addEventListener('click', this.stopProp);
+      this.checkboxCount.node.addEventListener('click', this.stopProp);
     }
+  }
+
+  private stopProp(e: Event) {
+    e.stopPropagation();
   }
 }

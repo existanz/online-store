@@ -1,5 +1,6 @@
 import { ProductsData } from '../../../../shared/models/response-data';
 import { CheckboxInterface, ReduceValue } from '../../../../shared/models/store-page';
+import { UpdateData } from '../update-view.service';
 
 export abstract class CheckboxFilterService {
   static categoryState: CheckboxInterface[] = [];
@@ -38,7 +39,6 @@ export abstract class CheckboxFilterService {
         count: params[key],
       });
     }
-
     return this.alphabetOrder(this.brandState);
   }
 
@@ -60,20 +60,45 @@ export abstract class CheckboxFilterService {
     });
   }
 
-  static updateCheckbox(e: Event) {
+  static checkCheckboxValue(e: Event) {
     const target: HTMLElement = e.target as HTMLElement;
+    let value: string;
+
     if (target.closest('.brand')) {
-      const value: string = target.parentNode
+      value = target.parentNode
         ?.querySelector('.checkbox-filter__category-name')
         ?.innerHTML.toLowerCase()
         .split(' ')
         .join('-') as string;
-      // console.log(value);
-      // this.checkedBrand.push(value);
-      // if (!this.checkedBrand.includes(value)) {
-      //   this.checkedBrand.push(value);
-      // }
-      console.log(value);
+
+      if (CheckboxFilterService.checkedBrands.includes(value)) {
+        CheckboxFilterService.removeCheckedElem(value, CheckboxFilterService.checkedBrands);
+      } else {
+        CheckboxFilterService.checkedBrands.push(value);
+      }
+
+      UpdateData.update();
     }
+
+    if (target.closest('.category')) {
+      value = target.parentNode
+        ?.querySelector('.checkbox-filter__category-name')
+        ?.innerHTML.toLowerCase()
+        .split(' ')
+        .join('-') as string;
+
+      if (CheckboxFilterService.checkedCategories.includes(value)) {
+        CheckboxFilterService.removeCheckedElem(value, CheckboxFilterService.checkedCategories);
+      } else {
+        CheckboxFilterService.checkedCategories.push(value);
+      }
+
+      UpdateData.update();
+    }
+  }
+
+  private static removeCheckedElem(elem: string, arr: string[]) {
+    const indexElem = arr.indexOf(elem);
+    arr.splice(indexElem, 1);
   }
 }

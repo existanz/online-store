@@ -16,6 +16,8 @@ export class RangeFilter extends DOMElement {
   public inputMin: InputElement;
   public inputMax: InputElement;
 
+  private priceGap: number;
+
   constructor(parentNode: HTMLElement, rangeOptions: RangeSliderOptions) {
     super(parentNode, {
       tagName: 'div',
@@ -85,17 +87,17 @@ export class RangeFilter extends DOMElement {
       value: `${rangeOptions.data.max}`,
     });
 
-    this.changeRange();
+    this.priceGap = rangeOptions.title == 'Price' ? 100 : 10;
+
+    this.changeRange(this.priceGap);
   }
 
-  public changeRange(): void {
+  public changeRange(priceGap: number): void {
     const rangeinputs = [this.rangeInputMin.node, this.rangeInputMax.node];
     const textInputs = [this.inputMin.node, this.inputMax.node];
     const progress = this.progress.node;
     const checkMinInput = this.inputMin.node;
     const constMax = parseInt((rangeinputs[0] as HTMLInputElement).max);
-
-    const priceGap = 10;
 
     rangeinputs.forEach((input) => {
       input.addEventListener('input', (e: Event) => {
