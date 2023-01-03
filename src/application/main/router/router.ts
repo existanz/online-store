@@ -43,6 +43,7 @@ export class Router {
         this.parentNode.append(this.product.node);
         break;
       case 'cart':
+        this.cart = new CartPage('cart-page');
         this.parentNode.append(this.cart.node);
         break;
       default:
