@@ -2,6 +2,7 @@ import { ButtonElement } from '../../../../../shared/components/base-elements/bu
 import { DOMElement } from '../../../../../shared/components/base-elements/dom-element';
 import { ImageElement } from '../../../../../shared/components/base-elements/image-element';
 import { ProductsData } from '../../../../../shared/models/response-data';
+import CartService from '../../../../services/cart-page/cart.service';
 
 export class CartItem extends DOMElement {
   private count: DOMElement | null;
@@ -12,8 +13,8 @@ export class CartItem extends DOMElement {
   private price: DOMElement | null;
   private stock: DOMElement | null;
   private controls: DOMElement | null;
-  private minus: ButtonElement | null;
-  private plus: ButtonElement | null;
+  private minus: ButtonElement;
+  private plus: ButtonElement;
   private itemCount: DOMElement | null;
 
   constructor(parentNode: HTMLElement, product: ProductsData, index: number) {
@@ -22,25 +23,17 @@ export class CartItem extends DOMElement {
       classList: ['cart-list__item'],
     });
 
-    this.count = null;
-    this.photo = null;
-    this.description = null;
-    this.title = null;
-    this.desc = null;
-    this.price = null;
-    this.stock = null;
-    this.controls = null;
-    this.minus = null;
-    this.itemCount = null;
-    this.plus = null;
-
-    if (product && index) {
-      this.render(product, index);
-    }
-  }
-
-  public render(product: ProductsData, index: number) {
-    this.node.addEventListener('click', () => (location.href = '/#product?idProd=' + product?.id));
+    this.node.addEventListener('click', (el) => {
+      if (product) {
+        if (el.target == this.plus.node) {
+          CartService.addToCart(product);
+        } else if (el.target == this.minus.node) {
+          CartService.removeFromCart(product);
+        } else {
+          location.href = '/#product?idProd=' + product?.id;
+        }
+      }
+    });
 
     this.count = new DOMElement(this.node, {
       tagName: 'div',
@@ -96,7 +89,7 @@ export class CartItem extends DOMElement {
     this.itemCount = new DOMElement(this.controls.node, {
       tagName: 'div',
       classList: ['cart-list__item-count'],
-      content: '1',
+      content: CartService.countsCart[index].toString(),
     });
 
     this.plus = new ButtonElement(this.controls.node, {
