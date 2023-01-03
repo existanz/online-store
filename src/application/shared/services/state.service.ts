@@ -19,10 +19,12 @@ export abstract class State {
 
     const cartLoad = { cart: [], counts: [] };
     Object.assign(cartLoad, this.localStorageSVC.getRecordObj('cart'));
-    console.log(cartLoad.cart, Object.keys(cartLoad)[0]);
-
-    this.cart = cartLoad.cart;
-    CartService.countsCart = cartLoad.counts;
+    if (cartLoad.cart) {
+      this.cart = cartLoad.cart;
+      CartService.countsCart = cartLoad.counts;
+    } else {
+      this.cart = [];
+    }
   }
 
   static getProductByID(idProd: number): ProductsData {
