@@ -23,7 +23,6 @@ export default abstract class CartService {
     this.totalCount++;
     this.totalSum += product.price;
     this.save();
-    console.log(this.getTotalCount(), this.getTotalSum());
   }
 
   static removeFromCart(product: ProductsData) {
@@ -39,6 +38,8 @@ export default abstract class CartService {
         console.log('удалил из корзины', State.cart);
       }
     }
+    this.totalCount--;
+    this.totalSum -= product.price;
     this.save();
   }
 
@@ -63,7 +64,7 @@ export default abstract class CartService {
         this.totalSum += product.price * cartLoad.counts[id];
       });
       this.countsCart = cartLoad.counts;
-      this.totalCount = this.countsCart.reduce((acc, cur) => acc + cur);
+      if (this.countsCart.length > 0) this.totalCount = this.countsCart.reduce((acc, cur) => acc + cur);
     }
   }
 }
