@@ -13,6 +13,7 @@ import { GridView } from '../items/grid-view/grid-view';
 import { ListView } from '../items/list-view/list-view';
 
 export class LeftFilters extends DOMElement {
+  public totalProducts: DOMElement;
   public checkboxCategory: CheckboxFilter;
   public checkboxBrand: CheckboxFilter;
   public rangePrice: RangeFilter;
@@ -24,6 +25,12 @@ export class LeftFilters extends DOMElement {
     super(parentNode, {
       tagName: 'aside',
       classList: ['left-filters'],
+    });
+
+    this.totalProducts = new DOMElement(this.node, {
+      tagName: 'div',
+      classList: ['total-products'],
+      content: `Products: ${State.current.length}`,
     });
 
     this.checkboxCategory = new CheckboxFilter(this.node, {
@@ -71,12 +78,13 @@ export class LeftFilters extends DOMElement {
       if (!CheckboxFilterService.checkedCategories.length) {
         const categoryData = CheckboxFilterService.pickCategory(State.allData);
         this.checkboxCategory.render(categoryData);
-
         this.updateRange(newState);
+        
       }
 
       (this.view as GridView).render(newState);
       this.updateRange(newState);
+      this.totalProducts.node.innerText = `Products: ${State.current.length}`;
     });
 
     this.checkboxBrand.list.node.addEventListener('click', (e: Event) => {
@@ -94,18 +102,21 @@ export class LeftFilters extends DOMElement {
 
       (this.view as GridView).render(newState);
       this.updateRange(newState);
+      this.totalProducts.node.innerText = `Products: ${State.current.length}`;
     });
 
     this.rangePrice.node.addEventListener('input', (e: Event) => {
       RangeFilterService.pickData(e, 'price');
       const newState = UpdateData.updatePriceRange();
       (this.view as GridView).render(newState);
+      this.totalProducts.node.innerText = `Products: ${State.current.length}`;
     });
 
     this.rangeStock.node.addEventListener('input', (e: Event) => {
       RangeFilterService.pickData(e, 'stock');
       const newState = UpdateData.updateStockRange();
       (this.view as GridView).render(newState);
+      this.totalProducts.node.innerText = `Products: ${State.current.length}`;
     });
   }
 
