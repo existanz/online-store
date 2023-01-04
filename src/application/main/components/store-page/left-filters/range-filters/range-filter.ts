@@ -97,7 +97,7 @@ export class RangeFilter extends DOMElement {
     this.checkMinInput = this.inputMin.node;
     this.constMax = parseInt((this.rangeInputs[0] as HTMLInputElement).max);
 
-    this.priceGap = 2;
+    this.priceGap = rangeOptions.title == 'Price' ? 100 : 10;
     this.changeRange(this.priceGap);
   }
 
@@ -113,10 +113,12 @@ export class RangeFilter extends DOMElement {
             (parseInt((this.rangeInputs[0] as HTMLInputElement).max) -
               parseInt((this.rangeInputs[0] as HTMLInputElement).min as string))) *
           100;
-        // неверно считается % right на измененных ренжах
         const min = parseInt((this.rangeInputs[0] as HTMLInputElement).min as string);
         const percentRight: number =
-          100 - ((parseInt((this.rangeInputs[1] as HTMLInputElement).value) - min) / (parseInt((this.rangeInputs[1] as HTMLInputElement).max) - min) * 100);
+          100 -
+          ((parseInt((this.rangeInputs[1] as HTMLInputElement).value) - min) /
+            (parseInt((this.rangeInputs[1] as HTMLInputElement).max) - min)) *
+            100;
         if (maxVal - minVal < priceGap) {
           if ((e.target as HTMLElement).className === 'range-filter__range-input-min') {
             (this.rangeInputs[0] as HTMLInputElement).value = `${maxVal - priceGap}`;
@@ -168,8 +170,6 @@ export class RangeFilter extends DOMElement {
     this.rangeInputMax.node.setAttribute('min', `${data.min}`);
     this.rangeInputMax.node.setAttribute('max', `${data.max}`);
 
-    this.rangeInputMax.node.setAttribute('value', `${data.max}`);
-    this.rangeInputMin.node.setAttribute('value', `${data.min}`);
     this.inputMin.node.setAttribute('value', `${data.min}`);
     this.inputMax.node.setAttribute('value', `${data.max}`);
 
@@ -180,5 +180,8 @@ export class RangeFilter extends DOMElement {
     this.textInputs = [this.inputMin.node, this.inputMax.node];
     this.checkMinInput = this.inputMin.node;
     this.constMax = data.max;
+
+    this.rangeInputMax.node.setAttribute('value', `${data.max}`);
+    this.rangeInputMin.node.setAttribute('value', `${data.min}`);
   }
 }

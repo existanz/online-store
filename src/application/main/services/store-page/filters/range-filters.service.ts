@@ -26,4 +26,27 @@ export abstract class RangeFilterService {
     };
     return this.priceState;
   }
+
+  static pickData(e: Event, state: string) {
+    let min = (document.querySelector('.range-filter__range-input-min') as HTMLInputElement).value;
+    let max = (document.querySelector('.range-filter__range-input-max') as HTMLInputElement).value;
+    if ((e.target as HTMLElement).closest('.range-filter__range-input-min')) {
+      min = (e.target as HTMLInputElement).value;
+    }
+    if ((e.target as HTMLElement).closest('.range-filter__range-input-max')) {
+      max = (e.target as HTMLInputElement).value;
+    }
+
+    if (state == 'price') {
+      this.priceState = {
+        min: parseInt(min),
+        max: parseInt(max),
+      };
+    } else {
+      this.stockState = {
+        min: parseInt(min),
+        max: parseInt(max),
+      };
+    }
+  }
 }

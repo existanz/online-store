@@ -95,6 +95,18 @@ export class LeftFilters extends DOMElement {
       (this.view as GridView).render(newState);
       this.updateRange(newState);
     });
+
+    this.rangePrice.node.addEventListener('input', (e: Event) => {
+      RangeFilterService.pickData(e, 'price');
+      const newState = UpdateData.updatePriceRange();
+      (this.view as GridView).render(newState);
+    });
+
+    this.rangeStock.node.addEventListener('input', (e: Event) => {
+      RangeFilterService.pickData(e, 'stock');
+      const newState = UpdateData.updateStockRange();
+      (this.view as GridView).render(newState);
+    });
   }
 
   private updateRange(newState: ProductsData[]) {
