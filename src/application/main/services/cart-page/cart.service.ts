@@ -9,10 +9,10 @@ export default abstract class CartService {
   private static localStorageSVC = new LocalStorageSvc();
 
   static addToCart(product: ProductsData) {
-    const idInCart = State.cart.indexOf(product);
+    const idInCart = this.idInCart(product);
 
     if (idInCart >= 0) {
-      console.log('уже есть', idInCart, this.countsCart[idInCart]);
+      console.log('увеличил количество', this.countsCart[idInCart]);
       this.countsCart[idInCart]++;
     } else {
       State.cart.push(product);
@@ -26,7 +26,7 @@ export default abstract class CartService {
   }
 
   static removeFromCart(product: ProductsData) {
-    const idInCart = State.cart.indexOf(product);
+    const idInCart = this.idInCart(product);
 
     if (idInCart >= 0) {
       if (this.countsCart[idInCart] > 1) {
@@ -66,5 +66,10 @@ export default abstract class CartService {
       this.countsCart = cartLoad.counts;
       if (this.countsCart.length > 0) this.totalCount = this.countsCart.reduce((acc, cur) => acc + cur);
     }
+  }
+
+  static idInCart(product: ProductsData) {
+    const idInCart = State.cart.indexOf(product);
+    return idInCart;
   }
 }
