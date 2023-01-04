@@ -4,7 +4,7 @@ import { ProductsData } from '../../../../../shared/models/response-data';
 import { GridCard } from '../grid-card';
 
 export class GridView {
-  private gridView: DOMElement;
+  public gridView: DOMElement;
 
   constructor(parentNode: HTMLElement, data: ProductsData[] | null) {
     this.gridView = new DOMElement(parentNode, {
@@ -19,6 +19,7 @@ export class GridView {
 
   public render(data: ProductsData[]): void {
     const container = this.gridView.node;
+    container.innerHTML = '';
     data.map((item) => new GridCard(container, item));
   }
 }

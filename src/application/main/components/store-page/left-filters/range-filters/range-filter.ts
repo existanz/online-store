@@ -1,6 +1,6 @@
 import './range-filter.scss';
 
-import { RangeSliderOptions } from '../../../../../shared/models/store-page';
+import { RangeSliderInterFace, RangeSliderOptions } from '../../../../../shared/models/store-page';
 import { DOMElement } from '../../../../../shared/components/base-elements/dom-element';
 import { InputElement } from '../../../../../shared/components/base-elements/input-element';
 
@@ -15,6 +15,11 @@ export class RangeFilter extends DOMElement {
   private slider: DOMElement;
   public inputMin: InputElement;
   public inputMax: InputElement;
+
+  public rangeInputs: HTMLElement[];
+  public textInputs: HTMLElement[];
+  public checkMinInput: HTMLElement;
+  private constMax: number;
 
   private priceGap: number;
 
@@ -87,64 +92,95 @@ export class RangeFilter extends DOMElement {
       value: `${rangeOptions.data.max}`,
     });
 
-    this.priceGap = rangeOptions.title == 'Price' ? 100 : 10;
+    this.rangeInputs = [this.rangeInputMin.node, this.rangeInputMax.node];
+    this.textInputs = [this.inputMin.node, this.inputMax.node];
+    this.checkMinInput = this.inputMin.node;
+    this.constMax = parseInt((this.rangeInputs[0] as HTMLInputElement).max);
 
+    this.priceGap = 2;
     this.changeRange(this.priceGap);
   }
 
   public changeRange(priceGap: number): void {
-    const rangeinputs = [this.rangeInputMin.node, this.rangeInputMax.node];
-    const textInputs = [this.inputMin.node, this.inputMax.node];
-    const progress = this.progress.node;
-    const checkMinInput = this.inputMin.node;
-    const constMax = parseInt((rangeinputs[0] as HTMLInputElement).max);
-
-    rangeinputs.forEach((input) => {
+    this.rangeInputs.forEach((input) => {
       input.addEventListener('input', (e: Event) => {
-        const minVal: number = parseInt((rangeinputs[0] as HTMLInputElement).value as string);
-        const maxVal: number = parseInt((rangeinputs[1] as HTMLInputElement).value as string);
-        const percentLeft: number = (minVal / parseInt((rangeinputs[0] as HTMLInputElement).max)) * 100;
-        const percentRight: number = 100 - (maxVal / parseInt((rangeinputs[1] as HTMLInputElement).max)) * 100;
+        const minVal: number =
+          parseInt((this.rangeInputs[0] as HTMLInputElement).value as string) -
+          parseInt((this.rangeInputs[0] as HTMLInputElement).min as string);
+        const maxVal: number = parseInt((this.rangeInputs[1] as HTMLInputElement).value as string);
+        const percentLeft: number =
+          (minVal /
+            (parseInt((this.rangeInputs[0] as HTMLInputElement).max) -
+              parseInt((this.rangeInputs[0] as HTMLInputElement).min as string))) *
+          100;
 
+        // неверно считается % right на измененных ренжах
+        const percentRight: number =
+          100 - (maxVal / Math.ceil(parseInt((this.rangeInputs[1] as HTMLInputElement).max) - minVal)) * 100;
+        console.log(maxVal / parseInt((this.rangeInputs[1] as HTMLInputElement).max));
+        console.log(percentRight);
         if (maxVal - minVal < priceGap) {
           if ((e.target as HTMLElement).className === 'range-filter__range-input-min') {
-            (rangeinputs[0] as HTMLInputElement).value = `${maxVal - priceGap}`;
+            (this.rangeInputs[0] as HTMLInputElement).value = `${maxVal - priceGap}`;
           } else {
-            (rangeinputs[1] as HTMLInputElement).value = `${minVal + priceGap}`;
+            (this.rangeInputs[1] as HTMLInputElement).value = `${minVal + priceGap}`;
           }
         } else {
-          (textInputs[0] as HTMLInputElement).value = `${minVal}`;
-          (textInputs[1] as HTMLInputElement).value = `${maxVal}`;
-          progress.style.left = `${percentLeft}%`;
-          progress.style.right = `${percentRight}%`;
+          (this.textInputs[0] as HTMLInputElement).value = `${
+            minVal + parseInt((this.rangeInputs[0] as HTMLInputElement).min as string)
+          }`;
+          (this.textInputs[1] as HTMLInputElement).value = `${maxVal}`;
+          this.progress.node.style.left = `${percentLeft}%`;
+          this.progress.node.style.right = `${percentRight}%`;
         }
       });
     });
 
-    textInputs.forEach((input) => {
+    this.textInputs.forEach((input) => {
       input.addEventListener('input', (e: Event) => {
-        const minVal: number = parseInt((textInputs[0] as HTMLInputElement).value as string);
-        const maxVal: number = parseInt((textInputs[1] as HTMLInputElement).value as string);
-        let percentLeft: number = Math.ceil((minVal / parseInt((rangeinputs[0] as HTMLInputElement).max)) * 100);
+        const minVal: number = parseInt((this.textInputs[0] as HTMLInputElement).value as string);
+        const maxVal: number = parseInt((this.textInputs[1] as HTMLInputElement).value as string);
+        let percentLeft: number = Math.ceil((minVal / parseInt((this.rangeInputs[0] as HTMLInputElement).max)) * 100);
 
-        let percentRight: number = 100 - (maxVal / parseInt((rangeinputs[1] as HTMLInputElement).max)) * 100;
+        let percentRight: number = 100 - (maxVal / parseInt((this.rangeInputs[1] as HTMLInputElement).max)) * 100;
 
         if (maxVal - minVal >= priceGap) {
-          if ((e.target as HTMLElement) === checkMinInput) {
+          if ((e.target as HTMLElement) === this.checkMinInput) {
             if (minVal < 0) {
               percentLeft = 0;
             }
-            (rangeinputs[0] as HTMLInputElement).value = `${minVal}`;
-            progress.style.left = `${percentLeft}%`;
+            (this.rangeInputs[0] as HTMLInputElement).value = `${minVal}`;
+            this.progress.node.style.left = `${percentLeft}%`;
           } else {
-            if (maxVal > constMax) {
+            if (maxVal > this.constMax) {
               percentRight = 0;
             }
-            (rangeinputs[1] as HTMLInputElement).value = `${maxVal}`;
-            progress.style.right = `${percentRight}%`;
+            (this.rangeInputs[1] as HTMLInputElement).value = `${maxVal}`;
+            this.progress.node.style.right = `${percentRight}%`;
           }
         }
       });
     });
+  }
+
+  public updateRange(data: RangeSliderInterFace) {
+    this.rangeInputMin.node.setAttribute('min', `${data.min}`);
+    this.rangeInputMin.node.setAttribute('max', `${data.max}`);
+
+    this.rangeInputMax.node.setAttribute('min', `${data.min}`);
+    this.rangeInputMax.node.setAttribute('max', `${data.max}`);
+
+    this.rangeInputMax.node.setAttribute('value', `${data.max}`);
+    this.rangeInputMin.node.setAttribute('value', `${data.min}`);
+    this.inputMin.node.setAttribute('value', `${data.min}`);
+    this.inputMax.node.setAttribute('value', `${data.max}`);
+
+    this.progress.node.style.left = '0';
+    this.progress.node.style.right = '0';
+
+    this.rangeInputs = [this.rangeInputMin.node, this.rangeInputMax.node];
+    this.textInputs = [this.inputMin.node, this.inputMax.node];
+    this.checkMinInput = this.inputMin.node;
+    this.constMax = data.max;
   }
 }

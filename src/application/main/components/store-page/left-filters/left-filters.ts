@@ -9,6 +9,8 @@ import { CheckboxFilterService } from '../../../services/store-page/filters/chec
 import { RangeFilterService } from '../../../services/store-page/filters/range-filters.service';
 import { UpdateData } from '../../../services/store-page/update-view.service';
 import { State } from '../../../../shared/services/state.service';
+import { GridView } from '../items/grid-view/grid-view';
+import { ListView } from '../items/list-view/list-view';
 
 export class LeftFilters extends DOMElement {
   public checkboxCategory: CheckboxFilter;
@@ -16,8 +18,9 @@ export class LeftFilters extends DOMElement {
   public rangePrice: RangeFilter;
   public rangeStock: RangeFilter;
   public whiteButton: WhiteButton;
+  private view: GridView | ListView | null;
 
-  constructor(parentNode: HTMLElement, data: ProductsData[]) {
+  constructor(parentNode: HTMLElement, data: ProductsData[], render: GridView | ListView | null) {
     super(parentNode, {
       tagName: 'aside',
       classList: ['left-filters'],
@@ -55,6 +58,7 @@ export class LeftFilters extends DOMElement {
       content: 'Reset',
     });
     this.listen();
+    this.view = render;
   }
 
   public listen() {
@@ -67,7 +71,12 @@ export class LeftFilters extends DOMElement {
       if (!CheckboxFilterService.checkedCategories.length) {
         const categoryData = CheckboxFilterService.pickCategory(State.allData);
         this.checkboxCategory.render(categoryData);
+
+        this.updateRange(newState);
       }
+
+      (this.view as GridView).render(newState);
+      this.updateRange(newState);
     });
 
     this.checkboxBrand.list.node.addEventListener('click', (e: Event) => {
@@ -79,7 +88,20 @@ export class LeftFilters extends DOMElement {
       if (!CheckboxFilterService.checkedBrands.length) {
         const brandData = CheckboxFilterService.pickBrand(State.allData);
         this.checkboxBrand.render(brandData);
+
+        this.updateRange(newState);
       }
+
+      (this.view as GridView).render(newState);
+      this.updateRange(newState);
     });
+  }
+
+  private updateRange(newState: ProductsData[]) {
+    const priceState = RangeFilterService.pickPrice(newState);
+    this.rangePrice.updateRange(priceState);
+
+    const stockState = RangeFilterService.pickStock(newState);
+    this.rangeStock.updateRange(stockState);
   }
 }
