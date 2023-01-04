@@ -113,12 +113,10 @@ export class RangeFilter extends DOMElement {
             (parseInt((this.rangeInputs[0] as HTMLInputElement).max) -
               parseInt((this.rangeInputs[0] as HTMLInputElement).min as string))) *
           100;
-
         // неверно считается % right на измененных ренжах
+        const min = parseInt((this.rangeInputs[0] as HTMLInputElement).min as string);
         const percentRight: number =
-          100 - (maxVal / Math.ceil(parseInt((this.rangeInputs[1] as HTMLInputElement).max) - minVal)) * 100;
-        console.log(maxVal / parseInt((this.rangeInputs[1] as HTMLInputElement).max));
-        console.log(percentRight);
+          100 - ((parseInt((this.rangeInputs[1] as HTMLInputElement).value) - min) / (parseInt((this.rangeInputs[1] as HTMLInputElement).max) - min) * 100);
         if (maxVal - minVal < priceGap) {
           if ((e.target as HTMLElement).className === 'range-filter__range-input-min') {
             (this.rangeInputs[0] as HTMLInputElement).value = `${maxVal - priceGap}`;
