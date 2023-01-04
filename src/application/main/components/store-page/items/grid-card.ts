@@ -14,20 +14,23 @@ export class GridCard extends DOMElement {
   private button: ButtonElement;
   private title: DOMElement;
   private price: DOMElement;
+  private hasInCart: boolean;
 
-  constructor(parentNode: HTMLElement, product: ProductsData | null) {
+  constructor(parentNode: HTMLElement, product: ProductsData) {
     super(parentNode, {
       tagName: 'div',
       classList: ['grid-card'],
     });
 
+    this.hasInCart = CartService.idInCart(product) >= 0;
+
     this.node.addEventListener('click', (el) => {
-      if (product) {
-        if (el.target == this.button.node) {
-          CartService.addToCart(product);
-        } else {
-          location.href = '/#product?idProd=' + product?.id;
-        }
+      if (el.target == this.button.node) {
+        if (this.hasInCart) CartService.removeFromCart(product);
+        else CartService.addToCart(product);
+        this.updateButton(product);
+      } else {
+        location.href = '/#product?idProd=' + product?.id;
       }
     });
 
@@ -63,6 +66,8 @@ export class GridCard extends DOMElement {
       classList: ['grid-card__button'],
     });
 
+    if (this.hasInCart) this.button.node.classList.add('grid-card__button--active');
+
     this.title = new DOMElement(this.text.node, {
       tagName: 'h3',
       classList: ['grid-card__title'],
@@ -74,5 +79,11 @@ export class GridCard extends DOMElement {
       classList: ['grid-card__price'],
       content: `$${product?.price}`,
     });
+  }
+
+  private updateButton(product: ProductsData) {
+    this.hasInCart = CartService.idInCart(product) >= 0;
+    if (this.hasInCart) this.button.node.classList.add('grid-card__button--active');
+    else this.button.node.classList.remove('grid-card__button--active');
   }
 }
