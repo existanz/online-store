@@ -97,7 +97,7 @@ export class RangeFilter extends DOMElement {
     this.checkMinInput = this.inputMin.node;
     this.constMax = parseInt((this.rangeInputs[0] as HTMLInputElement).max);
 
-    this.priceGap = rangeOptions.title == 'Price' ? 100 : 10;
+    this.priceGap = 1;
     this.changeRange(this.priceGap);
   }
 

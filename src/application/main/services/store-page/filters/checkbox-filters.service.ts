@@ -66,7 +66,6 @@ export abstract class CheckboxFilterService {
     let value: string;
 
     if (target.closest('.brand') && target.closest('.checkbox-filter__label')) {
-      CheckboxFilterService.checkedCategories = [];
       value = target.parentNode
         ?.querySelector('.checkbox-filter__category-name')
         ?.innerHTML.toLowerCase()
@@ -81,7 +80,6 @@ export abstract class CheckboxFilterService {
     }
 
     if (target.closest('.category') && target.closest('.checkbox-filter__label')) {
-      CheckboxFilterService.checkedBrands = [];
       value = target.parentNode
         ?.querySelector('.checkbox-filter__category-name')
         ?.innerHTML.toLowerCase()
@@ -99,5 +97,11 @@ export abstract class CheckboxFilterService {
   private static removeCheckedElem(elem: string, arr: string[]) {
     const indexElem = arr.indexOf(elem);
     arr.splice(indexElem, 1);
+  }
+
+  static isChecked(title: string, name: string) {
+    const state = title == 'Category' ? this.checkedCategories : this.checkedBrands;
+    const value = name.split(' ').join('-').toLowerCase();
+    return state.indexOf(value) > -1;
   }
 }

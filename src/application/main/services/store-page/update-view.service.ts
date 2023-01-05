@@ -18,26 +18,18 @@ export abstract class UpdateData {
       );
     }
 
-    return State.current;
-  }
+    // State.current = State.current.filter((item) => {
+    //   return item.price >= RangeFilterService.priceState.min && item.price <= RangeFilterService.priceState.max;
+    // });
 
-  static updatePriceRange() {
-    State.current = State.allData;
-
-    State.current = State.current.filter((item) => {
-      return item.price >= RangeFilterService.priceState.min && item.price <= RangeFilterService.priceState.max;
-    });
+    // State.current = State.current.filter((item) => {
+    //   return item.stock >= RangeFilterService.stockState.min && item.stock <= RangeFilterService.stockState.max;
+    // });
 
     return State.current;
   }
 
-  static updateStockRange() {
-    State.current = State.allData;
-
-    State.current = State.current.filter((item) => {
-      return item.stock >= RangeFilterService.stockState.min && item.stock <= RangeFilterService.stockState.max;
-    });
-
-    return State.current;
+  static updateProductCounter() {
+    (document.querySelector('.total-products') as HTMLElement).innerText = `Products: ${State.current.length}`;
   }
 }

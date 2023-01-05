@@ -72,51 +72,61 @@ export class LeftFilters extends DOMElement {
     this.checkboxCategory.list.node.addEventListener('click', (e: Event) => {
       CheckboxFilterService.checkCheckboxValue(e);
       const newState = UpdateData.update();
-      const brandData = CheckboxFilterService.pickBrand(newState);
+      const brandData = {
+        title: 'Brand',
+        data: CheckboxFilterService.pickBrand(newState),
+      };
+
       this.checkboxBrand.render(brandData);
 
       if (!CheckboxFilterService.checkedCategories.length) {
-        const categoryData = CheckboxFilterService.pickCategory(State.allData);
+        const categoryData = {
+          title: 'Category',
+          data: CheckboxFilterService.pickCategory(newState),
+        };
         this.checkboxCategory.render(categoryData);
-        this.updateRange(newState);
-        
       }
 
       (this.view as GridView).render(newState);
       this.updateRange(newState);
-      this.totalProducts.node.innerText = `Products: ${State.current.length}`;
+      UpdateData.updateProductCounter();
     });
 
     this.checkboxBrand.list.node.addEventListener('click', (e: Event) => {
       CheckboxFilterService.checkCheckboxValue(e);
       const newState = UpdateData.update();
-      const categoryData = CheckboxFilterService.pickCategory(newState);
+      const categoryData = {
+        title: 'Category',
+        data: CheckboxFilterService.pickCategory(newState),
+      };
+
       this.checkboxCategory.render(categoryData);
 
       if (!CheckboxFilterService.checkedBrands.length) {
-        const brandData = CheckboxFilterService.pickBrand(State.allData);
+        const brandData = {
+          title: 'Brand',
+          data: CheckboxFilterService.pickBrand(newState),
+        };
         this.checkboxBrand.render(brandData);
-
-        this.updateRange(newState);
       }
 
       (this.view as GridView).render(newState);
       this.updateRange(newState);
-      this.totalProducts.node.innerText = `Products: ${State.current.length}`;
+      UpdateData.updateProductCounter();
     });
 
     this.rangePrice.node.addEventListener('input', (e: Event) => {
+      const newState = UpdateData.update();
       RangeFilterService.pickData(e, 'price');
-      const newState = UpdateData.updatePriceRange();
       (this.view as GridView).render(newState);
-      this.totalProducts.node.innerText = `Products: ${State.current.length}`;
+      UpdateData.updateProductCounter();
     });
 
     this.rangeStock.node.addEventListener('input', (e: Event) => {
+      const newState = UpdateData.update();
       RangeFilterService.pickData(e, 'stock');
-      const newState = UpdateData.updateStockRange();
       (this.view as GridView).render(newState);
-      this.totalProducts.node.innerText = `Products: ${State.current.length}`;
+      UpdateData.updateProductCounter();
     });
   }
 

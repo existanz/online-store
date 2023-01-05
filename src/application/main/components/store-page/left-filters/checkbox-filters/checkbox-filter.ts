@@ -1,7 +1,8 @@
 import './checkbox-filter.scss';
 import { DOMElement } from '../../../../../shared/components/base-elements/dom-element';
 import { InputElement } from '../../../../../shared/components/base-elements/input-element';
-import { CheckboxInterface, CheckboxOptions } from '../../../../../shared/models/store-page';
+import { CheckboxOptions } from '../../../../../shared/models/store-page';
+import { CheckboxFilterService } from '../../../../services/store-page/filters/checkbox-filters.service';
 
 export class CheckboxFilter extends DOMElement {
   private title: DOMElement;
@@ -36,12 +37,12 @@ export class CheckboxFilter extends DOMElement {
     this.checkboxName = null;
     this.checkboxCount = null;
 
-    this.render(checkboxOptions.data);
+    this.render(checkboxOptions);
   }
 
-  public render(data: CheckboxInterface[]): void {
+  public render(checkboxOptions: CheckboxOptions): void {
     this.list.node.innerHTML = '';
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < checkboxOptions.data.length; i++) {
       this.label = new DOMElement(this.list.node, {
         tagName: 'label',
         classList: ['checkbox-filter__label'],
@@ -51,6 +52,7 @@ export class CheckboxFilter extends DOMElement {
         tagName: 'input',
         type: 'checkbox',
         classList: ['checkbox-filter__checkbox'],
+        checked: CheckboxFilterService.isChecked(checkboxOptions.title, checkboxOptions.data[i].name),
       });
 
       this.customCheckbox = new DOMElement(this.label.node, {
@@ -61,13 +63,13 @@ export class CheckboxFilter extends DOMElement {
       this.checkboxName = new DOMElement(this.label.node, {
         tagName: 'p',
         classList: ['checkbox-filter__category-name'],
-        content: `${data[i].name}`,
+        content: `${checkboxOptions.data[i].name}`,
       });
 
       this.checkboxCount = new DOMElement(this.label.node, {
         tagName: 'span',
         classList: ['checkbox-filter__category-count'],
-        content: `${data[i].count}`,
+        content: `${checkboxOptions.data[i].count}`,
       });
       this.customCheckbox.node.addEventListener('click', this.stopProp);
       this.checkboxName.node.addEventListener('click', this.stopProp);
