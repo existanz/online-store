@@ -3,6 +3,7 @@ import { DOMElement } from '../../../../shared/components/base-elements/dom-elem
 import { ProductsData } from '../../../../shared/models/response-data';
 import { WhiteButton } from '../../../../shared/components/buttons/white-button';
 import { BlueButton } from '../../../../shared/components/buttons/blue-button';
+import CartService from '../../../services/cart-page/cart.service';
 
 export class Description extends DOMElement {
   private title: DOMElement;
@@ -12,7 +13,7 @@ export class Description extends DOMElement {
   private bagButton: WhiteButton;
   private buyButton: BlueButton;
 
-  constructor(parentNode: HTMLElement, data: ProductsData) {
+  constructor(parentNode: HTMLElement, product: ProductsData) {
     super(parentNode, {
       tagName: 'div',
       classList: ['description'],
@@ -21,7 +22,7 @@ export class Description extends DOMElement {
     this.title = new DOMElement(this.node, {
       tagName: 'h1',
       classList: ['description__title'],
-      content: data.title,
+      content: product.title,
     });
 
     this.data = new DOMElement(this.node, {
@@ -32,25 +33,25 @@ export class Description extends DOMElement {
     this.props = new DOMElement(this.data.node, {
       tagName: 'li',
       classList: ['description__prop'],
-      content: `price: $${data.price}`,
+      content: `price: $${product.price}`,
     });
 
     this.props = new DOMElement(this.data.node, {
       tagName: 'li',
       classList: ['description__prop'],
-      content: `in stock: ${data.stock}`,
+      content: `in stock: ${product.stock}`,
     });
 
     this.props = new DOMElement(this.data.node, {
       tagName: 'li',
       classList: ['description__prop'],
-      content: `brand: ${data.brand}`,
+      content: `brand: ${product.brand}`,
     });
 
     this.props = new DOMElement(this.data.node, {
       tagName: 'li',
       classList: ['description__prop'],
-      content: data.description,
+      content: product.description,
     });
 
     this.buttons = new DOMElement(this.node, {
@@ -62,10 +63,22 @@ export class Description extends DOMElement {
       tagName: 'button',
       content: 'Add to bag',
     });
+    if (CartService.idInCart(product) >= 0) this.bagButton.node.textContent = 'Remove from bag';
+
+    this.bagButton.node.addEventListener('click', () => {
+      if (CartService.idInCart(product) >= 0) CartService.removeFromCart(product);
+      else CartService.addToCart(product);
+      this.updateBagButton(product);
+    });
 
     this.buyButton = new BlueButton(this.buttons.node, {
       tagName: 'button',
       content: 'Buy now',
     });
+  }
+
+  private updateBagButton(product: ProductsData) {
+    if (CartService.idInCart(product) >= 0) this.bagButton.node.textContent = 'Remove from bag';
+    else this.bagButton.node.textContent = 'Add to bag';
   }
 }
