@@ -31,6 +31,7 @@ export interface InputOptions extends Options {
   selected?: boolean;
   min?: string;
   max?: string;
+  checked?: boolean;
 }
 
 export interface ImageOptions extends Options {

@@ -40,5 +40,9 @@ export class InputElement extends DOMElement {
     if (options.value) {
       this.node.setAttribute('value', options.value);
     }
+
+    if (options.checked) {
+      (this.node as HTMLInputElement).checked = true;
+    }
   }
 }

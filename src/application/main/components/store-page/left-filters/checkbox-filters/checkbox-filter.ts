@@ -1,11 +1,12 @@
 import './checkbox-filter.scss';
 import { DOMElement } from '../../../../../shared/components/base-elements/dom-element';
 import { InputElement } from '../../../../../shared/components/base-elements/input-element';
-import { StorePageOptions } from '../../../../../shared/models/store-page';
+import { CheckboxOptions } from '../../../../../shared/models/store-page';
+import { CheckboxFilterService } from '../../../../services/store-page/filters/checkbox-filters.service';
 
 export class CheckboxFilter extends DOMElement {
   private title: DOMElement;
-  private list: DOMElement;
+  public list: DOMElement;
   private label: DOMElement | null;
   private customCheckbox: DOMElement | null;
   private checkboxName: DOMElement | null;
@@ -13,10 +14,10 @@ export class CheckboxFilter extends DOMElement {
 
   private input: InputElement | null;
 
-  constructor(parentNode: HTMLElement, checkboxOptions: StorePageOptions) {
+  constructor(parentNode: HTMLElement, checkboxOptions: CheckboxOptions) {
     super(parentNode, {
       tagName: 'div',
-      classList: ['checkbox-filter'],
+      classList: ['checkbox-filter', `${checkboxOptions.title.toLowerCase()}`],
     });
 
     this.title = new DOMElement(this.node, {
@@ -36,14 +37,12 @@ export class CheckboxFilter extends DOMElement {
     this.checkboxName = null;
     this.checkboxCount = null;
 
-    // временный вызов из консруктора, метод публичный
-    this.render(6);
+    this.render(checkboxOptions);
   }
 
-  public render(count: number): void {
-    // рендерим чекбоксы, которые есть в data
-    // временный рендер
-    for (let i = 0; i < count; i++) {
+  public render(checkboxOptions: CheckboxOptions): void {
+    this.list.node.innerHTML = '';
+    for (let i = 0; i < checkboxOptions.data.length; i++) {
       this.label = new DOMElement(this.list.node, {
         tagName: 'label',
         classList: ['checkbox-filter__label'],
@@ -53,6 +52,7 @@ export class CheckboxFilter extends DOMElement {
         tagName: 'input',
         type: 'checkbox',
         classList: ['checkbox-filter__checkbox'],
+        checked: CheckboxFilterService.isChecked(checkboxOptions.title, checkboxOptions.data[i].name),
       });
 
       this.customCheckbox = new DOMElement(this.label.node, {
@@ -63,14 +63,21 @@ export class CheckboxFilter extends DOMElement {
       this.checkboxName = new DOMElement(this.label.node, {
         tagName: 'p',
         classList: ['checkbox-filter__category-name'],
-        content: `category-${i + 1}`,
+        content: `${checkboxOptions.data[i].name}`,
       });
 
       this.checkboxCount = new DOMElement(this.label.node, {
         tagName: 'span',
         classList: ['checkbox-filter__category-count'],
-        content: '3333',
+        content: `${checkboxOptions.data[i].count}`,
       });
+      this.customCheckbox.node.addEventListener('click', this.stopProp);
+      this.checkboxName.node.addEventListener('click', this.stopProp);
+      this.checkboxCount.node.addEventListener('click', this.stopProp);
     }
+  }
+
+  private stopProp(e: Event) {
+    e.stopPropagation();
   }
 }

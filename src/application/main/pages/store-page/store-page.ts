@@ -35,11 +35,10 @@ export class StorePage extends Page {
       classList: ['store-page__store-items'],
     });
 
-    this.topFilters = new TopFilters(this.storeTopFilters.node);
-    this.leftFilters = new LeftFilters(this.storeAsideFilters.node);
-
-    // временный запрос данных
+    // временно рендерим в grid-view запрос данных
     this.gridView = new GridView(this.storeItems.node, data);
     this.listView = null;
+    this.topFilters = new TopFilters(this.storeTopFilters.node);
+    this.leftFilters = new LeftFilters(this.storeAsideFilters.node, data, this.gridView);
   }
 }
