@@ -27,7 +27,8 @@ export default class LocalStorageSvc {
   }
 
   public getRecordObj(key: string): object {
-    return <object>JSON.parse(this.getRecord(key));
+    if (this.getRecord(key)) return <object>JSON.parse(this.getRecord(key));
+    return {};
   }
 
   public setRecord(key: string, value: unknown): void {
