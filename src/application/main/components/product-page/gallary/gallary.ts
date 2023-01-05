@@ -26,9 +26,7 @@ export class Gallary extends DOMElement {
     this.element = null;
     this.image = null;
     this.images = GallaryService.checkUniqueImg(data.images);
-    setTimeout(() => {
-      this.render(this.images);
-    }, 2000);
+    this.render(this.images);
 
     this.mainImage = new DOMElement(this.node, {
       tagName: 'div',
