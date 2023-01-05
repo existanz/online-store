@@ -29,32 +29,39 @@ export abstract class RangeFilterService {
   }
 
   static pickData(e: Event, state: string) {
-    let min = (document.querySelector('.range-filter__range-input-min') as HTMLInputElement).value;
-    let max = (document.querySelector('.range-filter__range-input-max') as HTMLInputElement).value;
-    if ((e.target as HTMLElement).closest('.range-filter__range-input-min')) {
-      min = (e.target as HTMLInputElement).value;
+    RangeFilterService.priceState = RangeFilterService.pickPrice(State.current);
+    RangeFilterService.stockState = RangeFilterService.pickStock(State.current);
+
+    let { max: maxPrice, min: minPrice } = RangeFilterService.priceState;
+    let { max: maxStock, min: minStock } = RangeFilterService.stockState;
+
+    if ((e.target as HTMLElement).closest('.range-filter__range-input-min') && state === 'price') {
+      minPrice = Number((e.target as HTMLInputElement).value);
+      maxPrice = Number(((e.target as HTMLInputElement).nextSibling as HTMLInputElement).value);
     }
-    if ((e.target as HTMLElement).closest('.range-filter__range-input-max')) {
-      max = (e.target as HTMLInputElement).value;
+    if ((e.target as HTMLElement).closest('.range-filter__range-input-max') && state === 'price') {
+      maxPrice = Number((e.target as HTMLInputElement).value);
+      minPrice = Number(((e.target as HTMLInputElement).previousSibling as HTMLInputElement).value);
     }
 
-    if (state == 'price') {
-      console.log(max);
-      RangeFilterService.priceState = {
-        max: parseInt(max),
-        min: parseInt(min),
-      };
-      RangeFilterService.stockState = RangeFilterService.pickStock(State.current);
-    } else {
-      console.log(max);
-      RangeFilterService.stockState = {
-        max: parseInt(max),
-        min: parseInt(min),
-      };
-      RangeFilterService.priceState = RangeFilterService.pickPrice(State.current);
+    if ((e.target as HTMLElement).closest('.range-filter__range-input-min') && state === 'stock') {
+      minStock = Number((e.target as HTMLInputElement).value);
+      maxStock = Number(((e.target as HTMLInputElement).nextSibling as HTMLInputElement).value);
     }
 
-    console.log(RangeFilterService.priceState);
-    console.log(RangeFilterService.stockState);
+    if ((e.target as HTMLElement).closest('.range-filter__range-input-max') && state === 'stock') {
+      maxStock = Number((e.target as HTMLInputElement).value);
+      minStock = Number(((e.target as HTMLInputElement).previousSibling as HTMLInputElement).value);
+    }
+
+    RangeFilterService.priceState = {
+      max: maxPrice,
+      min: minPrice,
+    };
+
+    RangeFilterService.stockState = {
+      max: maxStock,
+      min: minStock,
+    };
   }
 }

@@ -122,7 +122,7 @@ export class LeftFilters extends DOMElement {
       UpdateData.updateProductCounter();
     });
 
-    this.rangeStock.node.addEventListener('change', async (e: Event) => {
+    this.rangeStock.node.addEventListener('change', (e: Event) => {
       RangeFilterService.pickData(e, 'stock');
       const newState = UpdateData.update();
       (this.view as GridView).render(newState);
