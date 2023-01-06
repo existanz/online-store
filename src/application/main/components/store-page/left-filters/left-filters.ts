@@ -88,7 +88,6 @@ export class LeftFilters extends DOMElement {
       }
 
       (this.view as GridView).render(newState);
-      this.updateRange(newState);
       UpdateData.updateProductCounter();
     });
 
@@ -111,30 +110,21 @@ export class LeftFilters extends DOMElement {
       }
 
       (this.view as GridView).render(newState);
-      this.updateRange(newState);
       UpdateData.updateProductCounter();
     });
 
     this.rangePrice.node.addEventListener('input', (e: Event) => {
       RangeFilterService.pickData(e, 'price');
-      const newState = UpdateData.update('price');
+      const newState = UpdateData.update();
       (this.view as GridView).render(newState);
       UpdateData.updateProductCounter();
     });
 
     this.rangeStock.node.addEventListener('input', (e: Event) => {
       RangeFilterService.pickData(e, 'stock');
-      const newState = UpdateData.update('stock');
+      const newState = UpdateData.update();
       (this.view as GridView).render(newState);
       UpdateData.updateProductCounter();
     });
-  }
-
-  private updateRange(newState: ProductsData[]) {
-    const priceState = RangeFilterService.pickPrice(newState);
-    this.rangePrice.updateRange(priceState);
-
-    const stockState = RangeFilterService.pickStock(newState);
-    this.rangeStock.updateRange(stockState);
   }
 }

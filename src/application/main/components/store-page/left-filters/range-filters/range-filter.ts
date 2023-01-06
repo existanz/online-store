@@ -1,6 +1,6 @@
 import './range-filter.scss';
 
-import { RangeSliderInterFace, RangeSliderOptions } from '../../../../../shared/models/store-page';
+import { RangeSliderOptions } from '../../../../../shared/models/store-page';
 import { DOMElement } from '../../../../../shared/components/base-elements/dom-element';
 import { InputElement } from '../../../../../shared/components/base-elements/input-element';
 
@@ -161,27 +161,5 @@ export class RangeFilter extends DOMElement {
         }
       });
     });
-  }
-
-  public updateRange(data: RangeSliderInterFace) {
-    this.rangeInputMin.node.setAttribute('min', `${data.min}`);
-    this.rangeInputMin.node.setAttribute('max', `${data.max}`);
-
-    this.rangeInputMax.node.setAttribute('min', `${data.min}`);
-    this.rangeInputMax.node.setAttribute('max', `${data.max}`);
-
-    this.inputMin.node.setAttribute('value', `${data.min}`);
-    this.inputMax.node.setAttribute('value', `${data.max}`);
-
-    this.progress.node.style.left = '0';
-    this.progress.node.style.right = '0';
-
-    this.rangeInputs = [this.rangeInputMin.node, this.rangeInputMax.node];
-    this.textInputs = [this.inputMin.node, this.inputMax.node];
-    this.checkMinInput = this.inputMin.node;
-    this.constMax = data.max;
-
-    this.rangeInputMax.node.setAttribute('value', `${data.max}`);
-    this.rangeInputMin.node.setAttribute('value', `${data.min}`);
   }
 }

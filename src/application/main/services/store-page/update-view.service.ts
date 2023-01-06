@@ -3,7 +3,7 @@ import { CheckboxFilterService } from './filters/checkbox-filters.service';
 import { RangeFilterService } from './filters/range-filters.service';
 
 export abstract class UpdateData {
-  static update(filter?: string) {
+  static update() {
     State.current = State.allData;
 
     if (CheckboxFilterService.checkedCategories.length) {
@@ -17,19 +17,15 @@ export abstract class UpdateData {
         CheckboxFilterService.checkedBrands.includes(item.brand.split(' ').join('-').toLowerCase())
       );
     }
+    console.log(State.current);
+    State.current = State.current.filter((item) => {
+      return item.price >= RangeFilterService.priceState.min && item.price <= RangeFilterService.priceState.max;
+    });
 
-    if (filter === 'price') {
-      State.current = State.current.filter((item) => {
-        return item.price >= RangeFilterService.priceState.min && item.price <= RangeFilterService.priceState.max;
-      });
-    }
-
-    if (filter === 'stock') {
-      State.current = State.current.filter((item) => {
-        return item.stock >= RangeFilterService.stockState.min && item.stock <= RangeFilterService.stockState.max;
-      });
-    }
-
+    State.current = State.current.filter((item) => {
+      return item.stock >= RangeFilterService.stockState.min && item.stock <= RangeFilterService.stockState.max;
+    });
+    console.log(State.current);
     return State.current;
   }
 
