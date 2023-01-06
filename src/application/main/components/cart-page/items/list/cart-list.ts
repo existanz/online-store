@@ -13,13 +13,13 @@ export class CartList extends DOMElement {
     });
 
     if (data) {
-      this.render(data);
+      this.render();
     }
-    this.node.addEventListener('click', () => this.render(State.cart));
+    this.node.addEventListener('click', () => this.render());
   }
 
-  public render(data: ProductsData[]) {
+  public render() {
     this.node.innerHTML = '';
-    PaginationService.getCurPageProducts(data).map((product, index) => new CartItem(this.node, product, index));
+    PaginationService.getCurPageProducts(State.cart).map((product, index) => new CartItem(this.node, product, index));
   }
 }

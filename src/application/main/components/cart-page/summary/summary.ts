@@ -112,4 +112,8 @@ export class Summary extends DOMElement {
       content: 'Buy now',
     });
   }
+
+  render() {
+    console.log('summary render');
+  }
 }

@@ -9,8 +9,8 @@ export class CartPage extends Page {
   private itemsContainer: DOMElement;
   private summaryContainer: DOMElement;
 
-  private items: CartItems | null;
-  private summary: Summary | null;
+  private items: CartItems;
+  private summary: Summary;
 
   constructor(id: string) {
     super(id);
@@ -26,5 +26,11 @@ export class CartPage extends Page {
     });
     this.items = new CartItems(this.itemsContainer.node, State.cart);
     this.summary = new Summary(this.summaryContainer.node);
+    this.node.addEventListener('click', () => this.render());
+  }
+
+  public render() {
+    this.items.render();
+    this.summary.render();
   }
 }

@@ -2,6 +2,7 @@ import { ButtonElement } from '../../../../../shared/components/base-elements/bu
 import { DOMElement } from '../../../../../shared/components/base-elements/dom-element';
 import { InputElement } from '../../../../../shared/components/base-elements/input-element';
 import { ProductsData } from '../../../../../shared/models/response-data';
+import { State } from '../../../../../shared/services/state.service';
 import PaginationService from '../../../../services/cart-page/pagination.service';
 import './pagination.scss';
 
@@ -87,5 +88,10 @@ export class Pagination extends DOMElement {
       classList: ['pagination__total-page'],
       content: `of ${PaginationService.getMaxPage(data)}`,
     });
+  }
+
+  public render() {
+    this.totalPages.node.textContent = `of ${PaginationService.getMaxPage(State.cart)}`;
+    this.productOnPage.value = PaginationService.productsPerPage;
   }
 }
