@@ -83,6 +83,7 @@ export class RangeFilter extends DOMElement {
       type: 'number',
       classList: ['range-filter__input'],
       value: `${rangeOptions.data.min}`,
+      readonly: true,
     });
 
     this.inputMax = new InputElement(this.inputField.node, {
@@ -90,6 +91,7 @@ export class RangeFilter extends DOMElement {
       type: 'number',
       classList: ['range-filter__input'],
       value: `${rangeOptions.data.max}`,
+      readonly: true,
     });
 
     this.rangeInputs = [this.rangeInputMin.node, this.rangeInputMax.node];
