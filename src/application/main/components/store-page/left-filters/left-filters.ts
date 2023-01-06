@@ -12,6 +12,7 @@ import { State } from '../../../../shared/services/state.service';
 import { GridView } from '../items/grid-view/grid-view';
 import { ListView } from '../items/list-view/list-view';
 import { SearchService } from '../../../services/store-page/filters/search.service';
+import { ResetService } from '../../../services/store-page/filters/reset.service';
 
 export class LeftFilters extends DOMElement {
   public totalProducts: DOMElement;
@@ -172,6 +173,28 @@ export class LeftFilters extends DOMElement {
         data: CheckboxFilterService.pickCategory(newState),
       };
       this.checkboxCategory.render(categoryData);
+    });
+
+    this.whiteButton.node.addEventListener('click', () => {
+      let newState = ResetService.reset();
+      (this.view as GridView).render(newState);
+      RangeFilterService.priceState = RangeFilterService.pickPrice(newState);
+      RangeFilterService.stockState = RangeFilterService.pickStock(newState);
+      newState = UpdateData.updateStock();
+      newState = UpdateData.updatePrice();
+      newState = UpdateData.update();
+      const brandData = {
+        title: 'Brand',
+        data: CheckboxFilterService.pickBrand(newState),
+      };
+      this.checkboxBrand.render(brandData);
+
+      const categoryData = {
+        title: 'Category',
+        data: CheckboxFilterService.pickCategory(newState),
+      };
+      this.checkboxCategory.render(categoryData);
+      UpdateData.updateProductCounter();
     });
   }
 }
