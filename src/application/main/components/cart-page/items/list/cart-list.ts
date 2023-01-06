@@ -3,6 +3,7 @@ import { ProductsData } from '../../../../../shared/models/response-data';
 import { CartItem } from './cart-item';
 import { State } from '../../../../../shared/services/state.service';
 import './cart-list.scss';
+import PaginationService from '../../../../services/cart-page/pagination.service';
 
 export class CartList extends DOMElement {
   constructor(parentNode: HTMLElement, data?: ProductsData[]) {
@@ -19,6 +20,6 @@ export class CartList extends DOMElement {
 
   public render(data: ProductsData[]) {
     this.node.innerHTML = '';
-    data.map((product, index) => new CartItem(this.node, product, index));
+    PaginationService.getCurPageProducts(data).map((product, index) => new CartItem(this.node, product, index));
   }
 }

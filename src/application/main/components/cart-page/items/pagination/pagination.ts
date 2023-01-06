@@ -2,6 +2,7 @@ import { ButtonElement } from '../../../../../shared/components/base-elements/bu
 import { DOMElement } from '../../../../../shared/components/base-elements/dom-element';
 import { InputElement } from '../../../../../shared/components/base-elements/input-element';
 import { ProductsData } from '../../../../../shared/models/response-data';
+import PaginationService from '../../../../services/cart-page/pagination.service';
 import './pagination.scss';
 
 export class Pagination extends DOMElement {
@@ -41,7 +42,14 @@ export class Pagination extends DOMElement {
       tagName: 'input',
       type: 'number',
       classList: ['pagination__input'],
-      value: '3',
+      value: PaginationService.productsPerPage.toString(),
+    });
+
+    this.productOnPage.node.addEventListener('input', (e) => {
+      const newValue = (e.target as HTMLInputElement).value;
+      this.productOnPage.value = parseInt(newValue);
+      PaginationService.productsPerPage = this.productOnPage.value;
+      console.log(e.target, this.productOnPage.value, newValue);
     });
 
     this.leftButton = new ButtonElement(this.paginationContainer.node, {
@@ -49,11 +57,16 @@ export class Pagination extends DOMElement {
       classList: ['pagination__left'],
     });
 
+    this.leftButton.node.addEventListener('click', () => {
+      if (PaginationService.curPage > 1) PaginationService.curPage--;
+      this.currentPage.value = PaginationService.curPage;
+    });
+
     this.currentPage = new InputElement(this.paginationContainer.node, {
       tagName: 'input',
       classList: ['pagination__current-page'],
       type: 'number',
-      value: '1',
+      value: PaginationService.curPage.toString(),
     });
 
     this.rightButton = new ButtonElement(this.paginationContainer.node, {
@@ -61,10 +74,16 @@ export class Pagination extends DOMElement {
       classList: ['pagination__right'],
     });
 
+    this.rightButton.node.addEventListener('click', () => {
+      if (PaginationService.curPage < PaginationService.getMaxPage(data)) {
+        PaginationService.curPage++;
+        this.currentPage.value = PaginationService.curPage;
+      }
+    });
     this.totalPages = new DOMElement(this.paginationContainer.node, {
       tagName: 'p',
       classList: ['pagination__total-page'],
-      content: `of ${Math.ceil(data.length / parseInt(this.productOnPage.node.getAttribute('value') as string))}`,
+      content: `of ${PaginationService.getMaxPage(data)}`,
     });
   }
 }
