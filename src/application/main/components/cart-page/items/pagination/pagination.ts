@@ -46,10 +46,12 @@ export class Pagination extends DOMElement {
     });
 
     this.productOnPage.node.addEventListener('input', (e) => {
-      const newValue = (e.target as HTMLInputElement).value;
-      this.productOnPage.value = parseInt(newValue);
-      PaginationService.productsPerPage = this.productOnPage.value;
-      console.log(e.target, this.productOnPage.value, newValue);
+      let newValue = parseInt((e.target as HTMLInputElement).value);
+      if (newValue > 50) newValue = 50;
+      if (newValue < 1) newValue = 1;
+
+      this.productOnPage.value = newValue;
+      PaginationService.productsPerPage = newValue;
     });
 
     this.leftButton = new ButtonElement(this.paginationContainer.node, {
