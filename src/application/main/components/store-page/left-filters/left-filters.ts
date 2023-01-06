@@ -71,7 +71,11 @@ export class LeftFilters extends DOMElement {
   public listen() {
     this.checkboxCategory.list.node.addEventListener('click', (e: Event) => {
       CheckboxFilterService.checkCheckboxValue(e);
-      const newState = UpdateData.update();
+      RangeFilterService.pickData(e, 'price');
+      RangeFilterService.pickData(e, 'stock');
+      let newState = UpdateData.updateStock();
+      newState = UpdateData.updatePrice();
+      newState = UpdateData.update();
       const brandData = {
         title: 'Brand',
         data: CheckboxFilterService.pickBrand(newState),
@@ -93,7 +97,11 @@ export class LeftFilters extends DOMElement {
 
     this.checkboxBrand.list.node.addEventListener('click', (e: Event) => {
       CheckboxFilterService.checkCheckboxValue(e);
-      const newState = UpdateData.update();
+      RangeFilterService.pickData(e, 'price');
+      RangeFilterService.pickData(e, 'stock');
+      let newState = UpdateData.updateStock();
+      newState = UpdateData.updatePrice();
+      newState = UpdateData.update();
       const categoryData = {
         title: 'Category',
         data: CheckboxFilterService.pickCategory(newState),
@@ -115,16 +123,42 @@ export class LeftFilters extends DOMElement {
 
     this.rangePrice.node.addEventListener('input', (e: Event) => {
       RangeFilterService.pickData(e, 'price');
-      const newState = UpdateData.update();
+      let newState = UpdateData.update();
+      newState = UpdateData.updatePrice();
       (this.view as GridView).render(newState);
       UpdateData.updateProductCounter();
+
+      const brandData = {
+        title: 'Brand',
+        data: CheckboxFilterService.pickBrand(newState),
+      };
+      this.checkboxBrand.render(brandData);
+
+      const categoryData = {
+        title: 'Category',
+        data: CheckboxFilterService.pickCategory(newState),
+      };
+      this.checkboxCategory.render(categoryData);
     });
 
     this.rangeStock.node.addEventListener('input', (e: Event) => {
       RangeFilterService.pickData(e, 'stock');
-      const newState = UpdateData.update();
+      let newState = UpdateData.update();
+      newState = UpdateData.updateStock();
       (this.view as GridView).render(newState);
       UpdateData.updateProductCounter();
+
+      const brandData = {
+        title: 'Brand',
+        data: CheckboxFilterService.pickBrand(newState),
+      };
+      this.checkboxBrand.render(brandData);
+
+      const categoryData = {
+        title: 'Category',
+        data: CheckboxFilterService.pickCategory(newState),
+      };
+      this.checkboxCategory.render(categoryData);
     });
   }
 }

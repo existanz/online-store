@@ -17,15 +17,21 @@ export abstract class UpdateData {
         CheckboxFilterService.checkedBrands.includes(item.brand.split(' ').join('-').toLowerCase())
       );
     }
-    console.log(State.current);
+
+    return State.current;
+  }
+
+  static updatePrice() {
     State.current = State.current.filter((item) => {
       return item.price >= RangeFilterService.priceState.min && item.price <= RangeFilterService.priceState.max;
     });
+    return State.current;
+  }
 
+  static updateStock() {
     State.current = State.current.filter((item) => {
       return item.stock >= RangeFilterService.stockState.min && item.stock <= RangeFilterService.stockState.max;
     });
-    console.log(State.current);
     return State.current;
   }
 
