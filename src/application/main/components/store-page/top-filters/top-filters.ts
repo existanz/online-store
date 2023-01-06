@@ -6,6 +6,11 @@ import { SelectSort } from './select-sort/select-sort';
 import { SortService } from '../../../services/store-page/filters/sort.service';
 import { ListView } from '../items/list-view/list-view';
 import { GridView } from '../items/grid-view/grid-view';
+import { SearchService } from '../../../services/store-page/filters/search.service';
+import { RangeFilterService } from '../../../services/store-page/filters/range-filters.service';
+import { UpdateData } from '../../../services/store-page/update-view.service';
+import { CheckboxFilterService } from '../../../services/store-page/filters/checkbox-filters.service';
+import { LeftFilters } from '../left-filters/left-filters';
 
 export class TopFilters extends DOMElement {
   private topFiltersToggle: DOMElement;
@@ -16,8 +21,9 @@ export class TopFilters extends DOMElement {
   private search: Search;
   private select: SelectSort;
   private view: GridView | ListView | null;
+  private leftFilters: LeftFilters;
 
-  constructor(parentNode: HTMLElement, render: GridView | ListView | null) {
+  constructor(parentNode: HTMLElement, render: GridView | ListView | null, leftFilters: LeftFilters) {
     super(parentNode, {
       tagName: 'div',
       classList: ['top-filters'],
@@ -42,6 +48,7 @@ export class TopFilters extends DOMElement {
     this.search = new Search(this.topFiltersSearch.node);
     this.select = new SelectSort(this.topFiltersSelect.node);
     this.view = render;
+    this.leftFilters = leftFilters;
     this.listen();
   }
 
@@ -55,6 +62,31 @@ export class TopFilters extends DOMElement {
         if (newState) {
           (this.view as GridView).render(newState);
         }
+      }
+    });
+
+    this.node.addEventListener('input', (e: Event) => {
+      if ((e.target as HTMLElement).closest('.search__input')) {
+        RangeFilterService.pickData(e, 'price');
+        RangeFilterService.pickData(e, 'stock');
+        let newState = UpdateData.updateStock();
+        newState = UpdateData.updatePrice();
+        newState = UpdateData.update();
+        newState = SearchService.search((e.target as HTMLInputElement).value);
+        (this.view as GridView).render(newState);
+
+        const brandData = {
+          title: 'Brand',
+          data: CheckboxFilterService.pickBrand(newState),
+        };
+        this.leftFilters.checkboxBrand.render(brandData);
+
+        const categoryData = {
+          title: 'Category',
+          data: CheckboxFilterService.pickCategory(newState),
+        };
+        this.leftFilters.checkboxCategory.render(categoryData);
+        UpdateData.updateProductCounter();
       }
     });
   }

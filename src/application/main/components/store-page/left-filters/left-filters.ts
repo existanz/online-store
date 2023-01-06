@@ -11,6 +11,7 @@ import { UpdateData } from '../../../services/store-page/update-view.service';
 import { State } from '../../../../shared/services/state.service';
 import { GridView } from '../items/grid-view/grid-view';
 import { ListView } from '../items/list-view/list-view';
+import { SearchService } from '../../../services/store-page/filters/search.service';
 
 export class LeftFilters extends DOMElement {
   public totalProducts: DOMElement;
@@ -76,6 +77,9 @@ export class LeftFilters extends DOMElement {
       let newState = UpdateData.updateStock();
       newState = UpdateData.updatePrice();
       newState = UpdateData.update();
+      if (SearchService.searchState) {
+        newState = SearchService.search(SearchService.searchState);
+      }
       const brandData = {
         title: 'Brand',
         data: CheckboxFilterService.pickBrand(newState),
@@ -102,6 +106,9 @@ export class LeftFilters extends DOMElement {
       let newState = UpdateData.updateStock();
       newState = UpdateData.updatePrice();
       newState = UpdateData.update();
+      if (SearchService.searchState) {
+        newState = SearchService.search(SearchService.searchState);
+      }
       const categoryData = {
         title: 'Category',
         data: CheckboxFilterService.pickCategory(newState),
@@ -125,6 +132,9 @@ export class LeftFilters extends DOMElement {
       RangeFilterService.pickData(e, 'price');
       let newState = UpdateData.update();
       newState = UpdateData.updatePrice();
+      if (SearchService.searchState) {
+        newState = SearchService.search(SearchService.searchState);
+      }
       (this.view as GridView).render(newState);
       UpdateData.updateProductCounter();
 
@@ -145,6 +155,9 @@ export class LeftFilters extends DOMElement {
       RangeFilterService.pickData(e, 'stock');
       let newState = UpdateData.update();
       newState = UpdateData.updateStock();
+      if (SearchService.searchState) {
+        newState = SearchService.search(SearchService.searchState);
+      }
       (this.view as GridView).render(newState);
       UpdateData.updateProductCounter();
 

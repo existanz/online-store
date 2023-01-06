@@ -38,7 +38,7 @@ export class StorePage extends Page {
     // временно рендерим в grid-view запрос данных
     this.gridView = new GridView(this.storeItems.node, data);
     this.listView = null;
-    this.topFilters = new TopFilters(this.storeTopFilters.node, this.gridView);
     this.leftFilters = new LeftFilters(this.storeAsideFilters.node, data, this.gridView);
+    this.topFilters = new TopFilters(this.storeTopFilters.node, this.gridView, this.leftFilters);
   }
 }
