@@ -35,29 +35,35 @@ export class SelectSort extends DOMElement {
     this.option = new InputElement(this.selectInput.node, {
       tagName: 'option',
       classList: ['select-sort__option'],
-      value: 'price-2',
-      content: 'price',
+      value: 'default',
     });
 
     this.option = new InputElement(this.selectInput.node, {
       tagName: 'option',
       classList: ['select-sort__option'],
-      value: 'price-2',
-      content: 'price',
+      value: 'price-decrease',
+      content: 'price decrease',
     });
 
     this.option = new InputElement(this.selectInput.node, {
       tagName: 'option',
       classList: ['select-sort__option'],
-      value: 'name-1',
-      content: 'name',
+      value: 'price-increase',
+      content: 'price increase',
     });
 
     this.option = new InputElement(this.selectInput.node, {
       tagName: 'option',
       classList: ['select-sort__option'],
-      value: 'name-2',
-      content: 'name',
+      value: 'name-a',
+      content: 'name A-Z',
+    });
+
+    this.option = new InputElement(this.selectInput.node, {
+      tagName: 'option',
+      classList: ['select-sort__option'],
+      value: 'name-z',
+      content: 'name Z-A',
     });
 
     this.arrow = new DOMElement(this.selectContainer.node, {

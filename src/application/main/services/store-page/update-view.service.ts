@@ -18,14 +18,20 @@ export abstract class UpdateData {
       );
     }
 
-    // State.current = State.current.filter((item) => {
-    //   return item.price >= RangeFilterService.priceState.min && item.price <= RangeFilterService.priceState.max;
-    // });
+    return State.current;
+  }
 
-    // State.current = State.current.filter((item) => {
-    //   return item.stock >= RangeFilterService.stockState.min && item.stock <= RangeFilterService.stockState.max;
-    // });
+  static updatePrice() {
+    State.current = State.current.filter((item) => {
+      return item.price >= RangeFilterService.priceState.min && item.price <= RangeFilterService.priceState.max;
+    });
+    return State.current;
+  }
 
+  static updateStock() {
+    State.current = State.current.filter((item) => {
+      return item.stock >= RangeFilterService.stockState.min && item.stock <= RangeFilterService.stockState.max;
+    });
     return State.current;
   }
 

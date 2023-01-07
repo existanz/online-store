@@ -4,7 +4,7 @@ export interface CheckboxOptions {
 }
 
 export interface RangeSliderOptions {
-  title: string;
+  title: 'stock' | 'price';
   data: RangeSliderInterFace;
 }
 

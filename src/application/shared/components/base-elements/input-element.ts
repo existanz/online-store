@@ -42,7 +42,11 @@ export class InputElement extends DOMElement {
     }
 
     if (options.checked) {
-      (this.node as HTMLInputElement).checked = true;
+      (this.node as HTMLInputElement).checked = options.checked;
+    }
+
+    if (options.readonly) {
+      (this.node as HTMLInputElement).readOnly = options.readonly;
     }
   }
 }

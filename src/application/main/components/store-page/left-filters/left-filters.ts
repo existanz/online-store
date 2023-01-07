@@ -9,8 +9,10 @@ import { CheckboxFilterService } from '../../../services/store-page/filters/chec
 import { RangeFilterService } from '../../../services/store-page/filters/range-filters.service';
 import { UpdateData } from '../../../services/store-page/update-view.service';
 import { State } from '../../../../shared/services/state.service';
-import { GridView } from '../items/grid-view/grid-view';
-import { ListView } from '../items/list-view/list-view';
+import { SearchService } from '../../../services/store-page/filters/search.service';
+import { ResetService } from '../../../services/store-page/filters/reset.service';
+import { CopyService } from '../../../services/store-page/filters/copy.service';
+import { ViewService } from '../../../services/store-page/change-view.service';
 
 export class LeftFilters extends DOMElement {
   public totalProducts: DOMElement;
@@ -18,10 +20,10 @@ export class LeftFilters extends DOMElement {
   public checkboxBrand: CheckboxFilter;
   public rangePrice: RangeFilter;
   public rangeStock: RangeFilter;
-  public whiteButton: WhiteButton;
-  private view: GridView | ListView | null;
+  public copyButton: WhiteButton;
+  public resetButton: BlueButton;
 
-  constructor(parentNode: HTMLElement, data: ProductsData[], render: GridView | ListView | null) {
+  constructor(parentNode: HTMLElement, data: ProductsData[]) {
     super(parentNode, {
       tagName: 'aside',
       classList: ['left-filters'],
@@ -44,34 +46,40 @@ export class LeftFilters extends DOMElement {
     });
 
     this.rangePrice = new RangeFilter(this.node, {
-      title: 'Price',
+      title: 'price',
       data: RangeFilterService.pickPrice(data),
     });
 
     this.rangeStock = new RangeFilter(this.node, {
-      title: 'Stock',
+      title: 'stock',
       data: RangeFilterService.pickStock(data),
     });
 
-    this.whiteButton = new WhiteButton(this.node, {
+    this.copyButton = new WhiteButton(this.node, {
       tagName: 'button',
       id: 'copy-query',
       content: 'Copy',
     });
 
-    this.whiteButton = new BlueButton(this.node, {
+    this.resetButton = new BlueButton(this.node, {
       tagName: 'button',
       id: 'reset-filters',
       content: 'Reset',
     });
     this.listen();
-    this.view = render;
   }
 
   public listen() {
     this.checkboxCategory.list.node.addEventListener('click', (e: Event) => {
       CheckboxFilterService.checkCheckboxValue(e);
-      const newState = UpdateData.update();
+      RangeFilterService.pickData(e, 'price');
+      RangeFilterService.pickData(e, 'stock');
+      let newState = UpdateData.updateStock();
+      newState = UpdateData.updatePrice();
+      newState = UpdateData.update();
+      if (SearchService.searchState) {
+        newState = SearchService.search(SearchService.searchState);
+      }
       const brandData = {
         title: 'Brand',
         data: CheckboxFilterService.pickBrand(newState),
@@ -87,14 +95,22 @@ export class LeftFilters extends DOMElement {
         this.checkboxCategory.render(categoryData);
       }
 
-      (this.view as GridView).render(newState);
-      this.updateRange(newState);
+      ViewService.view.render(newState);
       UpdateData.updateProductCounter();
+      this.updateMinMaxPrice();
+      this.updateMinMaxStock();
     });
 
     this.checkboxBrand.list.node.addEventListener('click', (e: Event) => {
       CheckboxFilterService.checkCheckboxValue(e);
-      const newState = UpdateData.update();
+      RangeFilterService.pickData(e, 'price');
+      RangeFilterService.pickData(e, 'stock');
+      let newState = UpdateData.updateStock();
+      newState = UpdateData.updatePrice();
+      newState = UpdateData.update();
+      if (SearchService.searchState) {
+        newState = SearchService.search(SearchService.searchState);
+      }
       const categoryData = {
         title: 'Category',
         data: CheckboxFilterService.pickCategory(newState),
@@ -110,31 +126,108 @@ export class LeftFilters extends DOMElement {
         this.checkboxBrand.render(brandData);
       }
 
-      (this.view as GridView).render(newState);
-      this.updateRange(newState);
+      ViewService.view.render(newState);
       UpdateData.updateProductCounter();
+
+      this.updateMinMaxPrice();
+      this.updateMinMaxStock();
     });
 
-    this.rangePrice.node.addEventListener('change', (e: Event) => {
+    this.rangePrice.node.addEventListener('input', (e: Event) => {
       RangeFilterService.pickData(e, 'price');
-      const newState = UpdateData.update();
-      (this.view as GridView).render(newState);
+      let newState = UpdateData.update();
+      newState = UpdateData.updatePrice();
+      if (SearchService.searchState) {
+        newState = SearchService.search(SearchService.searchState);
+      }
+      ViewService.view.render(newState);
       UpdateData.updateProductCounter();
+
+      const brandData = {
+        title: 'Brand',
+        data: CheckboxFilterService.pickBrand(newState),
+      };
+      this.checkboxBrand.render(brandData);
+
+      const categoryData = {
+        title: 'Category',
+        data: CheckboxFilterService.pickCategory(newState),
+      };
+      this.checkboxCategory.render(categoryData);
+
+      this.updateMinMaxStock();
     });
 
-    this.rangeStock.node.addEventListener('change', async (e: Event) => {
+    this.rangeStock.node.addEventListener('input', (e: Event) => {
       RangeFilterService.pickData(e, 'stock');
-      const newState = UpdateData.update();
-      (this.view as GridView).render(newState);
+      let newState = UpdateData.update();
+      newState = UpdateData.updateStock();
+      if (SearchService.searchState) {
+        newState = SearchService.search(SearchService.searchState);
+      }
+      ViewService.view.render(newState);
       UpdateData.updateProductCounter();
+
+      const brandData = {
+        title: 'Brand',
+        data: CheckboxFilterService.pickBrand(newState),
+      };
+      this.checkboxBrand.render(brandData);
+
+      const categoryData = {
+        title: 'Category',
+        data: CheckboxFilterService.pickCategory(newState),
+      };
+      this.checkboxCategory.render(categoryData);
+
+      this.updateMinMaxPrice();
+    });
+
+    this.resetButton.node.addEventListener('click', () => {
+      let newState = ResetService.reset();
+      ViewService.view.render(newState);
+      RangeFilterService.priceState = RangeFilterService.pickPrice(newState);
+      RangeFilterService.stockState = RangeFilterService.pickStock(newState);
+      newState = UpdateData.updateStock();
+      newState = UpdateData.updatePrice();
+      newState = UpdateData.update();
+      const brandData = {
+        title: 'Brand',
+        data: CheckboxFilterService.pickBrand(newState),
+      };
+      this.checkboxBrand.render(brandData);
+
+      const categoryData = {
+        title: 'Category',
+        data: CheckboxFilterService.pickCategory(newState),
+      };
+      this.checkboxCategory.render(categoryData);
+      UpdateData.updateProductCounter();
+
+      this.updateMinMaxPrice();
+      this.updateMinMaxStock();
+    });
+
+    this.copyButton.node.addEventListener('click', () => {
+      CopyService.copy(this.copyButton.node as HTMLButtonElement);
     });
   }
 
-  private updateRange(newState: ProductsData[]) {
-    const priceState = RangeFilterService.pickPrice(newState);
-    this.rangePrice.updateRange(priceState);
+  public updateMinMaxPrice() {
+    RangeFilterService.priceState = RangeFilterService.pickPrice(State.current);
+    (this.rangePrice.rangeInputMin.node as HTMLInputElement).value = RangeFilterService.priceState.min.toString();
+    (this.rangePrice.rangeInputMax.node as HTMLInputElement).value = RangeFilterService.priceState.max.toString();
 
-    const stockState = RangeFilterService.pickStock(newState);
-    this.rangeStock.updateRange(stockState);
+    (this.rangePrice.inputMin.node as HTMLInputElement).value = RangeFilterService.priceState.min.toString();
+    (this.rangePrice.inputMax.node as HTMLInputElement).value = RangeFilterService.priceState.max.toString();
+  }
+
+  public updateMinMaxStock() {
+    RangeFilterService.stockState = RangeFilterService.pickStock(State.current);
+    (this.rangeStock.rangeInputMin.node as HTMLInputElement).value = RangeFilterService.stockState.min.toString();
+    (this.rangeStock.rangeInputMax.node as HTMLInputElement).value = RangeFilterService.stockState.max.toString();
+
+    (this.rangeStock.inputMin.node as HTMLInputElement).value = RangeFilterService.stockState.min.toString();
+    (this.rangeStock.inputMax.node as HTMLInputElement).value = RangeFilterService.stockState.max.toString();
   }
 }
