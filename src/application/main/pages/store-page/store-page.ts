@@ -39,7 +39,7 @@ export class StorePage extends Page {
       ViewService.getViewState() === 'grid'
         ? new GridView(ViewService.container, data)
         : new ListView(ViewService.container, data);
-        
+
     this.leftFilters = new LeftFilters(this.storeAsideFilters.node, data);
     this.topFilters = new TopFilters(this.storeTopFilters.node, this.leftFilters);
   }

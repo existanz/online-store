@@ -3,6 +3,7 @@ import './range-filter.scss';
 import { RangeSliderOptions } from '../../../../../shared/models/store-page';
 import { DOMElement } from '../../../../../shared/components/base-elements/dom-element';
 import { InputElement } from '../../../../../shared/components/base-elements/input-element';
+import { State } from '../../../../../shared/services/state.service';
 
 export class RangeFilter extends DOMElement {
   private title: DOMElement;
@@ -21,6 +22,8 @@ export class RangeFilter extends DOMElement {
   public checkMinInput: HTMLElement;
   private constMax: number;
 
+  private value: 'stock' | 'price';
+
   private priceGap: number;
 
   constructor(parentNode: HTMLElement, rangeOptions: RangeSliderOptions) {
@@ -32,7 +35,7 @@ export class RangeFilter extends DOMElement {
     this.title = new DOMElement(this.node, {
       tagName: 'span',
       classList: ['range-filter__title'],
-      content: rangeOptions.title,
+      content: rangeOptions.title[0].toUpperCase() + rangeOptions.title.slice(1),
     });
 
     this.wrapper = new DOMElement(this.node, {
@@ -55,12 +58,14 @@ export class RangeFilter extends DOMElement {
       classList: ['range-filter__progress'],
     });
 
+    this.value = rangeOptions.title;
+
     this.rangeInputMin = new InputElement(this.rangeField.node, {
       tagName: 'input',
       classList: ['range-filter__range-input-min'],
       type: 'range',
-      min: `${rangeOptions.data.min}`,
-      max: `${rangeOptions.data.max}`,
+      min: this.pickMinMax().min.toString(),
+      max: this.pickMinMax().max.toString(),
       value: `${rangeOptions.data.min}`,
     });
 
@@ -68,8 +73,8 @@ export class RangeFilter extends DOMElement {
       tagName: 'input',
       classList: ['range-filter__range-input-max'],
       type: 'range',
-      min: `${rangeOptions.data.min}`,
-      max: `${rangeOptions.data.max}`,
+      min: this.pickMinMax().min.toString(),
+      max: this.pickMinMax().max.toString(),
       value: `${rangeOptions.data.max}`,
     });
 
@@ -163,5 +168,16 @@ export class RangeFilter extends DOMElement {
         }
       });
     });
+  }
+
+  private pickMinMax() {
+    const data = State.allData;
+    return {
+      max: data.reduce((x, y) => Math.max(x, y[this.value]), 0),
+      min: data.reduce(
+        (x, y) => Math.min(x, y[this.value]),
+        data.reduce((x, y) => Math.max(x, y[this.value]), 0)
+      ),
+    };
   }
 }

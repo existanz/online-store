@@ -46,12 +46,12 @@ export class LeftFilters extends DOMElement {
     });
 
     this.rangePrice = new RangeFilter(this.node, {
-      title: 'Price',
+      title: 'price',
       data: RangeFilterService.pickPrice(data),
     });
 
     this.rangeStock = new RangeFilter(this.node, {
-      title: 'Stock',
+      title: 'stock',
       data: RangeFilterService.pickStock(data),
     });
 
@@ -97,6 +97,8 @@ export class LeftFilters extends DOMElement {
 
       ViewService.view.render(newState);
       UpdateData.updateProductCounter();
+      this.updateMinMaxPrice();
+      this.updateMinMaxStock();
     });
 
     this.checkboxBrand.list.node.addEventListener('click', (e: Event) => {
@@ -126,6 +128,9 @@ export class LeftFilters extends DOMElement {
 
       ViewService.view.render(newState);
       UpdateData.updateProductCounter();
+
+      this.updateMinMaxPrice();
+      this.updateMinMaxStock();
     });
 
     this.rangePrice.node.addEventListener('input', (e: Event) => {
@@ -149,6 +154,8 @@ export class LeftFilters extends DOMElement {
         data: CheckboxFilterService.pickCategory(newState),
       };
       this.checkboxCategory.render(categoryData);
+
+      this.updateMinMaxStock();
     });
 
     this.rangeStock.node.addEventListener('input', (e: Event) => {
@@ -172,6 +179,8 @@ export class LeftFilters extends DOMElement {
         data: CheckboxFilterService.pickCategory(newState),
       };
       this.checkboxCategory.render(categoryData);
+
+      this.updateMinMaxPrice();
     });
 
     this.resetButton.node.addEventListener('click', () => {
@@ -194,10 +203,31 @@ export class LeftFilters extends DOMElement {
       };
       this.checkboxCategory.render(categoryData);
       UpdateData.updateProductCounter();
+
+      this.updateMinMaxPrice();
+      this.updateMinMaxStock();
     });
 
     this.copyButton.node.addEventListener('click', () => {
       CopyService.copy(this.copyButton.node as HTMLButtonElement);
     });
+  }
+
+  public updateMinMaxPrice() {
+    RangeFilterService.priceState = RangeFilterService.pickPrice(State.current);
+    (this.rangePrice.rangeInputMin.node as HTMLInputElement).value = RangeFilterService.priceState.min.toString();
+    (this.rangePrice.rangeInputMax.node as HTMLInputElement).value = RangeFilterService.priceState.max.toString();
+
+    (this.rangePrice.inputMin.node as HTMLInputElement).value = RangeFilterService.priceState.min.toString();
+    (this.rangePrice.inputMax.node as HTMLInputElement).value = RangeFilterService.priceState.max.toString();
+  }
+
+  public updateMinMaxStock() {
+    RangeFilterService.stockState = RangeFilterService.pickStock(State.current);
+    (this.rangeStock.rangeInputMin.node as HTMLInputElement).value = RangeFilterService.stockState.min.toString();
+    (this.rangeStock.rangeInputMax.node as HTMLInputElement).value = RangeFilterService.stockState.max.toString();
+
+    (this.rangeStock.inputMin.node as HTMLInputElement).value = RangeFilterService.stockState.min.toString();
+    (this.rangeStock.inputMax.node as HTMLInputElement).value = RangeFilterService.stockState.max.toString();
   }
 }

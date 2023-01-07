@@ -84,6 +84,9 @@ export class TopFilters extends DOMElement {
         };
         this.leftFilters.checkboxCategory.render(categoryData);
         UpdateData.updateProductCounter();
+
+        this.leftFilters.updateMinMaxPrice();
+        this.leftFilters.updateMinMaxStock();
       }
     });
   }
