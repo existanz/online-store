@@ -22,7 +22,6 @@ export default abstract class CartService {
       this.countsCart.push(1);
       console.log('добавил');
     }
-    console.log(Object.keys(this.promoList), this.promoList[this.activePromo[0]], this.activePromo[1] == 'EPAM');
     this.totalCount++;
     this.totalSum += product.price;
     this.save();
