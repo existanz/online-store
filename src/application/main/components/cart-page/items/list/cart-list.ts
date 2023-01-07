@@ -20,6 +20,8 @@ export class CartList extends DOMElement {
 
   public render() {
     this.node.innerHTML = '';
+    if (PaginationService.getCurPageProducts(State.cart).length == 0 && PaginationService.curPage > 1)
+      PaginationService.curPage--;
     PaginationService.getCurPageProducts(State.cart).map(
       (product, index) =>
         new CartItem(this.node, product, index + PaginationService.productsPerPage * (PaginationService.curPage - 1))

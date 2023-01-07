@@ -30,7 +30,7 @@ export class CartItem extends DOMElement {
         } else if (el.target == this.minus.node) {
           CartService.removeFromCart(product);
         } else {
-          location.href = '/#product?idProd=' + product?.id;
+          location.href = '/#product?idProd=' + product.id;
         }
       }
     });

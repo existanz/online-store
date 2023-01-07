@@ -93,5 +93,6 @@ export class Pagination extends DOMElement {
   public render() {
     this.totalPages.node.textContent = `of ${PaginationService.getMaxPage(State.cart)}`;
     this.productOnPage.value = PaginationService.productsPerPage;
+    this.currentPage.value = PaginationService.curPage;
   }
 }
