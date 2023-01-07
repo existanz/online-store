@@ -13,6 +13,7 @@ import { GridView } from '../items/grid-view/grid-view';
 import { ListView } from '../items/list-view/list-view';
 import { SearchService } from '../../../services/store-page/filters/search.service';
 import { ResetService } from '../../../services/store-page/filters/reset.service';
+import { CopyService } from '../../../services/store-page/filters/copy.service';
 
 export class LeftFilters extends DOMElement {
   public totalProducts: DOMElement;
@@ -20,7 +21,8 @@ export class LeftFilters extends DOMElement {
   public checkboxBrand: CheckboxFilter;
   public rangePrice: RangeFilter;
   public rangeStock: RangeFilter;
-  public whiteButton: WhiteButton;
+  public copyButton: WhiteButton;
+  public resetButton: BlueButton;
   private view: GridView | ListView | null;
 
   constructor(parentNode: HTMLElement, data: ProductsData[], render: GridView | ListView | null) {
@@ -55,13 +57,13 @@ export class LeftFilters extends DOMElement {
       data: RangeFilterService.pickStock(data),
     });
 
-    this.whiteButton = new WhiteButton(this.node, {
+    this.copyButton = new WhiteButton(this.node, {
       tagName: 'button',
       id: 'copy-query',
       content: 'Copy',
     });
 
-    this.whiteButton = new BlueButton(this.node, {
+    this.resetButton = new BlueButton(this.node, {
       tagName: 'button',
       id: 'reset-filters',
       content: 'Reset',
@@ -175,7 +177,7 @@ export class LeftFilters extends DOMElement {
       this.checkboxCategory.render(categoryData);
     });
 
-    this.whiteButton.node.addEventListener('click', () => {
+    this.resetButton.node.addEventListener('click', () => {
       let newState = ResetService.reset();
       (this.view as GridView).render(newState);
       RangeFilterService.priceState = RangeFilterService.pickPrice(newState);
@@ -195,6 +197,10 @@ export class LeftFilters extends DOMElement {
       };
       this.checkboxCategory.render(categoryData);
       UpdateData.updateProductCounter();
+    });
+
+    this.copyButton.node.addEventListener('click', () => {
+      CopyService.copy(this.copyButton.node as HTMLButtonElement);
     });
   }
 }
