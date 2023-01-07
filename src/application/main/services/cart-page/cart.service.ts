@@ -5,7 +5,7 @@ import { State } from '../../../shared/services/state.service';
 export default abstract class CartService {
   static countsCart: number[] = [];
   static promoList: PromoList = { RS: 10, EPAM: 10 };
-  static activePromo: Promo[] = ['RS'];
+  static activePromo: Promo[] = ['RS', 'EPAM'];
   private static totalCount = 0;
   private static totalSum = 0;
   private static curSum = 0;
@@ -77,7 +77,13 @@ export default abstract class CartService {
   }
 
   static activatePromo(promo: string) {
-    console.log(this.activePromo[0] == promo);
+    if (this.isPromo(promo) && !this.isActivePromo(promo)) this.activePromo.push(promo as Promo);
+    console.log(this.isPromo(promo), this.isActivePromo(promo), this.activePromo);
+  }
+
+  static deactivatePromo(promo: string) {
+    const index = this.activePromo.indexOf(promo as Promo);
+    if (index >= 0) this.activePromo.splice(index, 1);
   }
 
   static isPromo(promo: string) {

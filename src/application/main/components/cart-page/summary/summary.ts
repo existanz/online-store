@@ -122,6 +122,7 @@ export class Summary extends DOMElement {
         tagName: 'button',
         classList: ['summary__discount-button', 'summary__discount-button--active'],
       });
+      this.discountButton.node.addEventListener('click', () => CartService.deactivatePromo(elem));
     });
     if (promo && CartService.isPromo(promo)) {
       if (!CartService.isActivePromo(promo)) {
@@ -135,6 +136,7 @@ export class Summary extends DOMElement {
           tagName: 'button',
           classList: ['summary__discount-button'],
         });
+        this.discountButton.node.addEventListener('click', () => CartService.activatePromo(promo));
       }
     }
   }
