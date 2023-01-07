@@ -74,7 +74,7 @@ export class Summary extends DOMElement {
     this.discountText = new DOMElement(this.discountContainer.node, {
       tagName: 'div',
       classList: ['summary__discount-text'],
-      content: 'RS - 10%',
+      content: 'EPAM - 10%',
     });
 
     this.discountButton = new ButtonElement(this.discountText.node, {
@@ -82,22 +82,19 @@ export class Summary extends DOMElement {
       classList: ['summary__discount-button', 'summary__discount-button--active'],
     });
 
-    this.discountText = new DOMElement(this.discountContainer.node, {
-      tagName: 'div',
-      classList: ['summary__discount-text'],
-      content: 'RS - 10%',
-    });
-
-    this.discountButton = new ButtonElement(this.discountText.node, {
-      tagName: 'button',
-      classList: ['summary__discount-button'],
-    });
-
     this.input = new InputElement(this.form.node, {
       tagName: 'input',
       type: 'text',
       classList: ['summary__input'],
       placeholder: 'enter promo',
+    });
+
+    this.input.node.addEventListener('input', (e) => {
+      const newValue = (e.target as HTMLInputElement).value;
+      console.log(newValue, CartService.isPromo(newValue));
+      if (CartService.isPromo(newValue)) {
+        console.log('lalala');
+      }
     });
 
     this.promt = new DOMElement(this.form.node, {
@@ -111,10 +108,28 @@ export class Summary extends DOMElement {
       type: 'submit',
       content: 'Buy now',
     });
+    this.renderPromos();
+  }
+
+  private renderPromos() {
+    this.discountContainer.node.innerHTML = '';
+    Object.keys(CartService.promoList).forEach((elem) => {
+      this.discountText = new DOMElement(this.discountContainer.node, {
+        tagName: 'div',
+        classList: ['summary__discount-text'],
+        content: `${elem} - 10%`,
+      });
+
+      this.discountButton = new ButtonElement(this.discountText.node, {
+        tagName: 'button',
+        classList: ['summary__discount-button'],
+      });
+    });
   }
 
   public render() {
     this.totalPrice.node.textContent = `Total price: $${CartService.getTotalSum()}`;
     this.newPrice.node.textContent = `Current price: $${(CartService.getTotalSum() * 90) / 100}`;
+    this.renderPromos();
   }
 }

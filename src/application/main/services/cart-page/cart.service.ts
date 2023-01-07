@@ -4,8 +4,11 @@ import { State } from '../../../shared/services/state.service';
 
 export default abstract class CartService {
   static countsCart: number[] = [];
+  static promoList: PromoList = { RS: 10, EPAM: 10 };
+  private static activePromo: Promo[] = ['RS', 'EPAM'];
   private static totalCount = 0;
   private static totalSum = 0;
+  private static curSum = 0;
   private static localStorageSVC = new LocalStorageSvc();
 
   static addToCart(product: ProductsData) {
@@ -19,7 +22,7 @@ export default abstract class CartService {
       this.countsCart.push(1);
       console.log('добавил');
     }
-
+    console.log(Object.keys(this.promoList), this.promoList[this.activePromo[0]], this.activePromo[1] == 'EPAM');
     this.totalCount++;
     this.totalSum += product.price;
     this.save();
@@ -72,4 +75,15 @@ export default abstract class CartService {
     const idInCart = State.cart.indexOf(product);
     return idInCart;
   }
+
+  static activatePromo(promo: string) {
+    console.log(this.activePromo[0] == promo);
+  }
+
+  static isPromo(promo: string) {
+    return promo.toLocaleUpperCase() === 'RS' || promo.toLocaleUpperCase() === 'EPAM';
+  }
 }
+
+type Promo = 'RS' | 'EPAM';
+type PromoList = Record<Promo, number>;
