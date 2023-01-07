@@ -4,6 +4,8 @@ import { ProductsData } from '../../../../shared/models/response-data';
 import { WhiteButton } from '../../../../shared/components/buttons/white-button';
 import { BlueButton } from '../../../../shared/components/buttons/blue-button';
 import CartService from '../../../services/cart-page/cart.service';
+import { State } from '../../../../shared/services/state.service';
+import { ViewService } from '../../../services/store-page/change-view.service';
 
 export class Description extends DOMElement {
   private title: DOMElement;
@@ -69,6 +71,7 @@ export class Description extends DOMElement {
       if (CartService.idInCart(product) >= 0) CartService.removeFromCart(product);
       else CartService.addToCart(product);
       this.updateBagButton(product);
+      ViewService.view.render(State.current);
     });
 
     this.buyButton = new BlueButton(this.buttons.node, {

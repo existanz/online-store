@@ -55,7 +55,7 @@ export class InputElement extends DOMElement {
 
   public set value(val: number) {
     this._value = val;
-    this.node.setAttribute('value', val.toString());
+    if (!isNaN(val)) this.node.setAttribute('value', val.toString());
   }
 
   public get value() {
