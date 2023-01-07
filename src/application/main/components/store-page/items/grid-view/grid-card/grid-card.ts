@@ -1,9 +1,9 @@
 import './grid-card.scss';
-import { ProductsData } from '../../../../shared/models/response-data';
-import { DOMElement } from '../../../../shared/components/base-elements/dom-element';
-import { ImageElement } from '../../../../shared/components/base-elements/image-element';
-import { ButtonElement } from '../../../../shared/components/base-elements/button-element';
-import CartService from '../../../services/cart-page/cart.service';
+import { ProductsData } from '../../../../../../shared/models/response-data';
+import { DOMElement } from '../../../../../../shared/components/base-elements/dom-element';
+import { ImageElement } from '../../../../../../shared/components/base-elements/image-element';
+import { ButtonElement } from '../../../../../../shared/components/base-elements/button-element';
+import CartService from '../../../../../services/cart-page/cart.service';
 
 export class GridCard extends DOMElement {
   private imageContainer: DOMElement;

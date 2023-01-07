@@ -14,8 +14,9 @@ export class StorePage extends Page {
 
   private topFilters: TopFilters;
   private leftFilters: LeftFilters;
-  private gridView: GridView | null;
-  private listView: ListView | null;
+  private gridView: GridView;
+  private listView: ListView;
+  private currentView: ListView | GridView;
 
   constructor(id: string, data: ProductsData[]) {
     super(id);
@@ -36,9 +37,11 @@ export class StorePage extends Page {
     });
 
     // временно рендерим в grid-view запрос данных
-    this.gridView = new GridView(this.storeItems.node, data);
-    this.listView = null;
-    this.leftFilters = new LeftFilters(this.storeAsideFilters.node, data, this.gridView);
-    this.topFilters = new TopFilters(this.storeTopFilters.node, this.gridView, this.leftFilters);
+    this.gridView = new GridView(null, data);
+    this.listView = new ListView(null, data);
+    this.currentView = this.listView;
+    this.storeItems.node.append(this.currentView.listView.node);
+    this.leftFilters = new LeftFilters(this.storeAsideFilters.node, data, this.currentView);
+    this.topFilters = new TopFilters(this.storeTopFilters.node, this.currentView, this.leftFilters);
   }
 }
