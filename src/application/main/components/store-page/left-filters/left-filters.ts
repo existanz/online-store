@@ -9,11 +9,10 @@ import { CheckboxFilterService } from '../../../services/store-page/filters/chec
 import { RangeFilterService } from '../../../services/store-page/filters/range-filters.service';
 import { UpdateData } from '../../../services/store-page/update-view.service';
 import { State } from '../../../../shared/services/state.service';
-import { GridView } from '../items/grid-view/grid-view';
-import { ListView } from '../items/list-view/list-view';
 import { SearchService } from '../../../services/store-page/filters/search.service';
 import { ResetService } from '../../../services/store-page/filters/reset.service';
 import { CopyService } from '../../../services/store-page/filters/copy.service';
+import { ViewService } from '../../../services/store-page/change-view.service';
 
 export class LeftFilters extends DOMElement {
   public totalProducts: DOMElement;
@@ -23,9 +22,8 @@ export class LeftFilters extends DOMElement {
   public rangeStock: RangeFilter;
   public copyButton: WhiteButton;
   public resetButton: BlueButton;
-  private view: GridView | ListView | null;
 
-  constructor(parentNode: HTMLElement, data: ProductsData[], render: GridView | ListView | null) {
+  constructor(parentNode: HTMLElement, data: ProductsData[]) {
     super(parentNode, {
       tagName: 'aside',
       classList: ['left-filters'],
@@ -69,7 +67,6 @@ export class LeftFilters extends DOMElement {
       content: 'Reset',
     });
     this.listen();
-    this.view = render;
   }
 
   public listen() {
@@ -98,7 +95,7 @@ export class LeftFilters extends DOMElement {
         this.checkboxCategory.render(categoryData);
       }
 
-      (this.view as GridView).render(newState);
+      ViewService.view.render(newState);
       UpdateData.updateProductCounter();
     });
 
@@ -127,7 +124,7 @@ export class LeftFilters extends DOMElement {
         this.checkboxBrand.render(brandData);
       }
 
-      (this.view as GridView).render(newState);
+      ViewService.view.render(newState);
       UpdateData.updateProductCounter();
     });
 
@@ -138,7 +135,7 @@ export class LeftFilters extends DOMElement {
       if (SearchService.searchState) {
         newState = SearchService.search(SearchService.searchState);
       }
-      (this.view as GridView).render(newState);
+      ViewService.view.render(newState);
       UpdateData.updateProductCounter();
 
       const brandData = {
@@ -161,7 +158,7 @@ export class LeftFilters extends DOMElement {
       if (SearchService.searchState) {
         newState = SearchService.search(SearchService.searchState);
       }
-      (this.view as GridView).render(newState);
+      ViewService.view.render(newState);
       UpdateData.updateProductCounter();
 
       const brandData = {
@@ -179,7 +176,7 @@ export class LeftFilters extends DOMElement {
 
     this.resetButton.node.addEventListener('click', () => {
       let newState = ResetService.reset();
-      (this.view as GridView).render(newState);
+      ViewService.view.render(newState);
       RangeFilterService.priceState = RangeFilterService.pickPrice(newState);
       RangeFilterService.stockState = RangeFilterService.pickStock(newState);
       newState = UpdateData.updateStock();
