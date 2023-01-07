@@ -92,9 +92,7 @@ export class Summary extends DOMElement {
     this.input.node.addEventListener('input', (e) => {
       const newValue = (e.target as HTMLInputElement).value;
       console.log(newValue, CartService.isPromo(newValue));
-      if (CartService.isPromo(newValue)) {
-        console.log('lalala');
-      }
+      this.renderPromos(newValue);
     });
 
     this.promt = new DOMElement(this.form.node, {
@@ -111,9 +109,9 @@ export class Summary extends DOMElement {
     this.renderPromos();
   }
 
-  private renderPromos() {
+  private renderPromos(promo?: string) {
     this.discountContainer.node.innerHTML = '';
-    Object.keys(CartService.promoList).forEach((elem) => {
+    CartService.activePromo.forEach((elem) => {
       this.discountText = new DOMElement(this.discountContainer.node, {
         tagName: 'div',
         classList: ['summary__discount-text'],
@@ -122,9 +120,23 @@ export class Summary extends DOMElement {
 
       this.discountButton = new ButtonElement(this.discountText.node, {
         tagName: 'button',
-        classList: ['summary__discount-button'],
+        classList: ['summary__discount-button', 'summary__discount-button--active'],
       });
     });
+    if (promo && CartService.isPromo(promo)) {
+      if (!CartService.isActivePromo(promo)) {
+        this.discountText = new DOMElement(this.discountContainer.node, {
+          tagName: 'div',
+          classList: ['summary__discount-text'],
+          content: `${promo} - 10%`,
+        });
+
+        this.discountButton = new ButtonElement(this.discountText.node, {
+          tagName: 'button',
+          classList: ['summary__discount-button'],
+        });
+      }
+    }
   }
 
   public render() {

@@ -5,7 +5,7 @@ import { State } from '../../../shared/services/state.service';
 export default abstract class CartService {
   static countsCart: number[] = [];
   static promoList: PromoList = { RS: 10, EPAM: 10 };
-  private static activePromo: Promo[] = ['RS', 'EPAM'];
+  static activePromo: Promo[] = ['RS'];
   private static totalCount = 0;
   private static totalSum = 0;
   private static curSum = 0;
@@ -82,6 +82,10 @@ export default abstract class CartService {
 
   static isPromo(promo: string) {
     return promo.toLocaleUpperCase() === 'RS' || promo.toLocaleUpperCase() === 'EPAM';
+  }
+
+  static isActivePromo(promo: string) {
+    return this.activePromo.includes(promo.toLocaleUpperCase() as Promo);
   }
 }
 
