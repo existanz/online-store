@@ -20,6 +20,9 @@ export class CartList extends DOMElement {
 
   public render() {
     this.node.innerHTML = '';
-    PaginationService.getCurPageProducts(State.cart).map((product, index) => new CartItem(this.node, product, index));
+    PaginationService.getCurPageProducts(State.cart).map(
+      (product, index) =>
+        new CartItem(this.node, product, index + PaginationService.productsPerPage * (PaginationService.curPage - 1))
+    );
   }
 }
