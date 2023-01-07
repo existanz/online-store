@@ -55,11 +55,11 @@ export default abstract class CartService {
   }
 
   static save() {
-    this.localStorageSVC.setRecord('cart', { cart: State.cart, counts: this.countsCart });
+    this.localStorageSVC.setRecord('cart', { cart: State.cart, counts: this.countsCart, promo: this.activePromo });
   }
 
   static load() {
-    const cartLoad = { cart: [], counts: [] };
+    const cartLoad = { cart: [], counts: [], promo: [] };
     if (this.localStorageSVC.getRecordObj('cart')) {
       Object.assign(cartLoad, this.localStorageSVC.getRecordObj('cart'));
       cartLoad.cart.forEach((product: ProductsData, id) => {
@@ -68,6 +68,7 @@ export default abstract class CartService {
       });
       this.countsCart = cartLoad.counts;
       if (this.countsCart.length > 0) this.totalCount = this.countsCart.reduce((acc, cur) => acc + cur);
+      this.activePromo = cartLoad.promo;
     }
   }
 
@@ -79,11 +80,13 @@ export default abstract class CartService {
   static activatePromo(promo: string) {
     if (this.isPromo(promo) && !this.isActivePromo(promo)) this.activePromo.push(promo as Promo);
     console.log(this.isPromo(promo), this.isActivePromo(promo), this.activePromo);
+    this.save();
   }
 
   static deactivatePromo(promo: string) {
     const index = this.activePromo.indexOf(promo as Promo);
     if (index >= 0) this.activePromo.splice(index, 1);
+    this.save();
   }
 
   static isPromo(promo: string) {
