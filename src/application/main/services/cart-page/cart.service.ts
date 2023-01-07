@@ -79,7 +79,6 @@ export default abstract class CartService {
 
   static activatePromo(promo: string) {
     if (this.isPromo(promo) && !this.isActivePromo(promo)) this.activePromo.push(promo as Promo);
-    console.log(this.isPromo(promo), this.isActivePromo(promo), this.activePromo);
     this.save();
   }
 
@@ -95,6 +94,10 @@ export default abstract class CartService {
 
   static isActivePromo(promo: string) {
     return this.activePromo.includes(promo.toLocaleUpperCase() as Promo);
+  }
+
+  static getCurSum() {
+    return (this.totalSum * (100 - this.activePromo.length * 10)) / 100;
   }
 }
 

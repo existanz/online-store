@@ -71,17 +71,6 @@ export class Summary extends DOMElement {
       classList: ['summary__discount-button'],
     });
 
-    this.discountText = new DOMElement(this.discountContainer.node, {
-      tagName: 'div',
-      classList: ['summary__discount-text'],
-      content: 'EPAM - 10%',
-    });
-
-    this.discountButton = new ButtonElement(this.discountText.node, {
-      tagName: 'button',
-      classList: ['summary__discount-button', 'summary__discount-button--active'],
-    });
-
     this.input = new InputElement(this.form.node, {
       tagName: 'input',
       type: 'text',
@@ -90,8 +79,7 @@ export class Summary extends DOMElement {
     });
 
     this.input.node.addEventListener('input', (e) => {
-      const newValue = (e.target as HTMLInputElement).value;
-      console.log(newValue, CartService.isPromo(newValue));
+      const newValue = (e.target as HTMLInputElement).value.toLocaleUpperCase();
       this.renderPromos(newValue);
     });
 
@@ -143,7 +131,7 @@ export class Summary extends DOMElement {
 
   public render() {
     this.totalPrice.node.textContent = `Total price: $${CartService.getTotalSum()}`;
-    this.newPrice.node.textContent = `Current price: $${(CartService.getTotalSum() * 90) / 100}`;
+    this.newPrice.node.textContent = `Current price: $${CartService.getCurSum()}`;
     this.renderPromos();
   }
 }
