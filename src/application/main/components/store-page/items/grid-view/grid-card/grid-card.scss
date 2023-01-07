@@ -1,6 +1,7 @@
 .grid-card {
-  max-width: 197px;
-  width: 100%;
+  max-width: 190px;
+  width: 99%;
+  margin: 0 auto;
   height: 276px;
   transition: .3s;
 
@@ -19,7 +20,6 @@
 }
 
 .grid-card__image {
-  // не придумал нормальное позиционирование
   width: 110%;
   height: 110%;
   transform: translate(-4%, -4%);
