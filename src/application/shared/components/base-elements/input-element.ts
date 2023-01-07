@@ -2,6 +2,8 @@ import { DOMElement } from './dom-element';
 import { InputOptions } from '../../models/base-elements';
 
 export class InputElement extends DOMElement {
+  private _value = 0;
+
   constructor(parentNode: HTMLElement | null, options: InputOptions) {
     super(parentNode, {
       tagName: options.tagName,
@@ -39,6 +41,7 @@ export class InputElement extends DOMElement {
 
     if (options.value) {
       this.node.setAttribute('value', options.value);
+      this.value = parseInt(options.value);
     }
 
     if (options.checked) {
@@ -48,5 +51,14 @@ export class InputElement extends DOMElement {
     if (options.readonly) {
       (this.node as HTMLInputElement).readOnly = options.readonly;
     }
+  }
+
+  public set value(val: number) {
+    this._value = val;
+    this.node.setAttribute('value', val.toString());
+  }
+
+  public get value() {
+    return this._value;
   }
 }

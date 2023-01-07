@@ -112,4 +112,9 @@ export class Summary extends DOMElement {
       content: 'Buy now',
     });
   }
+
+  public render() {
+    this.totalPrice.node.textContent = `Total price: $${CartService.getTotalSum()}`;
+    this.newPrice.node.textContent = `Current price: $${(CartService.getTotalSum() * 90) / 100}`;
+  }
 }

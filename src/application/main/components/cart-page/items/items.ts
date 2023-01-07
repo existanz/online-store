@@ -17,4 +17,9 @@ export class CartItems extends DOMElement {
     this.pagination = new Pagination(this.node, data);
     this.list = new CartList(this.node, data);
   }
+
+  public render() {
+    this.pagination.render();
+    this.list.render();
+  }
 }
