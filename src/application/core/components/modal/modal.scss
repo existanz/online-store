@@ -25,10 +25,10 @@
 }
 
 .modal__container {
-  max-width: 600px;
+  max-width: 450px;
   width: 100%;
   background: #F3F4F6;
-  padding: 30px 20px;
+  padding: 25px 20px;
   position: relative;
   animation: zoomIn .3s;
 }
@@ -48,4 +48,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.modal__personal-info,
+.modal__card-info { 
+  width: 100%;
 }
