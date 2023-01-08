@@ -30,7 +30,7 @@ export class ListCard extends DOMElement {
         else CartService.addToCart(product);
         this.updateButton(product);
       } else {
-        location.href = '/#product?idProd=' + product?.id;
+        location.hash = '#product?idProd=' + product?.id;
       }
     });
 

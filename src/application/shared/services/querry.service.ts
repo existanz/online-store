@@ -29,7 +29,7 @@ export abstract class Querry {
         }
       }
     }
-    window.location.href = querry.length ? '/#store?' + querry.join('%') : '/#store';
+    window.location.hash = querry.length ? '#store?' + querry.join('%') : '#store';
   }
 
   static updateQuerry() {

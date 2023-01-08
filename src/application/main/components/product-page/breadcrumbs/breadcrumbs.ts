@@ -17,7 +17,7 @@ export class Breadcrumbs extends DOMElement {
 
     this.store = new LinkElement(this.node, {
       tagName: 'a',
-      href: '/#store',
+      href: '#store',
       classList: ['breadcrumbs__store'],
       content: 'Store',
     });
