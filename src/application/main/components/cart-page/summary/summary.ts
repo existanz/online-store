@@ -45,7 +45,7 @@ export class Summary extends DOMElement {
     this.newPrice = new DOMElement(this.priceContainer.node, {
       classList: ['summary__current-price'],
       tagName: 'p',
-      content: `Current price: $${(CartService.getTotalSum() * 90) / 100}`,
+      content: `Current price: $${CartService.getCurSum()}`,
     });
 
     this.form = new FormElement(this.node, {
@@ -71,33 +71,16 @@ export class Summary extends DOMElement {
       classList: ['summary__discount-button'],
     });
 
-    this.discountText = new DOMElement(this.discountContainer.node, {
-      tagName: 'div',
-      classList: ['summary__discount-text'],
-      content: 'RS - 10%',
-    });
-
-    this.discountButton = new ButtonElement(this.discountText.node, {
-      tagName: 'button',
-      classList: ['summary__discount-button', 'summary__discount-button--active'],
-    });
-
-    this.discountText = new DOMElement(this.discountContainer.node, {
-      tagName: 'div',
-      classList: ['summary__discount-text'],
-      content: 'RS - 10%',
-    });
-
-    this.discountButton = new ButtonElement(this.discountText.node, {
-      tagName: 'button',
-      classList: ['summary__discount-button'],
-    });
-
     this.input = new InputElement(this.form.node, {
       tagName: 'input',
       type: 'text',
       classList: ['summary__input'],
       placeholder: 'enter promo',
+    });
+
+    this.input.node.addEventListener('input', (e) => {
+      const newValue = (e.target as HTMLInputElement).value.toLocaleUpperCase();
+      this.renderPromos(newValue);
     });
 
     this.promt = new DOMElement(this.form.node, {
@@ -111,10 +94,44 @@ export class Summary extends DOMElement {
       type: 'submit',
       content: 'Buy now',
     });
+    this.renderPromos();
+  }
+
+  private renderPromos(promo?: string) {
+    this.discountContainer.node.innerHTML = '';
+    CartService.activePromo.forEach((elem) => {
+      this.discountText = new DOMElement(this.discountContainer.node, {
+        tagName: 'div',
+        classList: ['summary__discount-text'],
+        content: `${elem} - 10%`,
+      });
+
+      this.discountButton = new ButtonElement(this.discountText.node, {
+        tagName: 'button',
+        classList: ['summary__discount-button', 'summary__discount-button--active'],
+      });
+      this.discountButton.node.addEventListener('click', () => CartService.deactivatePromo(elem));
+    });
+    if (promo && CartService.isPromo(promo)) {
+      if (!CartService.isActivePromo(promo)) {
+        this.discountText = new DOMElement(this.discountContainer.node, {
+          tagName: 'div',
+          classList: ['summary__discount-text'],
+          content: `${promo} - 10%`,
+        });
+
+        this.discountButton = new ButtonElement(this.discountText.node, {
+          tagName: 'button',
+          classList: ['summary__discount-button'],
+        });
+        this.discountButton.node.addEventListener('click', () => CartService.activatePromo(promo));
+      }
+    }
   }
 
   public render() {
     this.totalPrice.node.textContent = `Total price: $${CartService.getTotalSum()}`;
-    this.newPrice.node.textContent = `Current price: $${(CartService.getTotalSum() * 90) / 100}`;
+    this.newPrice.node.textContent = `Current price: $${CartService.getCurSum()}`;
+    this.renderPromos();
   }
 }
