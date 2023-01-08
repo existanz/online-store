@@ -30,7 +30,7 @@ export class GridCard extends DOMElement {
         else CartService.addToCart(product);
         this.updateButton(product);
       } else {
-        location.href = '/#product?idProd=' + product?.id;
+        location.href = '#product?idProd=' + product?.id;
       }
     });
 

@@ -8,7 +8,7 @@ export class Logo {
   constructor(parentNode: HTMLElement) {
     this.link = new LinkElement(parentNode, {
       tagName: 'a',
-      href: '/#store',
+      href: '#store',
       classList: ['logo-link'],
       content: 'Store',
     });

@@ -8,19 +8,19 @@ export class Navigation {
   private linksInfo = [
     {
       content: 'main page',
-      href: '/#store',
+      href: '#store',
     },
     {
       content: 'item page',
-      href: '/#product',
+      href: '#product',
     },
     {
       content: 'cart',
-      href: '/#cart',
+      href: '#cart',
     },
     {
       content: '404',
-      href: '/#404',
+      href: '#404',
     },
   ];
 

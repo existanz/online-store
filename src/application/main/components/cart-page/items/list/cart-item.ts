@@ -33,7 +33,7 @@ export class CartItem extends DOMElement {
           CartService.removeFromCart(product);
           ViewService.view.render(State.current);
         } else {
-          location.href = '/#product?idProd=' + product.id;
+          location.href = '#product?idProd=' + product.id;
         }
       }
     });
