@@ -3,6 +3,7 @@ import { DOMElement } from '../../../../../shared/components/base-elements/dom-e
 import { InputElement } from '../../../../../shared/components/base-elements/input-element';
 import { ButtonElement } from '../../../../../shared/components/base-elements/button-element';
 import { SVG } from '../../../../../shared/components/svg-icons';
+import { SearchService } from '../../../../services/store-page/filters/search.service';
 
 export class Search extends DOMElement {
   private searchButton: ButtonElement;
@@ -25,6 +26,7 @@ export class Search extends DOMElement {
       type: 'text',
       classList: ['search__input'],
       placeholder: 'Search for products',
+      value: SearchService.searchState,
     });
   }
 }

@@ -19,7 +19,7 @@ export class Router {
     this.parentNode = parentNode;
 
     this.store = new StorePage('store-page', State.current);
-    this.product = new ProductPage('product-page', State.current[0]);
+    this.product = new ProductPage('product-page', State.allData[0]);
     this.notFoundPage = new NotFoundPage('not-found-page');
     this.cart = new CartPage('cart-page');
 

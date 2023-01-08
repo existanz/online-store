@@ -5,8 +5,9 @@ export abstract class SortService {
   static currentSort: string;
 
   static sort(type: string) {
-    if (type === this.currentSort) type = 'default';
-    let newState: ProductsData[] | null = null;
+    console.log(this.currentSort);
+    if (type === this.currentSort) return State.current;
+    let newState: ProductsData[] | null = State.current;
 
     switch (type) {
       case 'price-decrease':

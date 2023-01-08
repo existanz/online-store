@@ -18,14 +18,14 @@ export abstract class RangeFilterService {
   }
 
   static pickStock(data: ProductsData[]) {
-    RangeFilterService.priceState = {
+    RangeFilterService.stockState = {
       max: data.reduce((x, y) => Math.max(x, y.stock), 0),
       min: data.reduce(
         (x, y) => Math.min(x, y.stock),
         data.reduce((x, y) => Math.max(x, y.stock), 0)
       ),
     };
-    return RangeFilterService.priceState;
+    return RangeFilterService.stockState;
   }
 
   static pickData(e: Event, state: string) {
