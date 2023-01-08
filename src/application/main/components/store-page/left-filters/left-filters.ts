@@ -13,6 +13,7 @@ import { SearchService } from '../../../services/store-page/filters/search.servi
 import { ResetService } from '../../../services/store-page/filters/reset.service';
 import { CopyService } from '../../../services/store-page/filters/copy.service';
 import { ViewService } from '../../../services/store-page/change-view.service';
+import { Querry } from '../../../../shared/services/querry.service';
 
 export class LeftFilters extends DOMElement {
   public totalProducts: DOMElement;
@@ -47,12 +48,12 @@ export class LeftFilters extends DOMElement {
 
     this.rangePrice = new RangeFilter(this.node, {
       title: 'price',
-      data: RangeFilterService.pickPrice(data),
+      data: RangeFilterService.priceState,
     });
 
     this.rangeStock = new RangeFilter(this.node, {
       title: 'stock',
-      data: RangeFilterService.pickStock(data),
+      data: RangeFilterService.stockState,
     });
 
     this.copyButton = new WhiteButton(this.node, {
@@ -99,6 +100,8 @@ export class LeftFilters extends DOMElement {
       UpdateData.updateProductCounter();
       this.updateMinMaxPrice();
       this.updateMinMaxStock();
+
+      Querry.updateQuerry();
     });
 
     this.checkboxBrand.list.node.addEventListener('click', (e: Event) => {
@@ -131,6 +134,8 @@ export class LeftFilters extends DOMElement {
 
       this.updateMinMaxPrice();
       this.updateMinMaxStock();
+
+      Querry.updateQuerry();
     });
 
     this.rangePrice.node.addEventListener('input', (e: Event) => {
@@ -157,6 +162,9 @@ export class LeftFilters extends DOMElement {
 
       this.updateMinMaxStock();
     });
+
+    this.rangePrice.node.addEventListener('change', Querry.updateQuerry);
+    this.rangeStock.node.addEventListener('change', Querry.updateQuerry);
 
     this.rangeStock.node.addEventListener('input', (e: Event) => {
       RangeFilterService.pickData(e, 'stock');
@@ -185,7 +193,6 @@ export class LeftFilters extends DOMElement {
 
     this.resetButton.node.addEventListener('click', () => {
       let newState = ResetService.reset();
-      ViewService.view.render(newState);
       RangeFilterService.priceState = RangeFilterService.pickPrice(newState);
       RangeFilterService.stockState = RangeFilterService.pickStock(newState);
       newState = UpdateData.updateStock();
@@ -206,6 +213,7 @@ export class LeftFilters extends DOMElement {
 
       this.updateMinMaxPrice();
       this.updateMinMaxStock();
+      window.location.href = '/#store';
     });
 
     this.copyButton.node.addEventListener('click', () => {

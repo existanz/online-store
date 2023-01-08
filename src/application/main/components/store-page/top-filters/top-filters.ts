@@ -10,6 +10,7 @@ import { UpdateData } from '../../../services/store-page/update-view.service';
 import { CheckboxFilterService } from '../../../services/store-page/filters/checkbox-filters.service';
 import { LeftFilters } from '../left-filters/left-filters';
 import { ViewService } from '../../../services/store-page/change-view.service';
+import { Querry } from '../../../../shared/services/querry.service';
 
 export class TopFilters extends DOMElement {
   private topFiltersToggle: DOMElement;
@@ -58,6 +59,7 @@ export class TopFilters extends DOMElement {
         const newState = SortService.sort((e.target as HTMLInputElement).value);
         if (newState) {
           ViewService.view.render(newState);
+          Querry.updateQuerry();
         }
       }
     });
@@ -87,6 +89,12 @@ export class TopFilters extends DOMElement {
 
         this.leftFilters.updateMinMaxPrice();
         this.leftFilters.updateMinMaxStock();
+      }
+    });
+
+    this.node.addEventListener('change', (e: Event) => {
+      if ((e.target as HTMLElement).closest('.search__input')) {
+        Querry.updateQuerry();
       }
     });
   }

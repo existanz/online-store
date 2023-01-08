@@ -14,10 +14,8 @@ export abstract class State {
       .then((res) => res.json())
       .then((data: ResponseData) => (this.allData = data.products));
 
-    // смотрим квери запрос, обрабатываем allData и присваиваем в current. если запроса нет, то просто присваиваем allData
     this.current = this.allData;
 
-    //перенес загрузку корзины в картсервис
     this.cart = [];
     CartService.load();
   }
