@@ -47,12 +47,8 @@ export class Pagination extends DOMElement {
     });
 
     this.productOnPage.node.addEventListener('input', (e) => {
-      let newValue = parseInt((e.target as HTMLInputElement).value);
-      if (newValue > 50) newValue = 50;
-      if (newValue < 1) newValue = 1;
-
-      this.productOnPage.value = newValue;
-      PaginationService.productsPerPage = newValue;
+      PaginationService.productsPerPage = parseInt((e.target as HTMLInputElement).value);
+      this.render();
     });
 
     this.leftButton = new ButtonElement(this.paginationContainer.node, {
@@ -61,8 +57,8 @@ export class Pagination extends DOMElement {
     });
 
     this.leftButton.node.addEventListener('click', () => {
-      if (PaginationService.curPage > 1) PaginationService.curPage--;
-      this.currentPage.value = PaginationService.curPage;
+      PaginationService.curPage--;
+      this.render();
     });
 
     this.currentPage = new InputElement(this.paginationContainer.node, {
@@ -79,11 +75,10 @@ export class Pagination extends DOMElement {
     });
 
     this.rightButton.node.addEventListener('click', () => {
-      if (PaginationService.curPage < PaginationService.getMaxPage(data)) {
-        PaginationService.curPage++;
-        this.currentPage.value = PaginationService.curPage;
-      }
+      PaginationService.curPage++;
+      this.render();
     });
+
     this.totalPages = new DOMElement(this.paginationContainer.node, {
       tagName: 'p',
       classList: ['pagination__total-page'],
