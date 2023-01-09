@@ -125,7 +125,7 @@ export abstract class Validation {
 
     const firstNumber: boolean = value.split('')[0] === '+';
     const numbers: boolean = /^\d+$/.test(value.slice(1));
-    const length: boolean = value.slice(1).length > 8;
+    const length: boolean = value.slice(1).trim().length > 8;
 
     const message = firstNumber && numbers && length ? '✓ Valid' : '✖ Invalid';
     this.state.phone = firstNumber && numbers && length;
