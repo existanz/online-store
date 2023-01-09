@@ -123,8 +123,10 @@ export default abstract class CartService {
 
   static clearCart() {
     State.cart = [];
+    this.countsCart = [];
+    this.totalCount = 0;
+    this.totalSum = 0;
     this.save();
-    this.load();
   }
 }
 
