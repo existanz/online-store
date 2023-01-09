@@ -48,7 +48,7 @@ export class PersonalInfo extends DOMElement {
 
     this.phoneInput = new InputElement(this.phoneContainer.node, {
       tagName: 'input',
-      type: 'number',
+      type: 'text',
       classList: ['personal-info__input'],
       placeholder: 'Phone',
     });
@@ -72,7 +72,7 @@ export class PersonalInfo extends DOMElement {
 
     this.emailInput = new InputElement(this.emailContainer.node, {
       tagName: 'input',
-      type: 'email',
+      type: 'text',
       classList: ['personal-info__input'],
       placeholder: 'Email',
     });
