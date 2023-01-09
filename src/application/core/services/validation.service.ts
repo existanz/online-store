@@ -1,6 +1,8 @@
 import CartService from '../../main/services/cart-page/cart.service';
+import { ViewService } from '../../main/services/store-page/change-view.service';
 import { DOMElement } from '../../shared/components/base-elements/dom-element';
 import { ProductsData } from '../../shared/models/response-data';
+import { State } from '../../shared/services/state.service';
 import { ModalPage } from '../components/modal/modal';
 import { ModalService } from './modal.service';
 
@@ -34,6 +36,8 @@ export abstract class Validation {
       setTimeout(() => {
         window.location.hash = '#store';
         CartService.clearCart();
+        const state = State.getCurrent();
+        ViewService.view.render(state);
         ModalService.removeModal();
       }, 3000);
     }
