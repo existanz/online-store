@@ -7,6 +7,7 @@ import { PersonalInfo } from './personal-info/personal-info';
 import { CardInfo } from './card-info/card-info';
 import { ModalService } from '../../services/modal.service';
 import { BlueButton } from '../../../shared/components/buttons/blue-button';
+import { Validation } from '../../services/validation.service';
 
 export class ModalPage extends Page {
   private container: DOMElement;
@@ -66,5 +67,6 @@ export class ModalPage extends Page {
 
     this.personalInfo = new PersonalInfo(this.personalInfoContainer.node);
     this.cardInfo = new CardInfo(this.cardInfoContainer.node);
+    Validation.addListeners(this);
   }
 }

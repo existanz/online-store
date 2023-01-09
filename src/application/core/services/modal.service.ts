@@ -9,7 +9,6 @@ export abstract class ModalService {
   static appendModal() {
     if (this.checkHash()) window.location.hash = '#cart';
     Validation.isEmptyCart(State.cart) ? this.addDisableButton() : this.addValidButton();
-    Validation.addListeners(this.modal);
     document.body.append(this.modal.node);
   }
 
