@@ -47,6 +47,7 @@ export class ModalPage extends Page {
       tagName: 'form',
       classList: ['model__form'],
     });
+    this.form.node.addEventListener('submit', (e) => e.preventDefault());
 
     this.personalInfoContainer = new DOMElement(this.form.node, {
       tagName: 'div',
