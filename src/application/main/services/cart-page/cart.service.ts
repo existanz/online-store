@@ -14,7 +14,7 @@ export default abstract class CartService {
 
   static addToCart(product: ProductsData) {
     const idInCart = this.idInCart(product);
-    if (this.countsCart[idInCart] < product.stock) {
+    if (idInCart < 0 || this.countsCart[idInCart] < product.stock) {
       if (idInCart >= 0) {
         this.countsCart[idInCart]++;
       } else {
@@ -40,6 +40,17 @@ export default abstract class CartService {
     }
     this.totalCount--;
     this.totalSum -= product.price;
+    this.save();
+  }
+
+  static removePositionFromCart(product: ProductsData) {
+    const idInCart = this.idInCart(product);
+    if (idInCart >= 0) {
+      State.cart.splice(idInCart, 1);
+      this.countsCart.splice(idInCart, 1);
+    }
+    this.totalSum = State.cart.map((item, id) => item.price * this.countsCart[id]).reduce((acc, cur) => acc + cur);
+    this.totalCount = this.countsCart.reduce((acc, cur) => acc + cur);
     this.save();
   }
 
@@ -107,6 +118,7 @@ export default abstract class CartService {
 
   static clearCart() {
     State.cart = [];
+    this.save();
   }
 }
 
