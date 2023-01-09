@@ -10,6 +10,7 @@ import { ModalService } from '../../../../core/services/modal.service';
 export class Summary extends DOMElement {
   private title: DOMElement;
   private priceContainer: DOMElement;
+  private totalCount: DOMElement;
   private totalPrice: DOMElement;
   private newPrice: DOMElement;
   private input: InputElement;
@@ -35,6 +36,12 @@ export class Summary extends DOMElement {
     this.priceContainer = new DOMElement(this.node, {
       tagName: 'div',
       classList: ['summary__price-container'],
+    });
+
+    this.totalCount = new DOMElement(this.priceContainer.node, {
+      tagName: 'p',
+      classList: ['summary__total-count'],
+      content: `Products: ${CartService.getTotalCount()}`,
     });
 
     this.totalPrice = new DOMElement(this.priceContainer.node, {

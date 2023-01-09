@@ -18,8 +18,12 @@
   align-items: center;
 }
 
+.summary__total-count {
+  margin-bottom: 20px;
+}
+
 .summary__total-price {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 
     &--active {
       text-decoration: line-through;
