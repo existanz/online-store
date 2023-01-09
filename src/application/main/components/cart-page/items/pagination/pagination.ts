@@ -69,6 +69,7 @@ export class Pagination extends DOMElement {
       tagName: 'input',
       classList: ['pagination__current-page'],
       type: 'number',
+      readonly: true,
       value: PaginationService.curPage.toString(),
     });
 
