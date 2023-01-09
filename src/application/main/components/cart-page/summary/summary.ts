@@ -140,6 +140,7 @@ export class Summary extends DOMElement {
   }
 
   public render() {
+    this.totalCount.node.textContent = `Products: ${CartService.getTotalCount()}`;
     this.totalPrice.node.textContent = `Total price: $${CartService.getTotalSum()}`;
     this.newPrice.node.textContent = `Current price: $${CartService.getCurSum()}`;
     this.renderPromos();
