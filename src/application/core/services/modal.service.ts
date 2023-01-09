@@ -1,12 +1,14 @@
 import { ProductsData } from '../../shared/models/response-data';
 import { State } from '../../shared/services/state.service';
 import { ModalPage } from '../components/modal/modal';
+import { Validation } from './validation.service';
 
 export abstract class ModalService {
   static modal = new ModalPage('modal');
 
   static appendModal() {
     if (this.checkHash()) window.location.hash = '#cart';
+    Validation.isEmptyCart(State.cart) ? this.addDisableButton() : this.addValidButton();
     document.body.append(this.modal.node);
   }
 
@@ -16,10 +18,45 @@ export abstract class ModalService {
   }
 
   private static checkHash() {
-    return window.location.hash.slice(1).split('?')[0] === 'product';
+    return window.location.hash.slice(1).split('?')[0] !== 'cart';
   }
 
   static removeModal() {
     ModalService.modal.node.remove();
+  }
+
+  static clearModal() {
+    this.modal.personalInfo.nameInput.value = '';
+    this.modal.personalInfo.phoneInput.value = '';
+    this.modal.personalInfo.addressInput.value = '';
+    this.modal.personalInfo.emailInput.value = '';
+    this.modal.cardInfo.number.value = '';
+    this.modal.cardInfo.cardName.node.innerText = 'Card type:';
+    this.modal.cardInfo.cardMounthYear.value = '';
+    this.modal.cardInfo.cvv.value = '';
+  }
+
+  static removeMessage() {
+    Array.from(document.querySelectorAll('.personal-info__error')).forEach((item) => item.remove());
+  }
+
+  static removeSumbitMessage() {
+    Array.from(this.modal.cardInfo.node.querySelectorAll('.personal-info__error')).forEach((item) => item.remove());
+  }
+
+  private static addDisableButton() {
+    (this.modal.submit.node as HTMLButtonElement).disabled = true;
+    this.modal.submit.node.innerText = 'Bag is empty';
+    this.modal.submit.node.style.opacity = '0.5';
+  }
+
+  private static addValidButton() {
+    (this.modal.submit.node as HTMLButtonElement).disabled = false;
+    this.modal.submit.node.innerText = 'Submit';
+    this.modal.submit.node.style.opacity = '1';
+    this.modal.submit.node.addEventListener('click', () => {
+      const state = Validation.getState();
+      Validation.checkAllValidity(state, this.modal.cardInfo.cardContainer.node);
+    });
   }
 }

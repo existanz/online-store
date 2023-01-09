@@ -20,6 +20,10 @@ export abstract class State {
     CartService.load();
   }
 
+  static getCurrent() {
+    return this.current;
+  }
+
   static getProductByID(idProd: number): ProductsData {
     const res = this.allData.find((product) => product.id === idProd);
     if (res) return res;

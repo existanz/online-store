@@ -7,6 +7,7 @@ import { PersonalInfo } from './personal-info/personal-info';
 import { CardInfo } from './card-info/card-info';
 import { ModalService } from '../../services/modal.service';
 import { BlueButton } from '../../../shared/components/buttons/blue-button';
+import { Validation } from '../../services/validation.service';
 
 export class ModalPage extends Page {
   private container: DOMElement;
@@ -14,9 +15,9 @@ export class ModalPage extends Page {
   private form: FormElement;
   private personalInfoContainer: DOMElement;
   private cardInfoContainer: DOMElement;
-  private personalInfo: PersonalInfo;
-  private cardInfo: CardInfo;
-  private submit: BlueButton;
+  public personalInfo: PersonalInfo;
+  public cardInfo: CardInfo;
+  public submit: BlueButton;
 
   constructor(id: string) {
     super(id);
@@ -59,11 +60,13 @@ export class ModalPage extends Page {
 
     this.submit = new BlueButton(this.form.node, {
       tagName: 'button',
+      type: 'submit',
       classList: ['modal__submit'],
       content: 'Submit',
     });
 
     this.personalInfo = new PersonalInfo(this.personalInfoContainer.node);
     this.cardInfo = new CardInfo(this.cardInfoContainer.node);
+    Validation.addListeners(this);
   }
 }
