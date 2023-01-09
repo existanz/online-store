@@ -49,8 +49,13 @@ export default abstract class CartService {
       State.cart.splice(idInCart, 1);
       this.countsCart.splice(idInCart, 1);
     }
-    this.totalSum = State.cart.map((item, id) => item.price * this.countsCart[id]).reduce((acc, cur) => acc + cur);
-    this.totalCount = this.countsCart.reduce((acc, cur) => acc + cur);
+    if (State.cart.length == 0) {
+      this.totalCount = 0;
+      this.totalSum = 0;
+    } else {
+      this.totalSum = State.cart.map((item, id) => item.price * this.countsCart[id]).reduce((acc, cur) => acc + cur);
+      this.totalCount = this.countsCart.reduce((acc, cur) => acc + cur);
+    }
     this.save();
   }
 
