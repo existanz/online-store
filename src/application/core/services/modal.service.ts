@@ -25,6 +25,25 @@ export abstract class ModalService {
     ModalService.modal.node.remove();
   }
 
+  static clearModal() {
+    this.modal.personalInfo.nameInput.value = '';
+    this.modal.personalInfo.phoneInput.value = '';
+    this.modal.personalInfo.addressInput.value = '';
+    this.modal.personalInfo.emailInput.value = '';
+    this.modal.cardInfo.number.value = '';
+    this.modal.cardInfo.cardName.node.innerText = 'Card type:';
+    this.modal.cardInfo.cardMounthYear.value = '';
+    this.modal.cardInfo.cvv.value = '';
+  }
+
+  static removeMessage() {
+    Array.from(document.querySelectorAll('.personal-info__error')).forEach((item) => item.remove());
+  }
+
+  static removeSumbitMessage() {
+    Array.from(this.modal.cardInfo.node.querySelectorAll('.personal-info__error')).forEach((item) => item.remove());
+  }
+
   private static addDisableButton() {
     (this.modal.submit.node as HTMLButtonElement).disabled = true;
     this.modal.submit.node.innerText = 'Bag is empty';

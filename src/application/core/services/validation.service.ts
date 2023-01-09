@@ -27,8 +27,21 @@ export abstract class Validation {
     return Validation.state;
   }
 
+  protected static clearState() {
+    this.state = {
+      name: false,
+      phone: false,
+      address: false,
+      email: false,
+      cardNumber: false,
+      mounth: false,
+      cvv: false,
+    };
+  }
+
   static checkAllValidity(state: ValidationState, element: HTMLElement) {
     const result = Object.entries(state).filter((item) => item[1] === false);
+    ModalService.removeSumbitMessage();
     if (result.length) {
       this.createValidationMessage(element, '✖ Error in validation');
     } else {
@@ -38,6 +51,9 @@ export abstract class Validation {
         CartService.clearCart();
         const state = State.getCurrent();
         ViewService.view.render(state);
+        ModalService.clearModal();
+        ModalService.removeMessage();
+        this.clearState();
         ModalService.removeModal();
       }, 3000);
     }
