@@ -35,6 +35,9 @@ export abstract class ModalService {
     (this.modal.submit.node as HTMLButtonElement).disabled = false;
     this.modal.submit.node.innerText = 'Submit';
     this.modal.submit.node.style.opacity = '1';
-    this.modal.submit.node.addEventListener('click', () => Validation.checkAllValidity());
+    this.modal.submit.node.addEventListener('click', () => {
+      const state = Validation.getState();
+      Validation.checkAllValidity(state, this.modal.cardInfo.cardContainer.node);
+    });
   }
 }

@@ -124,6 +124,7 @@ export default abstract class CartService {
   static clearCart() {
     State.cart = [];
     this.save();
+    this.load();
   }
 }
 

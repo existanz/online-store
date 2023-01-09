@@ -1,15 +1,42 @@
+import CartService from '../../main/services/cart-page/cart.service';
 import { DOMElement } from '../../shared/components/base-elements/dom-element';
 import { ProductsData } from '../../shared/models/response-data';
 import { ModalPage } from '../components/modal/modal';
+import { ModalService } from './modal.service';
+
+type ValidationState = Record<string, boolean>;
 
 export abstract class Validation {
+  static state = {
+    name: false,
+    phone: false,
+    address: false,
+    email: false,
+    cardNumber: false,
+    mounth: false,
+    cvv: false,
+  };
+
   public static isEmptyCart(state: ProductsData[]) {
     return state.length === 0;
   }
 
-  static checkAllValidity() {
-    console.log('check');
-    // Validation.validateName(e, modal.personalInfo.nameContainer.node);
+  public static getState() {
+    return Validation.state;
+  }
+
+  static checkAllValidity(state: ValidationState, element: HTMLElement) {
+    const result = Object.entries(state).filter((item) => item[1] === false);
+    if (result.length) {
+      this.createValidationMessage(element, '✖ Error in validation');
+    } else {
+      this.createValidationMessage(element, 'Done! Redirect in 3 sec');
+      setTimeout(() => {
+        window.location.hash = '#store';
+        CartService.clearCart();
+        ModalService.removeModal();
+      }, 3000);
+    }
   }
 
   private static createValidationMessage(element: HTMLElement, message: string) {
@@ -19,8 +46,6 @@ export abstract class Validation {
       content: message,
     });
     element.append(error.node);
-    // при закрытии модалки не стирает старное значение в сообщении
-    // повявляется 2+ сообщения
     document.querySelector('.modal__close')?.addEventListener('click', () => this.removeErrorMessage(error));
     element.addEventListener('input', () => this.removeErrorMessage(error));
   }
@@ -71,6 +96,7 @@ export abstract class Validation {
     const length: boolean = value.split(' ').filter((item) => item.trim().length < 3).length === 0;
 
     const message = count && words && length ? '✓ Valid' : '✖ Invalid';
+    this.state.name = count && words && length;
     this.createValidationMessage(element, message);
   }
 
@@ -82,6 +108,7 @@ export abstract class Validation {
     const length: boolean = value.slice(1).length > 8;
 
     const message = firstNumber && numbers && length ? '✓ Valid' : '✖ Invalid';
+    this.state.phone = firstNumber && numbers && length;
     this.createValidationMessage(element, message);
   }
 
@@ -92,6 +119,7 @@ export abstract class Validation {
     const length: boolean = value.split(' ').filter((item) => item.trim().length < 5).length === 0;
 
     const message = count && length ? '✓ Valid' : '✖ Invalid';
+    this.state.address = count && length;
     this.createValidationMessage(element, message);
   }
 
@@ -103,6 +131,7 @@ export abstract class Validation {
 
     const message = [...arr1, ...arr2].length === 4 ? '✓ Valid' : '✖ Invalid';
     this.createValidationMessage(element, message);
+    this.state.email = [...arr1, ...arr2].length === 4;
   }
 
   private static validateCardNumber(e: Event, element: HTMLElement) {
@@ -110,6 +139,7 @@ export abstract class Validation {
 
     const message = value.length === 16 ? '✓ Valid number' : '✖ Invalid number';
     this.createValidationMessage(element, message);
+    this.state.cardNumber = value.length === 16;
   }
 
   private static formatCardNumber(e: Event, cardType: HTMLElement) {
@@ -149,6 +179,7 @@ export abstract class Validation {
 
     const message = mounth && length ? '✓ Valid thru' : '✖ Invalid thru';
     this.createValidationMessage(element, message);
+    this.state.mounth = mounth && length;
   }
 
   private static formatMounthYear(e: Event) {
@@ -165,6 +196,7 @@ export abstract class Validation {
 
     const message = length ? '✓ Valid cvv' : '✖ Invalid cvv';
     this.createValidationMessage(element, message);
+    this.state.cvv = length;
   }
 
   private static formatCvv(e: Event) {
