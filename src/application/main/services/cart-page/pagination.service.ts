@@ -14,7 +14,7 @@ export default abstract class PaginationService {
   }
 
   public static getMaxPage(data: ProductsData[]) {
-    return Math.ceil(data.length / this._productsPerPage);
+    return Math.max(Math.ceil(data.length / this._productsPerPage), 1);
   }
 
   public static set curPage(val: number) {
