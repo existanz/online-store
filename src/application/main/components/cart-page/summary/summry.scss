@@ -30,6 +30,13 @@
     }
 }
 
+.summary__current-price {
+  visibility: hidden;
+
+  &--active {
+    visibility: visible;
+  }
+}
 .summary__form {
   display: flex;
   flex-direction: column;
