@@ -1,5 +1,6 @@
 import './header-total-price.scss';
 import { DOMElement } from '../../../../shared/components/base-elements/dom-element';
+import CartService from '../../../../main/services/cart-page/cart.service';
 
 export class TotalPrice {
   private text: DOMElement;
@@ -20,9 +21,11 @@ export class TotalPrice {
       classList: ['total-price__price'],
       content: '$9999999',
     });
+
+    this.updatePrice();
   }
 
-  public updatePrice(newPrice: number): void {
-    this.price.node.textContent = `$${newPrice}`;
+  public updatePrice(): void {
+    this.price.node.textContent = `$${CartService.getTotalSum()}`;
   }
 }

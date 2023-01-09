@@ -10,8 +10,9 @@ import { ModalService } from '../../../../core/services/modal.service';
 export class Summary extends DOMElement {
   private title: DOMElement;
   private priceContainer: DOMElement;
+  private totalCount: DOMElement;
   private totalPrice: DOMElement;
-  private newPrice: DOMElement;
+  private currentPrice: DOMElement;
   private input: InputElement;
   private form: FormElement;
   private promt: DOMElement;
@@ -37,14 +38,20 @@ export class Summary extends DOMElement {
       classList: ['summary__price-container'],
     });
 
+    this.totalCount = new DOMElement(this.priceContainer.node, {
+      tagName: 'p',
+      classList: ['summary__total-count'],
+      content: `Products: ${CartService.getTotalCount()}`,
+    });
+
     this.totalPrice = new DOMElement(this.priceContainer.node, {
       tagName: 'p',
       classList: ['summary__total-price', 'summary__total-price--active'],
       content: `Total price: $${CartService.getTotalSum()}`,
     });
 
-    this.newPrice = new DOMElement(this.priceContainer.node, {
-      classList: ['summary__current-price'],
+    this.currentPrice = new DOMElement(this.priceContainer.node, {
+      classList: ['summary__current-price', 'summary__current-price--active'],
       tagName: 'p',
       content: `Current price: $${CartService.getCurSum()}`,
     });
@@ -130,11 +137,19 @@ export class Summary extends DOMElement {
         this.discountButton.node.addEventListener('click', () => CartService.activatePromo(promo));
       }
     }
+    if (CartService.activePromo.length > 0) {
+      this.totalPrice.node.classList.add('summary__total-price--active');
+      this.currentPrice.node.classList.add('summary__current-price--active');
+    } else {
+      this.totalPrice.node.classList.remove('summary__total-price--active');
+      this.currentPrice.node.classList.remove('summary__current-price--active');
+    }
   }
 
   public render() {
+    this.totalCount.node.textContent = `Products: ${CartService.getTotalCount()}`;
     this.totalPrice.node.textContent = `Total price: $${CartService.getTotalSum()}`;
-    this.newPrice.node.textContent = `Current price: $${CartService.getCurSum()}`;
+    this.currentPrice.node.textContent = `Current price: $${CartService.getCurSum()}`;
     this.renderPromos();
   }
 }

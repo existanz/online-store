@@ -69,7 +69,7 @@ export class Description extends DOMElement {
     if (CartService.idInCart(product) >= 0) this.bagButton.node.textContent = 'Remove from bag';
 
     this.bagButton.node.addEventListener('click', () => {
-      if (CartService.idInCart(product) >= 0) CartService.removeFromCart(product);
+      if (CartService.idInCart(product) >= 0) CartService.removePositionFromCart(product);
       else CartService.addToCart(product);
       this.updateBagButton(product);
       ViewService.view.render(State.current);

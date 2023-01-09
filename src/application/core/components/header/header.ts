@@ -3,7 +3,6 @@ import { DOMElement } from '../../../shared/components/base-elements/dom-element
 import { Logo } from './header-logo/header-logo';
 import { TotalPrice } from './header-total-price/header-total-price';
 import { Cart } from './header-cart/header-cart';
-import { Navigation } from './temp-nav/nav';
 
 export class Header extends DOMElement {
   private container: DOMElement;
@@ -15,7 +14,6 @@ export class Header extends DOMElement {
   private logo: Logo;
   private price: TotalPrice;
   private cart: Cart;
-  private tmpNav: Navigation;
 
   constructor(parentNode: HTMLElement) {
     super(parentNode, { tagName: 'header', classList: ['header'] });
@@ -48,6 +46,12 @@ export class Header extends DOMElement {
     this.logo = new Logo(this.headerLogo.node);
     this.price = new TotalPrice(this.headerTotalPrice.node);
     this.cart = new Cart(this.headerCart.node);
-    this.tmpNav = new Navigation(this.nav.node);
+
+    this.render();
+  }
+
+  public render() {
+    this.cart.updateCount();
+    this.price.updatePrice();
   }
 }

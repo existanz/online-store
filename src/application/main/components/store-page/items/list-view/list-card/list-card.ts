@@ -26,7 +26,7 @@ export class ListCard extends DOMElement {
 
     this.node.addEventListener('click', (el) => {
       if (el.target == this.button.node) {
-        if (this.hasInCart) CartService.removeFromCart(product);
+        if (this.hasInCart) CartService.removePositionFromCart(product);
         else CartService.addToCart(product);
         this.updateButton(product);
       } else {
