@@ -213,7 +213,7 @@ export class LeftFilters extends DOMElement {
 
       this.updateMinMaxPrice();
       this.updateMinMaxStock();
-      window.location.href = '/#store';
+      window.location.href = '#store';
     });
 
     this.copyButton.node.addEventListener('click', () => {
