@@ -1,5 +1,5 @@
-import { Cart } from "../components/header/header-cart/header-cart";
-import { TotalPrice } from "../components/header/header-total-price/header-total-price";
+import { Cart } from '../components/header/header-cart/header-cart';
+import { TotalPrice } from '../components/header/header-total-price/header-total-price';
 
 export abstract class HeaderService {
   static price: TotalPrice;
