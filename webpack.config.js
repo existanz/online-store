@@ -68,6 +68,10 @@ const baseConfig = {
       template: path.resolve(__dirname, './src/application/index.html'),
       filename: 'index.html',
     }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, 'src', 'application', '404.html'),
+      filename: '404.html',
+    }),
     new CleanWebpackPlugin(),
     new EslingPlugin({ extensions: 'ts' })
   ]
