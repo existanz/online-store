@@ -43,6 +43,24 @@ export abstract class Validation {
     modal.personalInfo.emailInput.node.addEventListener('change', (e: Event) =>
       Validation.validateEmail(e, modal.personalInfo.emailContainer.node)
     );
+    modal.cardInfo.number.node.addEventListener('change', (e: Event) => {
+      Validation.validateCardNumber(e, modal.cardInfo.cardContainer.node);
+    });
+    modal.cardInfo.number.node.addEventListener('input', (e: Event) => {
+      Validation.formatCardNumber(e, modal.cardInfo.cardName.node);
+    });
+    modal.cardInfo.cardMounthYear.node.addEventListener('change', (e: Event) => {
+      Validation.validateMounthYear(e, modal.cardInfo.cardContainer.node);
+    });
+    modal.cardInfo.cardMounthYear.node.addEventListener('input', (e: Event) => {
+      Validation.formatMounthYear(e);
+    });
+    modal.cardInfo.cvv.node.addEventListener('change', (e: Event) => {
+      Validation.validateCvv(e, modal.cardInfo.cardContainer.node);
+    });
+    modal.cardInfo.cvv.node.addEventListener('input', (e: Event) => {
+      Validation.formatCvv(e);
+    });
   }
 
   private static validateName(e: Event, element: HTMLElement) {
@@ -85,5 +103,73 @@ export abstract class Validation {
 
     const message = [...arr1, ...arr2].length === 4 ? '✓ Valid' : '✖ Invalid';
     this.createValidationMessage(element, message);
+  }
+
+  private static validateCardNumber(e: Event, element: HTMLElement) {
+    const value = (e.target as HTMLInputElement).value;
+
+    const message = value.length === 16 ? '✓ Valid number' : '✖ Invalid number';
+    this.createValidationMessage(element, message);
+  }
+
+  private static formatCardNumber(e: Event, cardType: HTMLElement) {
+    const value = (e.target as HTMLInputElement).value;
+
+    switch (value.split('')[0]) {
+      case '1':
+        cardType.innerText = 'Card type: SUPER-VISA';
+        break;
+      case '2':
+        cardType.innerText = 'Card type: PUPER-VISA';
+        break;
+      case '3':
+        cardType.innerText = 'Card type: DUPER-VISA';
+        break;
+      case '4':
+        cardType.innerText = 'Card type: VISA';
+        break;
+      case '5':
+        cardType.innerText = 'Card type: MASTER-CARD';
+        break;
+      case '6':
+        cardType.innerText = 'Card type: RS-CARD';
+        break;
+      default:
+        cardType.innerText = 'Card type:';
+        break;
+    }
+    if (value.length > 16) (e.target as HTMLInputElement).value = value.slice(0, 16);
+  }
+
+  private static validateMounthYear(e: Event, element: HTMLElement) {
+    const value = (e.target as HTMLInputElement).value.split('');
+
+    const mounth = Number([value[0], value[1]].join('')) < 13;
+    const length = value.length === 5;
+
+    const message = mounth && length ? '✓ Valid thru' : '✖ Invalid thru';
+    this.createValidationMessage(element, message);
+  }
+
+  private static formatMounthYear(e: Event) {
+    const value = (e.target as HTMLInputElement).value;
+    if (!/^\d+$/.test(value.slice(-1))) (e.target as HTMLInputElement).value = value.slice(0, -1);
+    if (value.length > 5) (e.target as HTMLInputElement).value = value.slice(0, 5);
+    if (value.length == 3) (e.target as HTMLInputElement).value = [value[0], value[1], '/', value[3]].join('');
+  }
+
+  private static validateCvv(e: Event, element: HTMLElement) {
+    const value = (e.target as HTMLInputElement).value.split('');
+
+    const length = value.length === 3;
+
+    const message = length ? '✓ Valid cvv' : '✖ Invalid cvv';
+    this.createValidationMessage(element, message);
+  }
+
+  private static formatCvv(e: Event) {
+    const value = (e.target as HTMLInputElement).value;
+    if (!/^\d+$/.test(value.slice(-1))) (e.target as HTMLInputElement).value = value.slice(0, -1);
+    if (value.length > 3) (e.target as HTMLInputElement).value = value.slice(0, 3);
   }
 }
