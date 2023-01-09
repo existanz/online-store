@@ -24,6 +24,7 @@ class App {
     await State.load();
     Querry.loadStateFromQuerry();
     this.router = new Router(this.main.container);
+    this.header.render();
   }
 }
 

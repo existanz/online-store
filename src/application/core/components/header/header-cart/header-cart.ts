@@ -2,6 +2,7 @@ import './header-cart.scss';
 import { DOMElement } from '../../../../shared/components/base-elements/dom-element';
 import { LinkElement } from '../../../../shared/components/base-elements/link-element';
 import { SVG } from '../../../../shared/components/svg-icons';
+import CartService from '../../../../main/services/cart-page/cart.service';
 
 export class Cart extends LinkElement {
   private counter: DOMElement;
@@ -27,16 +28,15 @@ export class Cart extends LinkElement {
       classList: ['cart-counter__text'],
       content: 'Bag',
     });
-
     this.updateCount();
   }
 
-  private setCount(count: number): void {
-    this.counter.node.innerText = `${count}`;
+  private setCount(): void {
+    this.counter.node.innerText = `${CartService.getTotalCount()}`;
   }
 
   public updateCount(): void {
-    // чекаем данные в корзине и обновляем, если нужно
+    this.setCount();
     if (this.counter.node.innerText === '0') {
       this.counter.node.classList.add('cart-counter__count--hidden');
     } else {

@@ -49,5 +49,12 @@ export class Header extends DOMElement {
     this.price = new TotalPrice(this.headerTotalPrice.node);
     this.cart = new Cart(this.headerCart.node);
     this.tmpNav = new Navigation(this.nav.node);
+
+    this.render();
+  }
+
+  public render() {
+    this.cart.updateCount();
+    this.price.updatePrice();
   }
 }
