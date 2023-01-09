@@ -1,5 +1,6 @@
 import { ProductsData } from '../../../shared/models/response-data';
 import { State } from '../../../shared/services/state.service';
+import CartService from './cart.service';
 
 export default abstract class PaginationService {
   private static _productsPerPage = 3;
@@ -20,6 +21,7 @@ export default abstract class PaginationService {
     this._curPage = val;
     if (val < 1) this._curPage = 1;
     if (val > this.getMaxPage(State.cart)) this._curPage = this.getMaxPage(State.cart);
+    CartService.save();
   }
 
   public static get curPage(): number {
@@ -30,6 +32,7 @@ export default abstract class PaginationService {
     if (val >= 1) this._productsPerPage = val;
     if (val < 1 || isNaN(val)) this._productsPerPage = 1;
     if (val > 100) this._productsPerPage = 100;
+    CartService.save();
   }
 
   public static get productsPerPage(): number {

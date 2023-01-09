@@ -1,6 +1,7 @@
 import { ProductsData } from '../../../shared/models/response-data';
 import LocalStorageSvc from '../../../shared/services/local-storage.service';
 import { State } from '../../../shared/services/state.service';
+import PaginationService from './pagination.service';
 
 export default abstract class CartService {
   static countsCart: number[] = [];
@@ -50,11 +51,17 @@ export default abstract class CartService {
   }
 
   static save() {
-    this.localStorageSVC.setRecord('cart', { cart: State.cart, counts: this.countsCart, promo: this.activePromo });
+    this.localStorageSVC.setRecord('cart', {
+      cart: State.cart,
+      counts: this.countsCart,
+      promo: this.activePromo,
+      prodsPerPage: PaginationService.productsPerPage,
+      curPage: PaginationService.curPage,
+    });
   }
 
   static load() {
-    const cartLoad = { cart: [], counts: [], promo: [] };
+    const cartLoad = { cart: [], counts: [], promo: [], prodsPerPage: 3, curPage: 1 };
     if (this.localStorageSVC.getRecordObj('cart')) {
       Object.assign(cartLoad, this.localStorageSVC.getRecordObj('cart'));
       cartLoad.cart.forEach((product: ProductsData, id) => {
@@ -64,6 +71,8 @@ export default abstract class CartService {
       this.countsCart = cartLoad.counts;
       if (this.countsCart.length > 0) this.totalCount = this.countsCart.reduce((acc, cur) => acc + cur);
       this.activePromo = cartLoad.promo;
+      PaginationService.productsPerPage = cartLoad.prodsPerPage;
+      PaginationService.curPage = cartLoad.curPage;
     }
   }
 
