@@ -16,14 +16,16 @@ class App {
     this.header = new Header(document.body);
     this.main = new Main(document.body);
     this.footer = new Footer(document.body);
-
     this.router = null;
+
+    this.main.node.addEventListener('click', () => this.header.render());
   }
 
   public async start() {
     await State.load();
     Querry.loadStateFromQuerry();
     this.router = new Router(this.main.container);
+    this.header.render();
   }
 }
 

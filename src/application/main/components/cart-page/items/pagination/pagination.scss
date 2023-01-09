@@ -35,6 +35,12 @@
     }
 }
 
+.pagination__current-page {
+  pointer-events: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
 .pagination__input {
   margin-right: 30px;
 }
