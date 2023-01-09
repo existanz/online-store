@@ -14,16 +14,17 @@ export default abstract class CartService {
 
   static addToCart(product: ProductsData) {
     const idInCart = this.idInCart(product);
-
-    if (idInCart >= 0) {
-      this.countsCart[idInCart]++;
-    } else {
-      State.cart.push(product);
-      this.countsCart.push(1);
+    if (this.countsCart[idInCart] < product.stock) {
+      if (idInCart >= 0) {
+        this.countsCart[idInCart]++;
+      } else {
+        State.cart.push(product);
+        this.countsCart.push(1);
+      }
+      this.totalCount++;
+      this.totalSum += product.price;
+      this.save();
     }
-    this.totalCount++;
-    this.totalSum += product.price;
-    this.save();
   }
 
   static removeFromCart(product: ProductsData) {
@@ -102,6 +103,10 @@ export default abstract class CartService {
 
   static getCurSum() {
     return (this.totalSum * (100 - this.activePromo.length * 10)) / 100;
+  }
+
+  static clearCart() {
+    State.cart = [];
   }
 }
 

@@ -17,7 +17,7 @@ export class CartItems extends DOMElement {
     });
 
     this.pagination = new Pagination(this.node, data);
-    this.cartList = new CartList(this.node, data);
+    this.cartList = new CartList(this.node);
     this.emptyBag = new DOMElement(this.node, {
       tagName: 'p',
       classList: ['cart-items__empty', 'cart-items__empty--visible'],
