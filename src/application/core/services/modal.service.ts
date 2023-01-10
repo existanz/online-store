@@ -66,10 +66,10 @@ export abstract class ModalService {
     if (!state.phone) Validation.createValidationMessage(this.modal.personalInfo.phoneContainer.node, '✖ Invalid');
     if (!state.address) Validation.createValidationMessage(this.modal.personalInfo.addressContainer.node, '✖ Invalid');
     if (!state.email) Validation.createValidationMessage(this.modal.personalInfo.emailContainer.node, '✖ Invalid');
-    let message = ''
-    if (!state.cardNumber) message = message + 'card '
-    if (!state.mounth) message = message + 'thru '
-    if (!state.cvv) message = message + 'cvv '
+    let message = '';
+    if (!state.cardNumber) message = message + 'card ';
+    if (!state.mounth) message = message + 'thru ';
+    if (!state.cvv) message = message + 'cvv ';
     if (message.length) message = '✖ Invalid in ' + message;
     Validation.createValidationMessage(this.modal.cardInfo.cardContainer.node, message);
   }
