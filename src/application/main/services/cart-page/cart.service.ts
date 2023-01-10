@@ -2,9 +2,14 @@ import { HeaderService } from '../../../core/services/header.service';
 import { ProductsData } from '../../../shared/models/response-data';
 import LocalStorageSvc from '../../../shared/services/local-storage.service';
 import { State } from '../../../shared/services/state.service';
+import { CartItems } from '../../components/cart-page/items/items';
+import { CartItem } from '../../components/cart-page/items/list/cart-item';
+import { CartList } from '../../components/cart-page/items/list/cart-list';
 import PaginationService from './pagination.service';
 
 export default abstract class CartService {
+  static container: CartList;
+  static cartItems: CartItems;
   static countsCart: number[] = [];
   static promoList: PromoList = { RS: 10, EPAM: 10 };
   static activePromo: Promo[] = ['RS', 'EPAM'];
@@ -129,6 +134,20 @@ export default abstract class CartService {
     this.totalSum = 0;
     this.save();
     HeaderService.update();
+  }
+
+  public static render() {
+    this.container.node.innerHTML = '';
+    if (PaginationService.getCurPageProducts(State.cart).length == 0 && PaginationService.curPage > 1)
+      PaginationService.curPage--;
+    PaginationService.getCurPageProducts(State.cart).map(
+      (product, index) =>
+        new CartItem(
+          this.container.node,
+          product,
+          index + PaginationService.productsPerPage * (PaginationService.curPage - 1)
+        )
+    );
   }
 }
 

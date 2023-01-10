@@ -3,6 +3,7 @@ import { DOMElement } from '../../../../../shared/components/base-elements/dom-e
 import { InputElement } from '../../../../../shared/components/base-elements/input-element';
 import { ProductsData } from '../../../../../shared/models/response-data';
 import { State } from '../../../../../shared/services/state.service';
+import CartService from '../../../../services/cart-page/cart.service';
 import PaginationService from '../../../../services/cart-page/pagination.service';
 import './pagination.scss';
 
@@ -48,7 +49,7 @@ export class Pagination extends DOMElement {
 
     this.productOnPage.node.addEventListener('input', (e) => {
       PaginationService.productsPerPage = parseInt((e.target as HTMLInputElement).value);
-      this.render();
+      CartService.container.render();
     });
 
     this.leftButton = new ButtonElement(this.paginationContainer.node, {

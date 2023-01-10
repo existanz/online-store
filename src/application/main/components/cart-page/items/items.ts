@@ -1,13 +1,13 @@
 import { DOMElement } from '../../../../shared/components/base-elements/dom-element';
 import { ProductsData } from '../../../../shared/models/response-data';
 import { State } from '../../../../shared/services/state.service';
+import CartService from '../../../services/cart-page/cart.service';
 import './items.scss';
 import { CartList } from './list/cart-list';
 import { Pagination } from './pagination/pagination';
 
 export class CartItems extends DOMElement {
   private pagination: Pagination;
-  private cartList: CartList;
   private emptyBag: DOMElement;
 
   constructor(parentNode: HTMLElement, data: ProductsData[]) {
@@ -17,7 +17,7 @@ export class CartItems extends DOMElement {
     });
 
     this.pagination = new Pagination(this.node, data);
-    this.cartList = new CartList(this.node);
+    CartService.container = new CartList(this.node);
     this.emptyBag = new DOMElement(this.node, {
       tagName: 'p',
       classList: ['cart-items__empty', 'cart-items__empty--visible'],
@@ -30,6 +30,6 @@ export class CartItems extends DOMElement {
     if (State.cart.length == 0) this.emptyBag.node.classList.add('cart-items__empty--visible');
     else this.emptyBag.node.classList.remove('cart-items__empty--visible');
     this.pagination.render();
-    this.cartList.render();
+    CartService.container.render();
   }
 }
