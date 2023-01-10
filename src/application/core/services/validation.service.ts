@@ -7,7 +7,7 @@ import { State } from '../../shared/services/state.service';
 import { ModalPage } from '../components/modal/modal';
 import { ModalService } from './modal.service';
 
-type ValidationState = Record<string, boolean>;
+export type ValidationState = Record<string, boolean>;
 
 export abstract class Validation {
   static state = {
@@ -44,7 +44,7 @@ export abstract class Validation {
     const result = Object.entries(state).filter((item) => item[1] === false);
     ModalService.removeSumbitMessage();
     if (result.length) {
-      this.createValidationMessage(element, '✖ Error in validation');
+      ModalService.appendErrors(this.state);
     } else {
       this.createValidationMessage(element, 'Done! Redirect in 3 sec');
       setTimeout(() => {
@@ -60,7 +60,7 @@ export abstract class Validation {
     }
   }
 
-  private static createValidationMessage(element: HTMLElement, message: string) {
+  public static createValidationMessage(element: HTMLElement, message: string) {
     const error = new DOMElement(element, {
       tagName: 'p',
       classList: ['personal-info__error'],
