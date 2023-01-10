@@ -1,6 +1,7 @@
 import CartService from '../../main/services/cart-page/cart.service';
 import { ViewService } from '../../main/services/store-page/change-view.service';
 import { DOMElement } from '../../shared/components/base-elements/dom-element';
+import { SVG } from '../../shared/components/svg-icons';
 import { ProductsData } from '../../shared/models/response-data';
 import { State } from '../../shared/services/state.service';
 import { ModalPage } from '../components/modal/modal';
@@ -82,6 +83,9 @@ export abstract class Validation {
     modal.personalInfo.phoneInput.node.addEventListener('change', (e: Event) =>
       Validation.validateNumber(e, modal.personalInfo.phoneContainer.node)
     );
+    modal.personalInfo.phoneInput.node.addEventListener('input', (e: Event) =>
+      Validation.formatNumber(e)
+    );
     modal.personalInfo.addressInput.node.addEventListener('change', (e: Event) =>
       Validation.validateAdress(e, modal.personalInfo.addressContainer.node)
     );
@@ -132,6 +136,12 @@ export abstract class Validation {
     this.createValidationMessage(element, message);
   }
 
+  private static formatNumber(e: Event) {
+    const value = (e.target as HTMLInputElement).value;
+    if (value.length === 1 && value !== '+') (e.target as HTMLInputElement).value = value.slice(0, -1);
+    if (!/^\d+$/.test(value.slice(-1)) && value.length > 1) (e.target as HTMLInputElement).value = value.slice(0, -1);
+  }
+
   private static validateAdress(e: Event, element: HTMLElement) {
     const value = (e.target as HTMLInputElement).value;
 
@@ -164,6 +174,7 @@ export abstract class Validation {
 
   private static formatCardNumber(e: Event, cardType: HTMLElement) {
     const value = (e.target as HTMLInputElement).value;
+    if (!/^\d+$/.test(value.slice(-1))) (e.target as HTMLInputElement).value = value.slice(0, -1);
 
     switch (value.split('')[0]) {
       case '1':
@@ -176,10 +187,10 @@ export abstract class Validation {
         cardType.innerText = 'Card type: DUPER-VISA';
         break;
       case '4':
-        cardType.innerText = 'Card type: VISA';
+        cardType.innerHTML = `Card type: ${SVG.visa}`;
         break;
       case '5':
-        cardType.innerText = 'Card type: MASTER-CARD';
+        cardType.innerHTML = `Card type: ${SVG.masterCard}`;
         break;
       case '6':
         cardType.innerText = 'Card type: RS-CARD';

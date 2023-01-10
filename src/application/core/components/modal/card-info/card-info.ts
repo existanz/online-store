@@ -42,7 +42,7 @@ export class CardInfo extends DOMElement {
 
     this.number = new InputElement(this.numberContainer.node, {
       tagName: 'input',
-      type: 'number',
+      type: 'text',
       classList: ['card-info__input'],
       placeholder: 'Card number',
     });
