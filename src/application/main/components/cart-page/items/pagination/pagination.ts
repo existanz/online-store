@@ -50,6 +50,7 @@ export class Pagination extends DOMElement {
     this.productOnPage.node.addEventListener('input', (e) => {
       PaginationService.productsPerPage = parseInt((e.target as HTMLInputElement).value);
       CartService.container.render();
+      window.location.hash = '#cart?prodPerPage=' + PaginationService.productsPerPage;
     });
 
     this.leftButton = new ButtonElement(this.paginationContainer.node, {
