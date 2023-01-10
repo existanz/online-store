@@ -83,9 +83,7 @@ export abstract class Validation {
     modal.personalInfo.phoneInput.node.addEventListener('change', (e: Event) =>
       Validation.validateNumber(e, modal.personalInfo.phoneContainer.node)
     );
-    modal.personalInfo.phoneInput.node.addEventListener('input', (e: Event) =>
-      Validation.formatNumber(e)
-    );
+    modal.personalInfo.phoneInput.node.addEventListener('input', (e: Event) => Validation.formatNumber(e));
     modal.personalInfo.addressInput.node.addEventListener('change', (e: Event) =>
       Validation.validateAdress(e, modal.personalInfo.addressContainer.node)
     );
@@ -154,14 +152,36 @@ export abstract class Validation {
   }
 
   private static validateEmail(e: Event, element: HTMLElement) {
-    const value = (e.target as HTMLInputElement).value;
+    // const value = (e.target as HTMLInputElement).value;
 
-    const arr1: string[] = value.split('@');
-    const arr2: string[] = arr1.length > 1 ? arr1[1].split('.') : arr1;
+    // const arr1: string[] = value.split('@');
+    // const arr2: string[] = arr1.length > 1 ? arr1[1].split('.') : arr1;
 
-    const message = [...arr1, ...arr2].length === 4 ? '✓ Valid' : '✖ Invalid';
+    // const valid = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test(value);
+    // const message = valid ? '✓ Valid' : '✖ Invalid';
+    // this.createValidationMessage(element, message);
+    // this.state.email = [...arr1, ...arr2].length === 4;
+    const specialChars = '[`!#$%^&*()_+-=[]{};\':"\\|,<>/?~]/';
+    const tempInput = (e.target as HTMLInputElement).value;
+    const secondPart = tempInput.split('@').at(-1);
+    const domain = secondPart?.split('.').at(-1);
+    let message: string;
+    if (
+      !tempInput.includes('@') ||
+      tempInput.indexOf('@') !== tempInput.lastIndexOf('@') ||
+      specialChars.split('').some((specialChar) => secondPart?.includes(specialChar)) ||
+      !secondPart?.includes('.') ||
+      secondPart.indexOf('.') !== secondPart.lastIndexOf('.') ||
+      !domain ||
+      (domain && domain.length < 2)
+    ) {
+      this.state.email = false;
+      message = '✖ Invalid';
+    } else {
+      this.state.email = true;
+      message = '✓ Valid';
+    }
     this.createValidationMessage(element, message);
-    this.state.email = [...arr1, ...arr2].length === 4;
   }
 
   private static validateCardNumber(e: Event, element: HTMLElement) {
