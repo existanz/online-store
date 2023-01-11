@@ -1,12 +1,13 @@
 import CartService from '../../main/services/cart-page/cart.service';
 import { ViewService } from '../../main/services/store-page/change-view.service';
 import { DOMElement } from '../../shared/components/base-elements/dom-element';
+import { SVG } from '../../shared/components/svg-icons';
 import { ProductsData } from '../../shared/models/response-data';
 import { State } from '../../shared/services/state.service';
 import { ModalPage } from '../components/modal/modal';
 import { ModalService } from './modal.service';
 
-type ValidationState = Record<string, boolean>;
+export type ValidationState = Record<string, boolean>;
 
 export abstract class Validation {
   static state = {
@@ -43,7 +44,7 @@ export abstract class Validation {
     const result = Object.entries(state).filter((item) => item[1] === false);
     ModalService.removeSumbitMessage();
     if (result.length) {
-      this.createValidationMessage(element, '✖ Error in validation');
+      ModalService.appendErrors(this.state);
     } else {
       this.createValidationMessage(element, 'Done! Redirect in 3 sec');
       setTimeout(() => {
@@ -59,7 +60,7 @@ export abstract class Validation {
     }
   }
 
-  private static createValidationMessage(element: HTMLElement, message: string) {
+  public static createValidationMessage(element: HTMLElement, message: string) {
     const error = new DOMElement(element, {
       tagName: 'p',
       classList: ['personal-info__error'],
@@ -82,6 +83,7 @@ export abstract class Validation {
     modal.personalInfo.phoneInput.node.addEventListener('change', (e: Event) =>
       Validation.validateNumber(e, modal.personalInfo.phoneContainer.node)
     );
+    modal.personalInfo.phoneInput.node.addEventListener('input', (e: Event) => Validation.formatNumber(e));
     modal.personalInfo.addressInput.node.addEventListener('change', (e: Event) =>
       Validation.validateAdress(e, modal.personalInfo.addressContainer.node)
     );
@@ -132,6 +134,12 @@ export abstract class Validation {
     this.createValidationMessage(element, message);
   }
 
+  private static formatNumber(e: Event) {
+    const value = (e.target as HTMLInputElement).value;
+    if (value.length === 1 && value !== '+') (e.target as HTMLInputElement).value = value.slice(0, -1);
+    if (!/^\d+$/.test(value.slice(-1)) && value.length > 1) (e.target as HTMLInputElement).value = value.slice(0, -1);
+  }
+
   private static validateAdress(e: Event, element: HTMLElement) {
     const value = (e.target as HTMLInputElement).value;
 
@@ -144,14 +152,36 @@ export abstract class Validation {
   }
 
   private static validateEmail(e: Event, element: HTMLElement) {
-    const value = (e.target as HTMLInputElement).value;
+    // const value = (e.target as HTMLInputElement).value;
 
-    const arr1: string[] = value.split('@');
-    const arr2: string[] = arr1.length > 1 ? arr1[1].split('.') : arr1;
+    // const arr1: string[] = value.split('@');
+    // const arr2: string[] = arr1.length > 1 ? arr1[1].split('.') : arr1;
 
-    const message = [...arr1, ...arr2].length === 4 ? '✓ Valid' : '✖ Invalid';
+    // const valid = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test(value);
+    // const message = valid ? '✓ Valid' : '✖ Invalid';
+    // this.createValidationMessage(element, message);
+    // this.state.email = [...arr1, ...arr2].length === 4;
+    const specialChars = '[`!#$%^&*()_+-=[]{};\':"\\|,<>/?~]/';
+    const tempInput = (e.target as HTMLInputElement).value;
+    const secondPart = tempInput.split('@').at(-1);
+    const domain = secondPart?.split('.').at(-1);
+    let message: string;
+    if (
+      !tempInput.includes('@') ||
+      tempInput.indexOf('@') !== tempInput.lastIndexOf('@') ||
+      specialChars.split('').some((specialChar) => secondPart?.includes(specialChar)) ||
+      !secondPart?.includes('.') ||
+      secondPart.indexOf('.') !== secondPart.lastIndexOf('.') ||
+      !domain ||
+      (domain && domain.length < 2)
+    ) {
+      this.state.email = false;
+      message = '✖ Invalid';
+    } else {
+      this.state.email = true;
+      message = '✓ Valid';
+    }
     this.createValidationMessage(element, message);
-    this.state.email = [...arr1, ...arr2].length === 4;
   }
 
   private static validateCardNumber(e: Event, element: HTMLElement) {
@@ -164,6 +194,7 @@ export abstract class Validation {
 
   private static formatCardNumber(e: Event, cardType: HTMLElement) {
     const value = (e.target as HTMLInputElement).value;
+    if (!/^\d+$/.test(value.slice(-1))) (e.target as HTMLInputElement).value = value.slice(0, -1);
 
     switch (value.split('')[0]) {
       case '1':
@@ -176,10 +207,10 @@ export abstract class Validation {
         cardType.innerText = 'Card type: DUPER-VISA';
         break;
       case '4':
-        cardType.innerText = 'Card type: VISA';
+        cardType.innerHTML = `Card type: ${SVG.visa}`;
         break;
       case '5':
-        cardType.innerText = 'Card type: MASTER-CARD';
+        cardType.innerHTML = `Card type: ${SVG.masterCard}`;
         break;
       case '6':
         cardType.innerText = 'Card type: RS-CARD';

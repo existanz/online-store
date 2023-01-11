@@ -1,7 +1,7 @@
 import { ProductsData } from '../../shared/models/response-data';
 import { State } from '../../shared/services/state.service';
 import { ModalPage } from '../components/modal/modal';
-import { Validation } from './validation.service';
+import { Validation, ValidationState } from './validation.service';
 
 export abstract class ModalService {
   static modal = new ModalPage('modal');
@@ -58,5 +58,19 @@ export abstract class ModalService {
       const state = Validation.getState();
       Validation.checkAllValidity(state, this.modal.cardInfo.cardContainer.node);
     });
+  }
+
+  public static appendErrors(state: ValidationState) {
+    this.removeMessage();
+    if (!state.name) Validation.createValidationMessage(this.modal.personalInfo.nameContainer.node, '✖ Invalid');
+    if (!state.phone) Validation.createValidationMessage(this.modal.personalInfo.phoneContainer.node, '✖ Invalid');
+    if (!state.address) Validation.createValidationMessage(this.modal.personalInfo.addressContainer.node, '✖ Invalid');
+    if (!state.email) Validation.createValidationMessage(this.modal.personalInfo.emailContainer.node, '✖ Invalid');
+    let message = '';
+    if (!state.cardNumber) message = message + 'card ';
+    if (!state.mounth) message = message + 'thru ';
+    if (!state.cvv) message = message + 'cvv ';
+    if (message.length) message = '✖ Invalid in ' + message;
+    Validation.createValidationMessage(this.modal.cardInfo.cardContainer.node, message);
   }
 }
