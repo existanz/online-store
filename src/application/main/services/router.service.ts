@@ -36,8 +36,10 @@ export default class RouterService {
   public getCartOptions() {
     if (this.idPage === 'cart' && this.query) {
       const CartOptions = this.query.split('&');
-      if (CartOptions[0].split('=')[0] === 'prodPerPage') this.prodsPerPage = parseInt(CartOptions[0].split('=')[1]);
-      if (CartOptions[1].split('=')[0] === 'prodPerPage') this.curPage = parseInt(CartOptions[1].split('=')[1]);
+      if (CartOptions.length == 2) {
+        if (CartOptions[0].split('=')[0] === 'prodPerPage') this.prodsPerPage = parseInt(CartOptions[0].split('=')[1]);
+        if (CartOptions[1].split('=')[0] === 'curPage') this.curPage = parseInt(CartOptions[1].split('=')[1]);
+      }
     }
     return [this.prodsPerPage, this.curPage];
   }
