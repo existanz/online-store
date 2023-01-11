@@ -1,20 +1,22 @@
-.description__title {
-  font-size: 25px;
-  font-family: "WorkSans-SemiBold";
-  margin-bottom: 20px;
+.description{
+  &__title {
+    font-size: 25px;
+    font-family: "WorkSans-SemiBold";
+    margin-bottom: 20px;
+  }
 
-    &__prop {
-      margin-bottom: 12px;
-    
-        &:last-child {
-          margin-bottom: 0;
-        }
-    }
+  &__prop {
+    margin-bottom: 12px;
+  
+      &:last-child {
+        margin-bottom: 0;
+      }
+  }
 
-    &__buttons {
-      margin-top: 70px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
+  &__buttons {
+    margin-top: 70px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
 }

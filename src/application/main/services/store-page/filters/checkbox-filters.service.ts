@@ -1,7 +1,7 @@
 import { ProductsData } from '../../../../shared/models/response-data';
 import { CheckboxInterface, ReduceValue } from '../../../../shared/models/store-page';
 
-export abstract class CheckboxFilterService {
+export class CheckboxFilterService {
   static categoryState: CheckboxInterface[] = [];
   static brandState: CheckboxInterface[] = [];
   static checkedCategories: string[] = [];

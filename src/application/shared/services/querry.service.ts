@@ -7,7 +7,7 @@ import { UpdateData } from '../../main/services/store-page/update-view.service';
 import { StoreQuerry } from '../models/querry';
 import { State } from './state.service';
 
-export abstract class Querry {
+export class Querry {
   static store: StoreQuerry = {
     category: null,
     brand: null,

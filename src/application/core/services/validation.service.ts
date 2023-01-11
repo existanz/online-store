@@ -9,7 +9,7 @@ import { ModalService } from './modal.service';
 
 export type ValidationState = Record<string, boolean>;
 
-export abstract class Validation {
+export class Validation {
   static state = {
     name: false,
     phone: false,

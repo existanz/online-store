@@ -4,7 +4,7 @@ import { CheckboxFilterService } from './checkbox-filters.service';
 import { SearchService } from './search.service';
 import { SortService } from './sort.service';
 
-export abstract class ResetService {
+export class ResetService {
   static reset() {
     SortService.currentSort = '';
     ViewService.view.render(State.allData);

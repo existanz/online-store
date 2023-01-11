@@ -1,4 +1,4 @@
-export abstract class CopyService {
+export class CopyService {
   static copy(button: HTMLButtonElement) {
     button.innerText = 'Copied!';
     setTimeout(() => (button.innerText = 'Copy'), 2000);

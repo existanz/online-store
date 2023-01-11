@@ -3,7 +3,7 @@ import { State } from '../../shared/services/state.service';
 import { ModalPage } from '../components/modal/modal';
 import { Validation, ValidationState } from './validation.service';
 
-export abstract class ModalService {
+export class ModalService {
   static modal = new ModalPage('modal');
 
   static appendModal() {

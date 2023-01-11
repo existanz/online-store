@@ -7,7 +7,7 @@ import { CartItem } from '../../components/cart-page/items/list/cart-item';
 import { CartList } from '../../components/cart-page/items/list/cart-list';
 import PaginationService from './pagination.service';
 
-export default abstract class CartService {
+export default class CartService {
   static container: CartList;
   static cartItems: CartItems;
   static countsCart: number[] = [];

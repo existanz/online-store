@@ -2,7 +2,7 @@ import { State } from '../../../shared/services/state.service';
 import { GridView } from '../../components/store-page/items/grid-view/grid-view';
 import { ListView } from '../../components/store-page/items/list-view/list-view';
 
-export abstract class ViewService {
+export class ViewService {
   static currentView: 'grid' | 'list' = 'grid';
   static container: HTMLElement;
   static view: GridView | ListView = new GridView(ViewService.container, State.current);

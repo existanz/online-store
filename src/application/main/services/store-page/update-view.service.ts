@@ -2,7 +2,7 @@ import { State } from '../../../shared/services/state.service';
 import { CheckboxFilterService } from './filters/checkbox-filters.service';
 import { RangeFilterService } from './filters/range-filters.service';
 
-export abstract class UpdateData {
+export class UpdateData {
   static update() {
     State.current = State.allData;
 

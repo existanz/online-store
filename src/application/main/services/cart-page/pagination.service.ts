@@ -2,7 +2,7 @@ import { ProductsData } from '../../../shared/models/response-data';
 import { State } from '../../../shared/services/state.service';
 import CartService from './cart.service';
 
-export default abstract class PaginationService {
+export default class PaginationService {
   private static _productsPerPage = 3;
   private static _curPage = 1;
 

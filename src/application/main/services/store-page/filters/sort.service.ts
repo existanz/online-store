@@ -1,7 +1,7 @@
 import { ProductsData } from '../../../../shared/models/response-data';
 import { State } from '../../../../shared/services/state.service';
 
-export abstract class SortService {
+export class SortService {
   static currentSort: string;
 
   static sort(type: string) {

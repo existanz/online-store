@@ -1,6 +1,6 @@
 import { State } from '../../../../shared/services/state.service';
 
-export abstract class SearchService {
+export class SearchService {
   static searchState: string;
 
   static search(value: string) {
