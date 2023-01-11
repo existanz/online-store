@@ -152,15 +152,6 @@ export abstract class Validation {
   }
 
   private static validateEmail(e: Event, element: HTMLElement) {
-    // const value = (e.target as HTMLInputElement).value;
-
-    // const arr1: string[] = value.split('@');
-    // const arr2: string[] = arr1.length > 1 ? arr1[1].split('.') : arr1;
-
-    // const valid = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test(value);
-    // const message = valid ? '✓ Valid' : '✖ Invalid';
-    // this.createValidationMessage(element, message);
-    // this.state.email = [...arr1, ...arr2].length === 4;
     const specialChars = '[`!#$%^&*()_+-=[]{};\':"\\|,<>/?~]/';
     const tempInput = (e.target as HTMLInputElement).value;
     const secondPart = tempInput.split('@').at(-1);

@@ -17,7 +17,6 @@ export class ProductPage extends Page {
   private gallary: Gallary | null;
   private description: Description | null;
 
-  // в конструктор будет передаваться productData, пока данные получаем через запрос
   constructor(id: string, productData: ProductsData) {
     super(id);
     this.productData = productData;
