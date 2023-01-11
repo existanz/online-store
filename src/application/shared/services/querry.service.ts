@@ -59,7 +59,8 @@ export abstract class Querry {
     if (querry) {
       querry.split('%').reduce((obj, item) => {
         const [key, value] = item.split('=');
-        obj[`${key as keyof StoreQuerry}`] = value.split(',');
+        console.log(key, value);
+        if (key && value) obj[`${key as keyof StoreQuerry}`] = value.split(',');
         return obj;
       }, this.store);
     }
