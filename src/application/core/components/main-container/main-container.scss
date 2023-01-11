@@ -1,8 +1,7 @@
 .main {
   flex: 1;
-  display: flex;
-}
-
-.main__container {
-  height: inherit;
+  display: flex; 
+    &__container {
+      height: inherit;
+    }
 }
