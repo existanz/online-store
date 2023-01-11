@@ -11,7 +11,7 @@ export class ListView extends DOMElement {
     super(parentNode, {
       tagName: 'div',
       classList: ['list-view'],
-    })
+    });
     this.notFoundPage = new NotFoundPage('not-found-page-items');
 
     if (data) {
@@ -22,10 +22,6 @@ export class ListView extends DOMElement {
   public render(data: ProductsData[]): void {
     const container = this.node;
     container.innerHTML = '';
-    if (data.length) {
-      data.map((item) => new ListCard(container, item));
-    } else {
-      container.append(this.notFoundPage.node);
-    }
+    data.length ? data.map((item) => new ListCard(container, item)) : container.append(this.notFoundPage.node);
   }
 }
