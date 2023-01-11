@@ -50,7 +50,7 @@ export class Pagination extends DOMElement {
     this.productOnPage.node.addEventListener('input', (e) => {
       PaginationService.productsPerPage = parseInt((e.target as HTMLInputElement).value);
       CartService.container.render();
-      window.location.hash = '#cart?prodPerPage=' + PaginationService.productsPerPage;
+      this.setHash();
     });
 
     this.leftButton = new ButtonElement(this.paginationContainer.node, {
@@ -61,6 +61,7 @@ export class Pagination extends DOMElement {
     this.leftButton.node.addEventListener('click', () => {
       PaginationService.curPage--;
       this.render();
+      this.setHash();
     });
 
     this.currentPage = new InputElement(this.paginationContainer.node, {
@@ -79,6 +80,7 @@ export class Pagination extends DOMElement {
     this.rightButton.node.addEventListener('click', () => {
       PaginationService.curPage++;
       this.render();
+      this.setHash();
     });
 
     this.totalPages = new DOMElement(this.paginationContainer.node, {
@@ -87,7 +89,9 @@ export class Pagination extends DOMElement {
       content: `of ${PaginationService.getMaxPage(data)}`,
     });
   }
-
+  private setHash() {
+    window.location.hash = `#cart?prodPerPage=${PaginationService.productsPerPage}&curPage=${PaginationService.curPage}`;
+  }
   public render() {
     this.totalPages.node.textContent = `of ${PaginationService.getMaxPage(State.cart)}`;
     this.productOnPage.value = PaginationService.productsPerPage;
