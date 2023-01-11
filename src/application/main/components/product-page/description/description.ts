@@ -91,7 +91,6 @@ export class Description extends DOMElement {
   }
 
   private updateBagButton(product: ProductsData) {
-    if (CartService.idInCart(product) >= 0) this.bagButton.node.textContent = 'Remove from bag';
-    else this.bagButton.node.textContent = 'Add to bag';
+    this.bagButton.node.textContent = CartService.idInCart(product) >= 0 ? 'Remove from bag' : 'Add to bag';
   }
 }

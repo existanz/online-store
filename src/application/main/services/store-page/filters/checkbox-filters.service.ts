@@ -72,11 +72,9 @@ export abstract class CheckboxFilterService {
         .split(' ')
         .join('-') as string;
 
-      if (CheckboxFilterService.checkedBrands.includes(value)) {
-        CheckboxFilterService.removeCheckedElem(value, CheckboxFilterService.checkedBrands);
-      } else {
-        CheckboxFilterService.checkedBrands.push(value);
-      }
+      CheckboxFilterService.checkedBrands.includes(value)
+        ? CheckboxFilterService.removeCheckedElem(value, CheckboxFilterService.checkedBrands)
+        : CheckboxFilterService.checkedBrands.push(value);
     }
 
     if (target.closest('.category') && target.closest('.checkbox-filter__label')) {
@@ -86,11 +84,9 @@ export abstract class CheckboxFilterService {
         .split(' ')
         .join('-') as string;
 
-      if (CheckboxFilterService.checkedCategories.includes(value)) {
-        CheckboxFilterService.removeCheckedElem(value, CheckboxFilterService.checkedCategories);
-      } else {
-        CheckboxFilterService.checkedCategories.push(value);
-      }
+      CheckboxFilterService.checkedCategories.includes(value)
+        ? CheckboxFilterService.removeCheckedElem(value, CheckboxFilterService.checkedCategories)
+        : CheckboxFilterService.checkedCategories.push(value);
     }
   }
 

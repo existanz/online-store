@@ -27,8 +27,9 @@ export class CartItems extends DOMElement {
   }
 
   public render() {
-    if (State.cart.length == 0) this.emptyBag.node.classList.add('cart-items__empty--visible');
-    else this.emptyBag.node.classList.remove('cart-items__empty--visible');
+    State.cart.length == 0
+      ? this.emptyBag.node.classList.add('cart-items__empty--visible')
+      : this.emptyBag.node.classList.remove('cart-items__empty--visible');
     this.pagination.render();
     CartService.container.render();
   }

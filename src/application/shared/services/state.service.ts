@@ -26,7 +26,6 @@ export abstract class State {
 
   static getProductByID(idProd: number): ProductsData {
     const res = this.allData.find((product) => product.id === idProd);
-    if (res) return res;
-    else return this.current[0];
+    return res ? res : this.current[0];
   }
 }

@@ -6,8 +6,7 @@
     <script type="text/javascript">
         const arr = window.location.href.split('/');
         console.log(arr);
-        if (arr[3] == 'online-store') arr.length = 5;
-        else arr.length = 4;
+        arr.length = (arr[3] == 'online-store') ? 5 : 4;
         arr.push('#' + arr.pop());
         window.location.href = arr.join('/');
     </script>

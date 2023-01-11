@@ -83,7 +83,8 @@ export class GridCard extends DOMElement {
 
   private updateButton(product: ProductsData) {
     this.hasInCart = CartService.idInCart(product) >= 0;
-    if (this.hasInCart) this.button.node.classList.add('grid-card__button--active');
-    else this.button.node.classList.remove('grid-card__button--active');
+    this.hasInCart
+      ? this.button.node.classList.add('grid-card__button--active')
+      : this.button.node.classList.remove('grid-card__button--active');
   }
 }
