@@ -60,6 +60,7 @@ export class Pagination extends DOMElement {
 
     this.leftButton.node.addEventListener('click', () => {
       PaginationService.curPage--;
+      this.setHash();
       this.render();
     });
 
@@ -78,6 +79,7 @@ export class Pagination extends DOMElement {
 
     this.rightButton.node.addEventListener('click', () => {
       PaginationService.curPage++;
+      this.setHash();
       this.render();
     });
 
@@ -91,7 +93,6 @@ export class Pagination extends DOMElement {
     window.location.hash = `#cart?prodPerPage=${PaginationService.productsPerPage}&curPage=${PaginationService.curPage}`;
   }
   public render() {
-    this.setHash();
     this.totalPages.node.textContent = `of ${PaginationService.getMaxPage(State.cart)}`;
     this.productOnPage.value = PaginationService.productsPerPage;
     this.currentPage.value = PaginationService.curPage;
