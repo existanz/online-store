@@ -19,13 +19,13 @@ export class Querry {
   };
 
   static setStoreQuerry(param: keyof StoreQuerry, value: string[]) {
-    Querry.store[`${param}`] = value;
+    Querry.store[param] = value;
     const querry: string[] = [];
     let key: keyof StoreQuerry;
     for (key in Querry.store) {
-      if (Querry.store[`${key}`]) {
-        if (Querry.store[`${key}`]?.length) {
-          querry.push(`${key}=${Querry.store[`${key}`]?.join(',')}`);
+      if (Querry.store[key]) {
+        if (Querry.store[key]?.length) {
+          querry.push(`${key}=${Querry.store[key]?.join(',')}`);
         }
       }
     }
@@ -59,7 +59,7 @@ export class Querry {
     if (querry) {
       querry.split('%').reduce((obj, item) => {
         const [key, value] = item.split('=');
-        if (key && value) obj[`${key as keyof StoreQuerry}`] = value.split(',');
+        if (key && value) obj[key as keyof StoreQuerry] = value.split(',');
         return obj;
       }, this.store);
     }
