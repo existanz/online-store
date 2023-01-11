@@ -4,16 +4,15 @@ import { ProductsData } from '../../../../../shared/models/response-data';
 import { GridCard } from './grid-card/grid-card';
 import { NotFoundPage } from '../../../../pages/not-found/not-found';
 
-export class GridView {
-  public gridView: DOMElement;
+export class GridView extends DOMElement {
   private notFoundPage: NotFoundPage;
 
   constructor(parentNode: HTMLElement | null, data: ProductsData[] | null) {
-    this.notFoundPage = new NotFoundPage('not-found-page-items');
-    this.gridView = new DOMElement(parentNode, {
+    super(parentNode, {
       tagName: 'div',
       classList: ['grid-view'],
     });
+    this.notFoundPage = new NotFoundPage('not-found-page-items');
 
     if (data) {
       this.render(data);
@@ -21,7 +20,7 @@ export class GridView {
   }
 
   public render(data: ProductsData[]): void {
-    const container = this.gridView.node;
+    const container = this.node;
     container.innerHTML = '';
     if (data.length) {
       data.map((item) => new GridCard(container, item));

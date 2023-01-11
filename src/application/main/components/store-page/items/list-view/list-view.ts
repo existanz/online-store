@@ -4,16 +4,15 @@ import { ProductsData } from '../../../../../shared/models/response-data';
 import { ListCard } from './list-card/list-card';
 import { NotFoundPage } from '../../../../pages/not-found/not-found';
 
-export class ListView {
-  public listView: DOMElement;
+export class ListView extends DOMElement {
   private notFoundPage: NotFoundPage;
 
   constructor(parentNode: HTMLElement | null, data: ProductsData[] | null) {
-    this.notFoundPage = new NotFoundPage('not-found-page-items');
-    this.listView = new DOMElement(parentNode, {
+    super(parentNode, {
       tagName: 'div',
       classList: ['list-view'],
-    });
+    })
+    this.notFoundPage = new NotFoundPage('not-found-page-items');
 
     if (data) {
       this.render(data);
@@ -21,7 +20,7 @@ export class ListView {
   }
 
   public render(data: ProductsData[]): void {
-    const container = this.listView.node;
+    const container = this.node;
     container.innerHTML = '';
     if (data.length) {
       data.map((item) => new ListCard(container, item));
