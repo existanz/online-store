@@ -37,10 +37,8 @@ export class Cart extends LinkElement {
 
   public updateCount(): void {
     this.setCount();
-    if (this.counter.node.innerText === '0') {
-      this.counter.node.classList.add('cart-counter__count--hidden');
-    } else {
-      this.counter.node.classList.remove('cart-counter__count--hidden');
-    }
+    this.counter.node.innerText === '0'
+      ? this.counter.node.classList.add('cart-counter__count--hidden')
+      : this.counter.node.classList.remove('cart-counter__count--hidden');
   }
 }
