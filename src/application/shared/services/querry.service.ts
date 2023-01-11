@@ -19,12 +19,12 @@ export abstract class Querry {
   };
 
   static setStoreQuerry(param: keyof StoreQuerry, value: string[]) {
-    Querry.store[`${param}`] = value;
+    Querry.store[param] = value;
     const querry: string[] = [];
     let key: keyof StoreQuerry;
     for (key in Querry.store) {
-      if (Querry.store[`${key}`]) {
-        if (Querry.store[`${key}`]?.length) {
+      if (Querry.store[key]) {
+        if (Querry.store[key]?.length) {
           querry.push(`${key}=${Querry.store[`${key}`]?.join(',')}`);
         }
       }
