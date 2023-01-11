@@ -42,7 +42,7 @@ export class ListCard extends DOMElement {
 
     this.description = new DOMElement(this.node, {
       tagName: 'div',
-      classList: ['list-cart__description'],
+      classList: ['list-card__description'],
     });
 
     this.title = new DOMElement(this.description.node, {
@@ -53,30 +53,30 @@ export class ListCard extends DOMElement {
 
     this.text = new DOMElement(this.description.node, {
       tagName: 'p',
-      classList: ['list-cart__text'],
+      classList: ['list-card__text'],
       content: product.description,
     });
 
     this.price = new DOMElement(this.description.node, {
       tagName: 'p',
-      classList: ['list-cart__price'],
+      classList: ['list-card__price'],
       content: `Price: $${product.price}`,
     });
 
     this.stock = new DOMElement(this.description.node, {
       tagName: 'p',
-      classList: ['list-cart__stock'],
+      classList: ['list-card__stock'],
       content: `In stock: ${product.stock}`,
     });
 
     this.controls = new DOMElement(this.node, {
       tagName: 'div',
-      classList: ['list-cart__controls'],
+      classList: ['list-card__controls'],
     });
 
     this.button = new ButtonElement(this.controls.node, {
       tagName: 'button',
-      classList: ['list-cart__btn'],
+      classList: ['list-card__btn'],
       content: 'Add to bug',
     });
 

@@ -5,13 +5,14 @@
   margin: 50px 0 30px;
   gap: 15px;
   justify-content: space-between;
-}
 
-.product-page__breadcrumbs {
-  width: 100%;
-  margin-bottom: 15px;
-}
+    &__breadcrumbs {
+      width: 100%;
+      margin-bottom: 15px;
+    }
 
-.product-page__gallary, .product-page__description {
-  width: 48%;
+    &__gallary,
+    &__description {
+      width: 48%;
+    }
 }
