@@ -23,10 +23,6 @@ export class GridView {
   public render(data: ProductsData[]): void {
     const container = this.gridView.node;
     container.innerHTML = '';
-    if (data.length) {
-      data.map((item) => new GridCard(container, item));
-    } else {
-      container.append(this.notFoundPage.node);
-    }
+    data.length ? data.map((item) => new GridCard(container, item)) : container.append(this.notFoundPage.node);
   }
 }
