@@ -2,7 +2,7 @@ import './toggle-grid.scss';
 import { DOMElement } from '../../../../../shared/components/base-elements/dom-element';
 import { ButtonElement } from '../../../../../shared/components/base-elements/button-element';
 import { SVG } from '../../../../../shared/components/svg-icons';
-import { ViewService } from '../../../../services/store-page/change-view.service';
+import viewService from '../../../../services/store-page/change-view.service';
 import { Querry } from '../../../../../shared/services/querry.service';
 
 export class ToggleGrid extends DOMElement {
@@ -31,12 +31,12 @@ export class ToggleGrid extends DOMElement {
 
   private listen() {
     this.toggleGridItemGrid.node.addEventListener('click', () => {
-      ViewService.setViewState('grid');
+      viewService.setViewState('grid');
       Querry.updateQuerry();
     });
 
     this.toggleGridItemList.node.addEventListener('click', () => {
-      ViewService.setViewState('list');
+      viewService.setViewState('list');
       Querry.updateQuerry();
     });
   }

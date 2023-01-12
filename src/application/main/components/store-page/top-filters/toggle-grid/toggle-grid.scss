@@ -2,20 +2,20 @@
   display: flex;
   align-items: center;
   gap: 20px;
-}
 
-.toggle-grid__item {
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  background: #F3F4F6;
-  transition: .3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-    &:hover {
-      background: #e6e6e6;
+    &__item {
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      background: #F3F4F6;
+      transition: .3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    
+        &:hover {
+          background: #e6e6e6;
+        }
     }
 }
 

@@ -2,38 +2,43 @@ import { ProductsData } from '../../../../shared/models/response-data';
 import { RangeSliderInterFace } from '../../../../shared/models/store-page';
 import { State } from '../../../../shared/services/state.service';
 
-export abstract class RangeFilterService {
-  static priceState: RangeSliderInterFace;
-  static stockState: RangeSliderInterFace;
+class RangeFilterService {
+  public priceState: RangeSliderInterFace | null;
+  public stockState: RangeSliderInterFace | null;
 
-  static pickPrice(data: ProductsData[]) {
-    RangeFilterService.priceState = {
+  constructor() {
+    this.priceState = null;
+    this.stockState = null;
+  }
+
+  public pickPrice(data: ProductsData[]) {
+    this.priceState = {
       max: data.reduce((x, y) => Math.max(x, y.price), 0),
       min: data.reduce(
         (x, y) => Math.min(x, y.price),
         data.reduce((x, y) => Math.max(x, y.price), 0)
       ),
     };
-    return RangeFilterService.priceState;
+    return this.priceState;
   }
 
-  static pickStock(data: ProductsData[]) {
-    RangeFilterService.stockState = {
+  public pickStock(data: ProductsData[]) {
+    this.stockState = {
       max: data.reduce((x, y) => Math.max(x, y.stock), 0),
       min: data.reduce(
         (x, y) => Math.min(x, y.stock),
         data.reduce((x, y) => Math.max(x, y.stock), 0)
       ),
     };
-    return RangeFilterService.stockState;
+    return this.stockState;
   }
 
-  static pickData(e: Event, state: string) {
-    RangeFilterService.priceState = RangeFilterService.pickPrice(State.current);
-    RangeFilterService.stockState = RangeFilterService.pickStock(State.current);
+  public pickData(e: Event, state: string) {
+    this.priceState = this.pickPrice(State.current);
+    this.stockState = this.pickStock(State.current);
 
-    let { max: maxPrice, min: minPrice } = RangeFilterService.priceState;
-    let { max: maxStock, min: minStock } = RangeFilterService.stockState;
+    let { max: maxPrice, min: minPrice } = this.priceState;
+    let { max: maxStock, min: minStock } = this.stockState;
 
     if ((e.target as HTMLElement).closest('.range-filter__range-input-min') && state === 'price') {
       minPrice = Number((e.target as HTMLInputElement).value);
@@ -54,14 +59,17 @@ export abstract class RangeFilterService {
       minStock = Number(((e.target as HTMLInputElement).previousSibling as HTMLInputElement).value);
     }
 
-    RangeFilterService.priceState = {
+    this.priceState = {
       max: maxPrice,
       min: minPrice,
     };
 
-    RangeFilterService.stockState = {
+    this.stockState = {
       max: maxStock,
       min: minStock,
     };
   }
 }
+
+const rangeFilterService = new RangeFilterService();
+export default rangeFilterService;

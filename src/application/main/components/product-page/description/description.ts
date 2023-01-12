@@ -5,8 +5,8 @@ import { WhiteButton } from '../../../../shared/components/buttons/white-button'
 import { BlueButton } from '../../../../shared/components/buttons/blue-button';
 import CartService from '../../../services/cart-page/cart.service';
 import { State } from '../../../../shared/services/state.service';
-import { ViewService } from '../../../services/store-page/change-view.service';
-import { ModalService } from '../../../../core/services/modal.service';
+import viewService from '../../../services/store-page/change-view.service';
+import modalService from '../../../../core/services/modal.service';
 
 export class Description extends DOMElement {
   private title: DOMElement;
@@ -72,7 +72,7 @@ export class Description extends DOMElement {
       if (CartService.idInCart(product) >= 0) CartService.removePositionFromCart(product);
       else CartService.addToCart(product);
       this.updateBagButton(product);
-      ViewService.view.render(State.current);
+      viewService.view.render(State.current);
     });
 
     this.buyButton = new BlueButton(this.buttons.node, {
@@ -81,12 +81,12 @@ export class Description extends DOMElement {
     });
 
     this.buyButton.node.addEventListener('click', () => {
-      if (ModalService.checkUnique(product)) {
+      if (modalService.checkUnique(product)) {
         CartService.addToCart(product);
         this.updateBagButton(product);
-        ViewService.view.render(State.current);
+        viewService.view.render(State.current);
       }
-      ModalService.appendModal();
+      modalService.appendModal();
     });
   }
 

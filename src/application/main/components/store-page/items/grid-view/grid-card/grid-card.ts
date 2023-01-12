@@ -3,7 +3,7 @@ import { ProductsData } from '../../../../../../shared/models/response-data';
 import { DOMElement } from '../../../../../../shared/components/base-elements/dom-element';
 import { ImageElement } from '../../../../../../shared/components/base-elements/image-element';
 import { ButtonElement } from '../../../../../../shared/components/base-elements/button-element';
-import CartService from '../../../../../services/cart-page/cart.service';
+import cartService from '../../../../../services/cart-page/cart.service';
 
 export class GridCard extends DOMElement {
   private imageContainer: DOMElement;
@@ -22,12 +22,12 @@ export class GridCard extends DOMElement {
       classList: ['grid-card'],
     });
 
-    this.hasInCart = CartService.idInCart(product) >= 0;
+    this.hasInCart = cartService.idInCart(product) >= 0;
 
     this.node.addEventListener('click', (el) => {
       if (el.target == this.button.node) {
-        if (this.hasInCart) CartService.removePositionFromCart(product);
-        else CartService.addToCart(product);
+        if (this.hasInCart) cartService.removePositionFromCart(product);
+        else cartService.addToCart(product);
         this.updateButton(product);
       } else {
         location.hash = '#product?idProd=' + product?.id;
@@ -82,7 +82,7 @@ export class GridCard extends DOMElement {
   }
 
   private updateButton(product: ProductsData) {
-    this.hasInCart = CartService.idInCart(product) >= 0;
+    this.hasInCart = cartService.idInCart(product) >= 0;
     if (this.hasInCart) this.button.node.classList.add('grid-card__button--active');
     else this.button.node.classList.remove('grid-card__button--active');
   }

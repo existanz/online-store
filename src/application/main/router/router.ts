@@ -4,6 +4,7 @@ import { StorePage } from '../../main/pages/store-page/store-page';
 import { CartPage } from '../../main/pages/cart-page/cart-page';
 import RouterService from '../services/router.service';
 import { State } from '../../shared/services/state.service';
+import PaginationService from '../services/cart-page/pagination.service';
 
 export class Router {
   private parentNode: HTMLElement;
@@ -43,6 +44,8 @@ export class Router {
         this.parentNode.append(this.product.node);
         break;
       case 'cart':
+        PaginationService.productsPerPage = this.routerService.getCartOptions()[0];
+        PaginationService.curPage = this.routerService.getCartOptions()[1];
         this.cart = new CartPage('cart-page');
         this.parentNode.append(this.cart.node);
         break;

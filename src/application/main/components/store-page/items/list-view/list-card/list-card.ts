@@ -3,7 +3,7 @@ import { DOMElement } from '../../../../../../shared/components/base-elements/do
 import { ImageElement } from '../../../../../../shared/components/base-elements/image-element';
 import { ProductsData } from '../../../../../../shared/models/response-data';
 import { ButtonElement } from '../../../../../../shared/components/base-elements/button-element';
-import CartService from '../../../../../services/cart-page/cart.service';
+import cartService from '../../../../../services/cart-page/cart.service';
 
 export class ListCard extends DOMElement {
   private photo: ImageElement;
@@ -22,12 +22,12 @@ export class ListCard extends DOMElement {
       classList: ['list-card'],
     });
 
-    this.hasInCart = CartService.idInCart(product) >= 0;
+    this.hasInCart = cartService.idInCart(product) >= 0;
 
     this.node.addEventListener('click', (el) => {
       if (el.target == this.button.node) {
-        if (this.hasInCart) CartService.removePositionFromCart(product);
-        else CartService.addToCart(product);
+        if (this.hasInCart) cartService.removePositionFromCart(product);
+        else cartService.addToCart(product);
         this.updateButton(product);
       } else {
         location.hash = '#product?idProd=' + product?.id;
@@ -42,7 +42,7 @@ export class ListCard extends DOMElement {
 
     this.description = new DOMElement(this.node, {
       tagName: 'div',
-      classList: ['list-cart__description'],
+      classList: ['list-card__description'],
     });
 
     this.title = new DOMElement(this.description.node, {
@@ -53,30 +53,30 @@ export class ListCard extends DOMElement {
 
     this.text = new DOMElement(this.description.node, {
       tagName: 'p',
-      classList: ['list-cart__text'],
+      classList: ['list-card__text'],
       content: product.description,
     });
 
     this.price = new DOMElement(this.description.node, {
       tagName: 'p',
-      classList: ['list-cart__price'],
+      classList: ['list-card__price'],
       content: `Price: $${product.price}`,
     });
 
     this.stock = new DOMElement(this.description.node, {
       tagName: 'p',
-      classList: ['list-cart__stock'],
+      classList: ['list-card__stock'],
       content: `In stock: ${product.stock}`,
     });
 
     this.controls = new DOMElement(this.node, {
       tagName: 'div',
-      classList: ['list-cart__controls'],
+      classList: ['list-card__controls'],
     });
 
     this.button = new ButtonElement(this.controls.node, {
       tagName: 'button',
-      classList: ['list-cart__btn'],
+      classList: ['list-card__btn'],
       content: 'Add to bug',
     });
 
@@ -84,7 +84,7 @@ export class ListCard extends DOMElement {
   }
 
   private updateButton(product: ProductsData) {
-    this.hasInCart = CartService.idInCart(product) >= 0;
+    this.hasInCart = cartService.idInCart(product) >= 0;
     if (this.hasInCart) this.button.node.innerText = 'Remove from bug';
     else this.button.node.innerText = 'Add to bug';
   }

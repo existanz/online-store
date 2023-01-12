@@ -1,15 +1,16 @@
 import CartService from '../../main/services/cart-page/cart.service';
-import { ViewService } from '../../main/services/store-page/change-view.service';
+import viewService from '../../main/services/store-page/change-view.service';
 import { DOMElement } from '../../shared/components/base-elements/dom-element';
+import { SVG } from '../../shared/components/svg-icons';
 import { ProductsData } from '../../shared/models/response-data';
 import { State } from '../../shared/services/state.service';
 import { ModalPage } from '../components/modal/modal';
-import { ModalService } from './modal.service';
+import modalService from './modal.service';
 
-type ValidationState = Record<string, boolean>;
+export type ValidationState = Record<string, boolean>;
 
-export abstract class Validation {
-  static state = {
+class Validation {
+  public state = {
     name: false,
     phone: false,
     address: false,
@@ -19,15 +20,15 @@ export abstract class Validation {
     cvv: false,
   };
 
-  public static isEmptyCart(state: ProductsData[]) {
+  public isEmptyCart(state: ProductsData[]) {
     return state.length === 0;
   }
 
-  public static getState() {
-    return Validation.state;
+  public getState() {
+    return this.state;
   }
 
-  protected static clearState() {
+  protected clearState() {
     this.state = {
       name: false,
       phone: false,
@@ -39,27 +40,27 @@ export abstract class Validation {
     };
   }
 
-  static checkAllValidity(state: ValidationState, element: HTMLElement) {
+  public checkAllValidity(state: ValidationState, element: HTMLElement) {
     const result = Object.entries(state).filter((item) => item[1] === false);
-    ModalService.removeSumbitMessage();
+    modalService.removeSumbitMessage();
     if (result.length) {
-      this.createValidationMessage(element, '✖ Error in validation');
+      modalService.appendErrors(this.state);
     } else {
       this.createValidationMessage(element, 'Done! Redirect in 3 sec');
       setTimeout(() => {
         window.location.hash = '#store';
         CartService.clearCart();
         const state = State.getCurrent();
-        ViewService.view.render(state);
-        ModalService.clearModal();
-        ModalService.removeMessage();
+        viewService.view.render(state);
+        modalService.clearModal();
+        modalService.removeMessage();
         this.clearState();
-        ModalService.removeModal();
+        modalService.removeModal();
       }, 3000);
     }
   }
 
-  private static createValidationMessage(element: HTMLElement, message: string) {
+  public createValidationMessage(element: HTMLElement, message: string) {
     const error = new DOMElement(element, {
       tagName: 'p',
       classList: ['personal-info__error'],
@@ -70,45 +71,46 @@ export abstract class Validation {
     element.addEventListener('input', () => this.removeErrorMessage(error));
   }
 
-  private static removeErrorMessage(error: DOMElement) {
+  private removeErrorMessage(error: DOMElement) {
     error.node.innerText = '';
     error.node.remove();
   }
 
-  static addListeners(modal: ModalPage) {
+  public addListeners(modal: ModalPage) {
     modal.personalInfo.nameInput.node.addEventListener('change', (e: Event) => {
-      Validation.validateName(e, modal.personalInfo.nameContainer.node);
+      this.validateName(e, modal.personalInfo.nameContainer.node);
     });
     modal.personalInfo.phoneInput.node.addEventListener('change', (e: Event) =>
-      Validation.validateNumber(e, modal.personalInfo.phoneContainer.node)
+      this.validateNumber(e, modal.personalInfo.phoneContainer.node)
     );
+    modal.personalInfo.phoneInput.node.addEventListener('input', (e: Event) => this.formatNumber(e));
     modal.personalInfo.addressInput.node.addEventListener('change', (e: Event) =>
-      Validation.validateAdress(e, modal.personalInfo.addressContainer.node)
+      this.validateAdress(e, modal.personalInfo.addressContainer.node)
     );
     modal.personalInfo.emailInput.node.addEventListener('change', (e: Event) =>
-      Validation.validateEmail(e, modal.personalInfo.emailContainer.node)
+      this.validateEmail(e, modal.personalInfo.emailContainer.node)
     );
     modal.cardInfo.number.node.addEventListener('change', (e: Event) => {
-      Validation.validateCardNumber(e, modal.cardInfo.cardContainer.node);
+      this.validateCardNumber(e, modal.cardInfo.cardContainer.node);
     });
     modal.cardInfo.number.node.addEventListener('input', (e: Event) => {
-      Validation.formatCardNumber(e, modal.cardInfo.cardName.node);
+      this.formatCardNumber(e, modal.cardInfo.cardName.node);
     });
     modal.cardInfo.cardMounthYear.node.addEventListener('change', (e: Event) => {
-      Validation.validateMounthYear(e, modal.cardInfo.cardContainer.node);
+      this.validateMounthYear(e, modal.cardInfo.cardContainer.node);
     });
     modal.cardInfo.cardMounthYear.node.addEventListener('input', (e: Event) => {
-      Validation.formatMounthYear(e);
+      this.formatMounthYear(e);
     });
     modal.cardInfo.cvv.node.addEventListener('change', (e: Event) => {
-      Validation.validateCvv(e, modal.cardInfo.cardContainer.node);
+      this.validateCvv(e, modal.cardInfo.cardContainer.node);
     });
     modal.cardInfo.cvv.node.addEventListener('input', (e: Event) => {
-      Validation.formatCvv(e);
+      this.formatCvv(e);
     });
   }
 
-  private static validateName(e: Event, element: HTMLElement) {
+  private validateName(e: Event, element: HTMLElement) {
     const value = (e.target as HTMLInputElement).value;
 
     const count: boolean = value.split(' ').length > 1;
@@ -120,7 +122,7 @@ export abstract class Validation {
     this.createValidationMessage(element, message);
   }
 
-  private static validateNumber(e: Event, element: HTMLElement) {
+  private validateNumber(e: Event, element: HTMLElement) {
     const value = (e.target as HTMLInputElement).value;
 
     const firstNumber: boolean = value.split('')[0] === '+';
@@ -132,7 +134,13 @@ export abstract class Validation {
     this.createValidationMessage(element, message);
   }
 
-  private static validateAdress(e: Event, element: HTMLElement) {
+  private formatNumber(e: Event) {
+    const value = (e.target as HTMLInputElement).value;
+    if (value.length === 1 && value !== '+') (e.target as HTMLInputElement).value = value.slice(0, -1);
+    if (!/^\d+$/.test(value.slice(-1)) && value.length > 1) (e.target as HTMLInputElement).value = value.slice(0, -1);
+  }
+
+  private validateAdress(e: Event, element: HTMLElement) {
     const value = (e.target as HTMLInputElement).value;
 
     const count: boolean = value.split(' ').length > 2;
@@ -143,18 +151,31 @@ export abstract class Validation {
     this.createValidationMessage(element, message);
   }
 
-  private static validateEmail(e: Event, element: HTMLElement) {
-    const value = (e.target as HTMLInputElement).value;
-
-    const arr1: string[] = value.split('@');
-    const arr2: string[] = arr1.length > 1 ? arr1[1].split('.') : arr1;
-
-    const message = [...arr1, ...arr2].length === 4 ? '✓ Valid' : '✖ Invalid';
+  private validateEmail(e: Event, element: HTMLElement) {
+    const specialChars = '[`!#$%^&*()_+-=[]{};\':"\\|,<>/?~]/';
+    const tempInput = (e.target as HTMLInputElement).value;
+    const secondPart = tempInput.split('@').at(-1);
+    const domain = secondPart?.split('.').at(-1);
+    let message: string;
+    if (
+      !tempInput.includes('@') ||
+      tempInput.indexOf('@') !== tempInput.lastIndexOf('@') ||
+      specialChars.split('').some((specialChar) => secondPart?.includes(specialChar)) ||
+      !secondPart?.includes('.') ||
+      secondPart.indexOf('.') !== secondPart.lastIndexOf('.') ||
+      !domain ||
+      (domain && domain.length < 2)
+    ) {
+      this.state.email = false;
+      message = '✖ Invalid';
+    } else {
+      this.state.email = true;
+      message = '✓ Valid';
+    }
     this.createValidationMessage(element, message);
-    this.state.email = [...arr1, ...arr2].length === 4;
   }
 
-  private static validateCardNumber(e: Event, element: HTMLElement) {
+  private validateCardNumber(e: Event, element: HTMLElement) {
     const value = (e.target as HTMLInputElement).value;
 
     const message = value.length === 16 ? '✓ Valid number' : '✖ Invalid number';
@@ -162,8 +183,9 @@ export abstract class Validation {
     this.state.cardNumber = value.length === 16;
   }
 
-  private static formatCardNumber(e: Event, cardType: HTMLElement) {
+  private formatCardNumber(e: Event, cardType: HTMLElement) {
     const value = (e.target as HTMLInputElement).value;
+    if (!/^\d+$/.test(value.slice(-1))) (e.target as HTMLInputElement).value = value.slice(0, -1);
 
     switch (value.split('')[0]) {
       case '1':
@@ -176,10 +198,10 @@ export abstract class Validation {
         cardType.innerText = 'Card type: DUPER-VISA';
         break;
       case '4':
-        cardType.innerText = 'Card type: VISA';
+        cardType.innerHTML = `Card type: ${SVG.visa}`;
         break;
       case '5':
-        cardType.innerText = 'Card type: MASTER-CARD';
+        cardType.innerHTML = `Card type: ${SVG.masterCard}`;
         break;
       case '6':
         cardType.innerText = 'Card type: RS-CARD';
@@ -191,7 +213,7 @@ export abstract class Validation {
     if (value.length > 16) (e.target as HTMLInputElement).value = value.slice(0, 16);
   }
 
-  private static validateMounthYear(e: Event, element: HTMLElement) {
+  private validateMounthYear(e: Event, element: HTMLElement) {
     const value = (e.target as HTMLInputElement).value.split('');
 
     const mounth = Number([value[0], value[1]].join('')) < 13;
@@ -202,14 +224,14 @@ export abstract class Validation {
     this.state.mounth = mounth && length;
   }
 
-  private static formatMounthYear(e: Event) {
+  private formatMounthYear(e: Event) {
     const value = (e.target as HTMLInputElement).value;
     if (!/^\d+$/.test(value.slice(-1))) (e.target as HTMLInputElement).value = value.slice(0, -1);
     if (value.length > 5) (e.target as HTMLInputElement).value = value.slice(0, 5);
     if (value.length == 3) (e.target as HTMLInputElement).value = [value[0], value[1], '/', value[3]].join('');
   }
 
-  private static validateCvv(e: Event, element: HTMLElement) {
+  private validateCvv(e: Event, element: HTMLElement) {
     const value = (e.target as HTMLInputElement).value.split('');
 
     const length = value.length === 3;
@@ -219,9 +241,12 @@ export abstract class Validation {
     this.state.cvv = length;
   }
 
-  private static formatCvv(e: Event) {
+  private formatCvv(e: Event) {
     const value = (e.target as HTMLInputElement).value;
     if (!/^\d+$/.test(value.slice(-1))) (e.target as HTMLInputElement).value = value.slice(0, -1);
     if (value.length > 3) (e.target as HTMLInputElement).value = value.slice(0, 3);
   }
 }
+
+const validation = new Validation();
+export default validation;

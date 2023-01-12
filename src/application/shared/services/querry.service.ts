@@ -1,13 +1,13 @@
-import { ViewService } from '../../main/services/store-page/change-view.service';
-import { CheckboxFilterService } from '../../main/services/store-page/filters/checkbox-filters.service';
-import { RangeFilterService } from '../../main/services/store-page/filters/range-filters.service';
-import { SearchService } from '../../main/services/store-page/filters/search.service';
-import { SortService } from '../../main/services/store-page/filters/sort.service';
-import { UpdateData } from '../../main/services/store-page/update-view.service';
+import viewService from '../../main/services/store-page/change-view.service';
+import checkboxFilterService from '../../main/services/store-page/filters/checkbox-filters.service';
+import rangeFilterService from '../../main/services/store-page/filters/range-filters.service';
+import searchService from '../../main/services/store-page/filters/search.service';
+import sortService from '../../main/services/store-page/filters/sort.service';
+import updateData from '../../main/services/store-page/update-view.service';
 import { StoreQuerry } from '../models/querry';
 import { State } from './state.service';
 
-export abstract class Querry {
+export class Querry {
   static store: StoreQuerry = {
     category: null,
     brand: null,
@@ -19,13 +19,13 @@ export abstract class Querry {
   };
 
   static setStoreQuerry(param: keyof StoreQuerry, value: string[]) {
-    Querry.store[`${param}`] = value;
+    Querry.store[param] = value;
     const querry: string[] = [];
     let key: keyof StoreQuerry;
     for (key in Querry.store) {
-      if (Querry.store[`${key}`]) {
-        if (Querry.store[`${key}`]?.length) {
-          querry.push(`${key}=${Querry.store[`${key}`]?.join(',')}`);
+      if (Querry.store[key]) {
+        if (Querry.store[key]?.length) {
+          querry.push(`${key}=${Querry.store[key]?.join(',')}`);
         }
       }
     }
@@ -33,25 +33,25 @@ export abstract class Querry {
   }
 
   static updateQuerry() {
-    Querry.setStoreQuerry('brand', CheckboxFilterService.checkedBrands);
-    Querry.setStoreQuerry('category', CheckboxFilterService.checkedCategories);
+    Querry.setStoreQuerry('brand', checkboxFilterService.checkedBrands);
+    Querry.setStoreQuerry('category', checkboxFilterService.checkedCategories);
 
-    RangeFilterService.stockState = RangeFilterService.pickStock(State.current);
+    rangeFilterService.stockState = rangeFilterService.pickStock(State.current);
     Querry.setStoreQuerry('stock', [
-      RangeFilterService.stockState.min.toString(),
-      RangeFilterService.stockState.max.toString(),
+      rangeFilterService.stockState.min.toString(),
+      rangeFilterService.stockState.max.toString(),
     ]);
 
-    RangeFilterService.priceState = RangeFilterService.pickPrice(State.current);
+    rangeFilterService.priceState = rangeFilterService.pickPrice(State.current);
     Querry.setStoreQuerry('price', [
-      RangeFilterService.priceState.min.toString(),
-      RangeFilterService.priceState.max.toString(),
+      rangeFilterService.priceState.min.toString(),
+      rangeFilterService.priceState.max.toString(),
     ]);
 
-    Querry.setStoreQuerry('search', [SearchService.searchState]);
+    Querry.setStoreQuerry('search', [searchService.searchState]);
 
-    Querry.setStoreQuerry('view', [ViewService.currentView]);
-    Querry.setStoreQuerry('sort', [SortService.currentSort]);
+    Querry.setStoreQuerry('view', [viewService.currentView]);
+    Querry.setStoreQuerry('sort', [sortService.currentSort]);
   }
 
   static async loadStateFromQuerry() {
@@ -59,47 +59,47 @@ export abstract class Querry {
     if (querry) {
       querry.split('%').reduce((obj, item) => {
         const [key, value] = item.split('=');
-        obj[`${key as keyof StoreQuerry}`] = value.split(',');
+        if (key && value) obj[key as keyof StoreQuerry] = value.split(',');
         return obj;
       }, this.store);
     }
-    CheckboxFilterService.checkedCategories = this.store.category ? this.store.category : [];
-    CheckboxFilterService.checkedBrands = this.store.brand ? this.store.brand : [];
+    checkboxFilterService.checkedCategories = this.store.category ? this.store.category : [];
+    checkboxFilterService.checkedBrands = this.store.brand ? this.store.brand : [];
 
-    RangeFilterService.priceState = RangeFilterService.pickPrice(State.allData);
+    rangeFilterService.priceState = rangeFilterService.pickPrice(State.allData);
     if (this.store.price) {
-      RangeFilterService.priceState = {
+      rangeFilterService.priceState = {
         min: Number(this.store.price[0]),
         max: Number(this.store.price[1]),
       };
     }
-    RangeFilterService.stockState = RangeFilterService.pickStock(State.allData);
+    rangeFilterService.stockState = rangeFilterService.pickStock(State.allData);
     if (this.store.stock) {
-      RangeFilterService.stockState = {
+      rangeFilterService.stockState = {
         min: Number(this.store.stock[0]),
         max: Number(this.store.stock[1]),
       };
     }
 
     if (this.store.search) {
-      SearchService.searchState = this.store.search[0];
+      searchService.searchState = this.store.search[0];
     }
 
     if (this.store.sort) {
-      SortService.currentSort = this.store.sort[0];
+      sortService.currentSort = this.store.sort[0];
     }
 
     if (this.store.view) {
-      ViewService.currentView = this.store.view[0] as 'grid' | 'list';
+      viewService.currentView = this.store.view[0] as 'grid' | 'list';
     }
 
-    let newState = UpdateData.update();
-    newState = UpdateData.updatePrice();
-    newState = UpdateData.updateStock();
-    if (SearchService.searchState) {
-      newState = SearchService.search(SearchService.searchState);
+    let newState = updateData.update();
+    newState = updateData.updatePrice();
+    newState = updateData.updateStock();
+    if (searchService.searchState) {
+      newState = searchService.search(searchService.searchState);
     }
-    SortService.sort(SortService.currentSort);
+    sortService.sort(sortService.currentSort);
     State.current = newState;
   }
 }

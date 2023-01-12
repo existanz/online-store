@@ -17,8 +17,8 @@ export class RangeFilter extends DOMElement {
   public inputMin: InputElement;
   public inputMax: InputElement;
 
-  public rangeInputs: HTMLElement[];
-  public textInputs: HTMLElement[];
+  public rangeInputs: HTMLInputElement[];
+  public textInputs: HTMLInputElement[];
   public checkMinInput: HTMLElement;
   private constMax: number;
 
@@ -99,8 +99,8 @@ export class RangeFilter extends DOMElement {
       readonly: true,
     });
 
-    this.rangeInputs = [this.rangeInputMin.node, this.rangeInputMax.node];
-    this.textInputs = [this.inputMin.node, this.inputMax.node];
+    this.rangeInputs = [this.rangeInputMin.node as HTMLInputElement, this.rangeInputMax.node as HTMLInputElement];
+    this.textInputs = [this.inputMin.node as HTMLInputElement, this.inputMax.node as HTMLInputElement];
     this.checkMinInput = this.inputMin.node;
     this.constMax = parseInt((this.rangeInputs[0] as HTMLInputElement).max);
 
@@ -111,32 +111,28 @@ export class RangeFilter extends DOMElement {
   public changeRange(priceGap: number): void {
     this.rangeInputs.forEach((input) => {
       input.addEventListener('input', (e: Event) => {
-        const minVal: number =
-          parseInt((this.rangeInputs[0] as HTMLInputElement).value as string) -
-          parseInt((this.rangeInputs[0] as HTMLInputElement).min as string);
-        const maxVal: number = parseInt((this.rangeInputs[1] as HTMLInputElement).value as string);
+        const [rangeInputLeft, rangeInputRigth] = this.rangeInputs;
+        const [textInputLeft, textInputRigth] = this.textInputs;
+
+        const minVal: number = parseInt(rangeInputLeft.value as string) - parseInt(rangeInputLeft.min as string);
+        const maxVal: number = parseInt(rangeInputRigth.value as string);
         const percentLeft: number =
-          (minVal /
-            (parseInt((this.rangeInputs[0] as HTMLInputElement).max) -
-              parseInt((this.rangeInputs[0] as HTMLInputElement).min as string))) *
-          100;
-        const min = parseInt((this.rangeInputs[0] as HTMLInputElement).min as string);
+          (minVal / (parseInt(rangeInputLeft.max) - parseInt(rangeInputLeft.min as string))) * 100;
+
+        const min = parseInt(rangeInputLeft.min as string);
         const percentRight: number =
-          100 -
-          ((parseInt((this.rangeInputs[1] as HTMLInputElement).value) - min) /
-            (parseInt((this.rangeInputs[1] as HTMLInputElement).max) - min)) *
-            100;
+          100 - ((parseInt(rangeInputRigth.value) - min) / (parseInt(rangeInputRigth.max) - min)) * 100;
+
         if (maxVal - minVal < priceGap) {
           if ((e.target as HTMLElement).className === 'range-filter__range-input-min') {
-            (this.rangeInputs[0] as HTMLInputElement).value = `${maxVal - priceGap}`;
+            rangeInputLeft.value = `${maxVal - priceGap}`;
           } else {
-            (this.rangeInputs[1] as HTMLInputElement).value = `${minVal + priceGap}`;
+            rangeInputRigth.value = `${minVal + priceGap}`;
           }
         } else {
-          (this.textInputs[0] as HTMLInputElement).value = `${
-            minVal + parseInt((this.rangeInputs[0] as HTMLInputElement).min as string)
-          }`;
-          (this.textInputs[1] as HTMLInputElement).value = `${maxVal}`;
+          textInputLeft.value = `${minVal + parseInt(rangeInputLeft.min as string)}`;
+          textInputRigth.value = `${maxVal}`;
+
           this.progress.node.style.left = `${percentLeft}%`;
           this.progress.node.style.right = `${percentRight}%`;
         }
@@ -145,24 +141,27 @@ export class RangeFilter extends DOMElement {
 
     this.textInputs.forEach((input) => {
       input.addEventListener('input', (e: Event) => {
-        const minVal: number = parseInt((this.textInputs[0] as HTMLInputElement).value as string);
-        const maxVal: number = parseInt((this.textInputs[1] as HTMLInputElement).value as string);
-        let percentLeft: number = Math.ceil((minVal / parseInt((this.rangeInputs[0] as HTMLInputElement).max)) * 100);
+        const [rangeInputLeft, rangeInputRigth] = this.rangeInputs;
+        const [textInputLeft, textInputRigth] = this.textInputs;
 
-        let percentRight: number = 100 - (maxVal / parseInt((this.rangeInputs[1] as HTMLInputElement).max)) * 100;
+        const minVal: number = parseInt(textInputLeft.value);
+        const maxVal: number = parseInt(textInputRigth.value);
+
+        let percentLeft: number = Math.ceil((minVal / parseInt(rangeInputLeft.max)) * 100);
+        let percentRight: number = 100 - (maxVal / parseInt(rangeInputRigth.max)) * 100;
 
         if (maxVal - minVal >= priceGap) {
           if ((e.target as HTMLElement) === this.checkMinInput) {
             if (minVal < 0) {
               percentLeft = 0;
             }
-            (this.rangeInputs[0] as HTMLInputElement).value = `${minVal}`;
+            rangeInputLeft.value = `${minVal}`;
             this.progress.node.style.left = `${percentLeft}%`;
           } else {
             if (maxVal > this.constMax) {
               percentRight = 0;
             }
-            (this.rangeInputs[1] as HTMLInputElement).value = `${maxVal}`;
+            rangeInputRigth.value = `${maxVal}`;
             this.progress.node.style.right = `${percentRight}%`;
           }
         }
