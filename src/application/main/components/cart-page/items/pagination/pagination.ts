@@ -3,8 +3,9 @@ import { DOMElement } from '../../../../../shared/components/base-elements/dom-e
 import { InputElement } from '../../../../../shared/components/base-elements/input-element';
 import { ProductsData } from '../../../../../shared/models/response-data';
 import { State } from '../../../../../shared/services/state.service';
-import CartService from '../../../../services/cart-page/cart.service';
+import cartService from '../../../../services/cart-page/cart.service';
 import PaginationService from '../../../../services/cart-page/pagination.service';
+import { CartList } from '../list/cart-list';
 import './pagination.scss';
 
 export class Pagination extends DOMElement {
@@ -49,7 +50,7 @@ export class Pagination extends DOMElement {
 
     this.productOnPage.node.addEventListener('input', (e) => {
       PaginationService.productsPerPage = parseInt((e.target as HTMLInputElement).value);
-      CartService.container.render();
+      (cartService.container as CartList).render();
       this.setHash();
     });
 

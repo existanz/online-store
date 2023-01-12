@@ -7,18 +7,23 @@ import { CartItem } from '../../components/cart-page/items/list/cart-item';
 import { CartList } from '../../components/cart-page/items/list/cart-list';
 import PaginationService from './pagination.service';
 
-export default class CartService {
-  static container: CartList;
-  static cartItems: CartItems;
-  static countsCart: number[] = [];
-  static promoList: PromoList = { RS: 10, EPAM: 10 };
-  static activePromo: Promo[] = ['RS', 'EPAM'];
-  private static totalCount = 0;
-  private static totalSum = 0;
-  private static curSum = 0;
-  private static localStorageSVC = new LocalStorageSvc();
+class CartService {
+  public container: CartList | null;
+  public cartItems: CartItems | null;
+  public countsCart: number[] = [];
+  public promoList: PromoList = { RS: 10, EPAM: 10 };
+  public activePromo: Promo[] = ['RS', 'EPAM'];
+  private totalCount = 0;
+  private totalSum = 0;
+  private curSum = 0;
+  private localStorageSVC = new LocalStorageSvc();
 
-  static addToCart(product: ProductsData) {
+  constructor() {
+    this.container = null;
+    this.cartItems = null;
+  }
+
+  public addToCart(product: ProductsData) {
     const idInCart = this.idInCart(product);
     if (idInCart < 0 || this.countsCart[idInCart] < product.stock) {
       if (idInCart >= 0) {
@@ -33,7 +38,7 @@ export default class CartService {
     }
   }
 
-  static removeFromCart(product: ProductsData) {
+  public removeFromCart(product: ProductsData) {
     const idInCart = this.idInCart(product);
 
     if (idInCart >= 0) {
@@ -49,7 +54,7 @@ export default class CartService {
     this.save();
   }
 
-  static removePositionFromCart(product: ProductsData) {
+  public removePositionFromCart(product: ProductsData) {
     const idInCart = this.idInCart(product);
     if (idInCart >= 0) {
       State.cart.splice(idInCart, 1);
@@ -65,15 +70,15 @@ export default class CartService {
     this.save();
   }
 
-  static getTotalSum() {
+  public getTotalSum() {
     return this.totalSum;
   }
 
-  static getTotalCount() {
+  public getTotalCount() {
     return this.totalCount;
   }
 
-  static save() {
+  public save() {
     this.localStorageSVC.setRecord('cart', {
       cart: State.cart,
       counts: this.countsCart,
@@ -83,7 +88,7 @@ export default class CartService {
     });
   }
 
-  static load() {
+  public load() {
     const cartLoad = { cart: [], counts: [], promo: [], prodsPerPage: 3, curPage: 1 };
     if (this.localStorageSVC.getRecordObj('cart')) {
       Object.assign(cartLoad, this.localStorageSVC.getRecordObj('cart'));
@@ -99,35 +104,35 @@ export default class CartService {
     }
   }
 
-  static idInCart(product: ProductsData) {
+  public idInCart(product: ProductsData) {
     const idInCart = State.cart.indexOf(product);
     return idInCart;
   }
 
-  static activatePromo(promo: string) {
+  public activatePromo(promo: string) {
     if (this.isPromo(promo) && !this.isActivePromo(promo)) this.activePromo.push(promo as Promo);
     this.save();
   }
 
-  static deactivatePromo(promo: string) {
+  public deactivatePromo(promo: string) {
     const index = this.activePromo.indexOf(promo as Promo);
     if (index >= 0) this.activePromo.splice(index, 1);
     this.save();
   }
 
-  static isPromo(promo: string) {
+  public isPromo(promo: string) {
     return promo.toLocaleUpperCase() === 'RS' || promo.toLocaleUpperCase() === 'EPAM';
   }
 
-  static isActivePromo(promo: string) {
+  public isActivePromo(promo: string) {
     return this.activePromo.includes(promo.toLocaleUpperCase() as Promo);
   }
 
-  static getCurSum() {
+  public getCurSum() {
     return (this.totalSum * (100 - this.activePromo.length * 10)) / 100;
   }
 
-  static clearCart() {
+  public clearCart() {
     State.cart = [];
     this.countsCart = [];
     this.totalCount = 0;
@@ -136,14 +141,14 @@ export default class CartService {
     headerService.update();
   }
 
-  public static render() {
-    this.container.node.innerHTML = '';
+  public render() {
+    (this.container as CartList).node.innerHTML = '';
     if (PaginationService.getCurPageProducts(State.cart).length == 0 && PaginationService.curPage > 1)
       PaginationService.curPage--;
     PaginationService.getCurPageProducts(State.cart).map(
       (product, index) =>
         new CartItem(
-          this.container.node,
+          (this.container as CartList).node,
           product,
           index + PaginationService.productsPerPage * (PaginationService.curPage - 1)
         )
@@ -153,3 +158,6 @@ export default class CartService {
 
 type Promo = 'RS' | 'EPAM';
 type PromoList = Record<Promo, number>;
+
+const cartService = new CartService();
+export default cartService;
