@@ -5,7 +5,7 @@ import { State } from '../../../shared/services/state.service';
 import { CartItems } from '../../components/cart-page/items/items';
 import { CartItem } from '../../components/cart-page/items/list/cart-item';
 import { CartList } from '../../components/cart-page/items/list/cart-list';
-import PaginationService from './pagination.service';
+import paginationService from './pagination.service';
 
 class CartService {
   public container: CartList | null;
@@ -83,8 +83,8 @@ class CartService {
       cart: State.cart,
       counts: this.countsCart,
       promo: this.activePromo,
-      prodsPerPage: PaginationService.productsPerPage,
-      curPage: PaginationService.curPage,
+      prodsPerPage: paginationService.productsPerPage,
+      curPage: paginationService.curPage,
     });
   }
 
@@ -99,8 +99,8 @@ class CartService {
       this.countsCart = cartLoad.counts;
       if (this.countsCart.length > 0) this.totalCount = this.countsCart.reduce((acc, cur) => acc + cur);
       this.activePromo = cartLoad.promo;
-      PaginationService.productsPerPage = cartLoad.prodsPerPage;
-      PaginationService.curPage = cartLoad.curPage;
+      paginationService.productsPerPage = cartLoad.prodsPerPage;
+      paginationService.curPage = cartLoad.curPage;
     }
   }
 
@@ -143,14 +143,14 @@ class CartService {
 
   public render() {
     (this.container as CartList).node.innerHTML = '';
-    if (PaginationService.getCurPageProducts(State.cart).length == 0 && PaginationService.curPage > 1)
-      PaginationService.curPage--;
-    PaginationService.getCurPageProducts(State.cart).map(
+    if (paginationService.getCurPageProducts(State.cart).length == 0 && paginationService.curPage > 1)
+      paginationService.curPage--;
+      paginationService.getCurPageProducts(State.cart).map(
       (product, index) =>
         new CartItem(
           (this.container as CartList).node,
           product,
-          index + PaginationService.productsPerPage * (PaginationService.curPage - 1)
+          index + paginationService.productsPerPage * (paginationService.curPage - 1)
         )
     );
   }
