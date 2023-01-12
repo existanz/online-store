@@ -6,7 +6,7 @@ import { SelectSort } from './select-sort/select-sort';
 import sortService from '../../../services/store-page/filters/sort.service';
 import searchService from '../../../services/store-page/filters/search.service';
 import rangeFilterService from '../../../services/store-page/filters/range-filters.service';
-import { UpdateData } from '../../../services/store-page/update-view.service';
+import updateData from '../../../services/store-page/update-view.service';
 import checkboxFilterService from '../../../services/store-page/filters/checkbox-filters.service';
 import { LeftFilters } from '../left-filters/left-filters';
 import viewService from '../../../services/store-page/change-view.service';
@@ -68,9 +68,9 @@ export class TopFilters extends DOMElement {
       if ((e.target as HTMLElement).closest('.search__input')) {
         rangeFilterService.pickData(e, 'price');
         rangeFilterService.pickData(e, 'stock');
-        let newState = UpdateData.updateStock();
-        newState = UpdateData.updatePrice();
-        newState = UpdateData.update();
+        let newState = updateData.updateStock();
+        newState = updateData.updatePrice();
+        newState = updateData.update();
         newState = searchService.search((e.target as HTMLInputElement).value);
         viewService.view.render(newState);
 
@@ -85,7 +85,7 @@ export class TopFilters extends DOMElement {
           data: checkboxFilterService.pickCategory(newState),
         };
         this.leftFilters.checkboxCategory.render(categoryData);
-        UpdateData.updateProductCounter();
+        updateData.updateProductCounter();
 
         this.leftFilters.updateMinMaxPrice();
         this.leftFilters.updateMinMaxStock();

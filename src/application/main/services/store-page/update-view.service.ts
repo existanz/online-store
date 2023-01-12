@@ -3,8 +3,8 @@ import { State } from '../../../shared/services/state.service';
 import checkboxFilterService from './filters/checkbox-filters.service';
 import rangeFilterService from './filters/range-filters.service';
 
-export class UpdateData {
-  static update() {
+class UpdateData {
+  public update() {
     State.current = State.allData;
 
     if (checkboxFilterService.checkedCategories.length) {
@@ -22,7 +22,7 @@ export class UpdateData {
     return State.current;
   }
 
-  static updatePrice() {
+  public updatePrice() {
     State.current = State.current.filter((item) => {
       return (
         item.price >= (rangeFilterService.priceState as RangeSliderInterFace).min &&
@@ -32,7 +32,7 @@ export class UpdateData {
     return State.current;
   }
 
-  static updateStock() {
+  public updateStock() {
     State.current = State.current.filter((item) => {
       return (
         item.stock >= (rangeFilterService.stockState as RangeSliderInterFace).min &&
@@ -42,7 +42,10 @@ export class UpdateData {
     return State.current;
   }
 
-  static updateProductCounter() {
+  public updateProductCounter() {
     (document.querySelector('.total-products') as HTMLElement).innerText = `Products: ${State.current.length}`;
   }
 }
+
+const updateData = new UpdateData();
+export default updateData;

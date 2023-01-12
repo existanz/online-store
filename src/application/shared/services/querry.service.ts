@@ -3,7 +3,7 @@ import checkboxFilterService from '../../main/services/store-page/filters/checkb
 import rangeFilterService from '../../main/services/store-page/filters/range-filters.service';
 import searchService from '../../main/services/store-page/filters/search.service';
 import sortService from '../../main/services/store-page/filters/sort.service';
-import { UpdateData } from '../../main/services/store-page/update-view.service';
+import updateData from '../../main/services/store-page/update-view.service';
 import { StoreQuerry } from '../models/querry';
 import { State } from './state.service';
 
@@ -93,9 +93,9 @@ export class Querry {
       viewService.currentView = this.store.view[0] as 'grid' | 'list';
     }
 
-    let newState = UpdateData.update();
-    newState = UpdateData.updatePrice();
-    newState = UpdateData.updateStock();
+    let newState = updateData.update();
+    newState = updateData.updatePrice();
+    newState = updateData.updateStock();
     if (searchService.searchState) {
       newState = searchService.search(searchService.searchState);
     }

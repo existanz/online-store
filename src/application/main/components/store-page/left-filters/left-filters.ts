@@ -7,7 +7,7 @@ import { BlueButton } from '../../../../shared/components/buttons/blue-button';
 import { ProductsData } from '../../../../shared/models/response-data';
 import checkboxFilterService from '../../../services/store-page/filters/checkbox-filters.service';
 import rangeFilterService from '../../../services/store-page/filters/range-filters.service';
-import { UpdateData } from '../../../services/store-page/update-view.service';
+import updateData from '../../../services/store-page/update-view.service';
 import { State } from '../../../../shared/services/state.service';
 import searchService from '../../../services/store-page/filters/search.service';
 import resetService from '../../../services/store-page/filters/reset.service';
@@ -76,9 +76,9 @@ export class LeftFilters extends DOMElement {
       checkboxFilterService.checkCheckboxValue(e);
       rangeFilterService.pickData(e, 'price');
       rangeFilterService.pickData(e, 'stock');
-      let newState = UpdateData.updateStock();
-      newState = UpdateData.updatePrice();
-      newState = UpdateData.update();
+      let newState = updateData.updateStock();
+      newState = updateData.updatePrice();
+      newState = updateData.update();
       if (searchService.searchState) {
         newState = searchService.search(searchService.searchState);
       }
@@ -98,7 +98,7 @@ export class LeftFilters extends DOMElement {
       }
 
       viewService.view.render(newState);
-      UpdateData.updateProductCounter();
+      updateData.updateProductCounter();
       this.updateMinMaxPrice();
       this.updateMinMaxStock();
 
@@ -109,9 +109,9 @@ export class LeftFilters extends DOMElement {
       checkboxFilterService.checkCheckboxValue(e);
       rangeFilterService.pickData(e, 'price');
       rangeFilterService.pickData(e, 'stock');
-      let newState = UpdateData.updateStock();
-      newState = UpdateData.updatePrice();
-      newState = UpdateData.update();
+      let newState = updateData.updateStock();
+      newState = updateData.updatePrice();
+      newState = updateData.update();
       if (searchService.searchState) {
         newState = searchService.search(searchService.searchState);
       }
@@ -131,7 +131,7 @@ export class LeftFilters extends DOMElement {
       }
 
       viewService.view.render(newState);
-      UpdateData.updateProductCounter();
+      updateData.updateProductCounter();
 
       this.updateMinMaxPrice();
       this.updateMinMaxStock();
@@ -141,13 +141,13 @@ export class LeftFilters extends DOMElement {
 
     this.rangePrice.node.addEventListener('input', (e: Event) => {
       rangeFilterService.pickData(e, 'price');
-      let newState = UpdateData.update();
-      newState = UpdateData.updatePrice();
+      let newState = updateData.update();
+      newState = updateData.updatePrice();
       if (searchService.searchState) {
         newState = searchService.search(searchService.searchState);
       }
       viewService.view.render(newState);
-      UpdateData.updateProductCounter();
+      updateData.updateProductCounter();
 
       const brandData = {
         title: 'Brand',
@@ -169,13 +169,13 @@ export class LeftFilters extends DOMElement {
 
     this.rangeStock.node.addEventListener('input', (e: Event) => {
       rangeFilterService.pickData(e, 'stock');
-      let newState = UpdateData.update();
-      newState = UpdateData.updateStock();
+      let newState = updateData.update();
+      newState = updateData.updateStock();
       if (searchService.searchState) {
         newState = searchService.search(searchService.searchState);
       }
       viewService.view.render(newState);
-      UpdateData.updateProductCounter();
+      updateData.updateProductCounter();
 
       const brandData = {
         title: 'Brand',
@@ -196,9 +196,9 @@ export class LeftFilters extends DOMElement {
       let newState = resetService.reset();
       rangeFilterService.priceState = rangeFilterService.pickPrice(newState);
       rangeFilterService.stockState = rangeFilterService.pickStock(newState);
-      newState = UpdateData.updateStock();
-      newState = UpdateData.updatePrice();
-      newState = UpdateData.update();
+      newState = updateData.updateStock();
+      newState = updateData.updatePrice();
+      newState = updateData.update();
       const brandData = {
         title: 'Brand',
         data: checkboxFilterService.pickBrand(newState),
@@ -210,7 +210,7 @@ export class LeftFilters extends DOMElement {
         data: checkboxFilterService.pickCategory(newState),
       };
       this.checkboxCategory.render(categoryData);
-      UpdateData.updateProductCounter();
+      updateData.updateProductCounter();
 
       this.updateMinMaxPrice();
       this.updateMinMaxStock();
