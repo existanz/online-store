@@ -7,7 +7,7 @@ import { SortService } from '../../../services/store-page/filters/sort.service';
 import { SearchService } from '../../../services/store-page/filters/search.service';
 import { RangeFilterService } from '../../../services/store-page/filters/range-filters.service';
 import { UpdateData } from '../../../services/store-page/update-view.service';
-import { CheckboxFilterService } from '../../../services/store-page/filters/checkbox-filters.service';
+import checkboxFilterService from '../../../services/store-page/filters/checkbox-filters.service';
 import { LeftFilters } from '../left-filters/left-filters';
 import { ViewService } from '../../../services/store-page/change-view.service';
 import { Querry } from '../../../../shared/services/querry.service';
@@ -76,13 +76,13 @@ export class TopFilters extends DOMElement {
 
         const brandData = {
           title: 'Brand',
-          data: CheckboxFilterService.pickBrand(newState),
+          data: checkboxFilterService.pickBrand(newState),
         };
         this.leftFilters.checkboxBrand.render(brandData);
 
         const categoryData = {
           title: 'Category',
-          data: CheckboxFilterService.pickCategory(newState),
+          data: checkboxFilterService.pickCategory(newState),
         };
         this.leftFilters.checkboxCategory.render(categoryData);
         UpdateData.updateProductCounter();

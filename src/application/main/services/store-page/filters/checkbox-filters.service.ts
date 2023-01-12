@@ -1,13 +1,20 @@
 import { ProductsData } from '../../../../shared/models/response-data';
 import { CheckboxInterface, ReduceValue } from '../../../../shared/models/store-page';
 
-export class CheckboxFilterService {
-  static categoryState: CheckboxInterface[] = [];
-  static brandState: CheckboxInterface[] = [];
-  static checkedCategories: string[] = [];
-  static checkedBrands: string[] = [];
+class CheckboxFilterService {
+  public categoryState: CheckboxInterface[];
+  public brandState: CheckboxInterface[];
+  public checkedCategories: string[];
+  public checkedBrands: string[];
 
-  static pickCategory(data: ProductsData[]) {
+  constructor() {
+    this.categoryState = [];
+    this.brandState = [];
+    this.checkedCategories = [];
+    this.checkedBrands = [];
+  }
+
+  public pickCategory(data: ProductsData[]) {
     this.categoryState = [];
     data.forEach((item) => item.category.toLowerCase());
     const params = data.reduce((value: ReduceValue, key) => {
@@ -26,7 +33,7 @@ export class CheckboxFilterService {
     return this.alphabetOrder(this.categoryState);
   }
 
-  static pickBrand(data: ProductsData[]) {
+  public pickBrand(data: ProductsData[]) {
     this.brandState = [];
     const params = data.reduce((value: ReduceValue, key) => {
       key.brand = this.formatText(key.brand);
@@ -43,14 +50,14 @@ export class CheckboxFilterService {
     return this.alphabetOrder(this.brandState);
   }
 
-  private static formatText(text: string) {
+  private formatText(text: string) {
     return text
       .split('-')
       .map((item, index) => (index === 0 ? item[0].toUpperCase() + item.slice(1).toLowerCase() : item.toLowerCase()))
       .join(' ');
   }
 
-  private static alphabetOrder(data: CheckboxInterface[]) {
+  private alphabetOrder(data: CheckboxInterface[]) {
     return data.sort((a, b) => {
       if (a.name.toLowerCase() < b.name.toLowerCase()) {
         return -1;
@@ -61,7 +68,7 @@ export class CheckboxFilterService {
     });
   }
 
-  static checkCheckboxValue(e: Event) {
+  public checkCheckboxValue(e: Event) {
     const target: HTMLElement = e.target as HTMLElement;
     let value: string;
 
@@ -72,10 +79,10 @@ export class CheckboxFilterService {
         .split(' ')
         .join('-') as string;
 
-      if (CheckboxFilterService.checkedBrands.includes(value)) {
-        CheckboxFilterService.removeCheckedElem(value, CheckboxFilterService.checkedBrands);
+      if (this.checkedBrands.includes(value)) {
+        this.removeCheckedElem(value, this.checkedBrands);
       } else {
-        CheckboxFilterService.checkedBrands.push(value);
+        this.checkedBrands.push(value);
       }
     }
 
@@ -86,22 +93,25 @@ export class CheckboxFilterService {
         .split(' ')
         .join('-') as string;
 
-      if (CheckboxFilterService.checkedCategories.includes(value)) {
-        CheckboxFilterService.removeCheckedElem(value, CheckboxFilterService.checkedCategories);
+      if (this.checkedCategories.includes(value)) {
+        this.removeCheckedElem(value, this.checkedCategories);
       } else {
-        CheckboxFilterService.checkedCategories.push(value);
+        this.checkedCategories.push(value);
       }
     }
   }
 
-  private static removeCheckedElem(elem: string, arr: string[]) {
+  private removeCheckedElem(elem: string, arr: string[]) {
     const indexElem = arr.indexOf(elem);
     arr.splice(indexElem, 1);
   }
 
-  static isChecked(title: string, name: string) {
+  public isChecked(title: string, name: string) {
     const state = title == 'Category' ? this.checkedCategories : this.checkedBrands;
     const value = name.split(' ').join('-').toLowerCase();
     return state.indexOf(value) > -1;
   }
 }
+
+const checkboxFilterService = new CheckboxFilterService();
+export default checkboxFilterService;

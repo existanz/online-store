@@ -1,20 +1,20 @@
 import { State } from '../../../shared/services/state.service';
-import { CheckboxFilterService } from './filters/checkbox-filters.service';
+import checkboxFilterService from './filters/checkbox-filters.service';
 import { RangeFilterService } from './filters/range-filters.service';
 
 export class UpdateData {
   static update() {
     State.current = State.allData;
 
-    if (CheckboxFilterService.checkedCategories.length) {
+    if (checkboxFilterService.checkedCategories.length) {
       State.current = State.current.filter((item) =>
-        CheckboxFilterService.checkedCategories.includes(item.category.split(' ').join('-').toLowerCase())
+        checkboxFilterService.checkedCategories.includes(item.category.split(' ').join('-').toLowerCase())
       );
     }
 
-    if (CheckboxFilterService.checkedBrands.length) {
+    if (checkboxFilterService.checkedBrands.length) {
       State.current = State.current.filter((item) =>
-        CheckboxFilterService.checkedBrands.includes(item.brand.split(' ').join('-').toLowerCase())
+        checkboxFilterService.checkedBrands.includes(item.brand.split(' ').join('-').toLowerCase())
       );
     }
 

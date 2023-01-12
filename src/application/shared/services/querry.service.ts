@@ -1,5 +1,5 @@
 import { ViewService } from '../../main/services/store-page/change-view.service';
-import { CheckboxFilterService } from '../../main/services/store-page/filters/checkbox-filters.service';
+import checkboxFilterService from '../../main/services/store-page/filters/checkbox-filters.service';
 import { RangeFilterService } from '../../main/services/store-page/filters/range-filters.service';
 import { SearchService } from '../../main/services/store-page/filters/search.service';
 import { SortService } from '../../main/services/store-page/filters/sort.service';
@@ -33,8 +33,8 @@ export class Querry {
   }
 
   static updateQuerry() {
-    Querry.setStoreQuerry('brand', CheckboxFilterService.checkedBrands);
-    Querry.setStoreQuerry('category', CheckboxFilterService.checkedCategories);
+    Querry.setStoreQuerry('brand', checkboxFilterService.checkedBrands);
+    Querry.setStoreQuerry('category', checkboxFilterService.checkedCategories);
 
     RangeFilterService.stockState = RangeFilterService.pickStock(State.current);
     Querry.setStoreQuerry('stock', [
@@ -63,8 +63,8 @@ export class Querry {
         return obj;
       }, this.store);
     }
-    CheckboxFilterService.checkedCategories = this.store.category ? this.store.category : [];
-    CheckboxFilterService.checkedBrands = this.store.brand ? this.store.brand : [];
+    checkboxFilterService.checkedCategories = this.store.category ? this.store.category : [];
+    checkboxFilterService.checkedBrands = this.store.brand ? this.store.brand : [];
 
     RangeFilterService.priceState = RangeFilterService.pickPrice(State.allData);
     if (this.store.price) {
