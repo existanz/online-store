@@ -5,7 +5,7 @@ import { InputElement } from '../../../../shared/components/base-elements/input-
 import { BlueButton } from '../../../../shared/components/buttons/blue-button';
 import { ButtonElement } from '../../../../shared/components/base-elements/button-element';
 import CartService from '../../../services/cart-page/cart.service';
-import { ModalService } from '../../../../core/services/modal.service';
+import modalService from '../../../../core/services/modal.service';
 
 export class Summary extends DOMElement {
   private title: DOMElement;
@@ -103,7 +103,7 @@ export class Summary extends DOMElement {
       content: 'Buy now',
     });
 
-    this.submit.node.addEventListener('click', () => ModalService.appendModal());
+    this.submit.node.addEventListener('click', () => modalService.appendModal());
     this.renderPromos();
   }
 

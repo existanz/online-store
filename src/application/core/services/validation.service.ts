@@ -5,7 +5,7 @@ import { SVG } from '../../shared/components/svg-icons';
 import { ProductsData } from '../../shared/models/response-data';
 import { State } from '../../shared/services/state.service';
 import { ModalPage } from '../components/modal/modal';
-import { ModalService } from './modal.service';
+import modalService from './modal.service';
 
 export type ValidationState = Record<string, boolean>;
 
@@ -42,9 +42,9 @@ export class Validation {
 
   static checkAllValidity(state: ValidationState, element: HTMLElement) {
     const result = Object.entries(state).filter((item) => item[1] === false);
-    ModalService.removeSumbitMessage();
+    modalService.removeSumbitMessage();
     if (result.length) {
-      ModalService.appendErrors(this.state);
+      modalService.appendErrors(this.state);
     } else {
       this.createValidationMessage(element, 'Done! Redirect in 3 sec');
       setTimeout(() => {
@@ -52,10 +52,10 @@ export class Validation {
         CartService.clearCart();
         const state = State.getCurrent();
         ViewService.view.render(state);
-        ModalService.clearModal();
-        ModalService.removeMessage();
+        modalService.clearModal();
+        modalService.removeMessage();
         this.clearState();
-        ModalService.removeModal();
+        modalService.removeModal();
       }, 3000);
     }
   }
@@ -152,15 +152,6 @@ export class Validation {
   }
 
   private static validateEmail(e: Event, element: HTMLElement) {
-    // const value = (e.target as HTMLInputElement).value;
-
-    // const arr1: string[] = value.split('@');
-    // const arr2: string[] = arr1.length > 1 ? arr1[1].split('.') : arr1;
-
-    // const valid = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test(value);
-    // const message = valid ? '✓ Valid' : '✖ Invalid';
-    // this.createValidationMessage(element, message);
-    // this.state.email = [...arr1, ...arr2].length === 4;
     const specialChars = '[`!#$%^&*()_+-=[]{};\':"\\|,<>/?~]/';
     const tempInput = (e.target as HTMLInputElement).value;
     const secondPart = tempInput.split('@').at(-1);
