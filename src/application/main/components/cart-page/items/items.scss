@@ -1,12 +1,12 @@
 .cart-items {
   display: flex;
   flex-direction: column;
-}
 
-.cart-items__empty {
-  margin: 100px auto;
-  visibility: hidden;
-  &--visible {
-    visibility:visible;
-  }
+    &__empty {
+      margin: 100px auto;
+      visibility: hidden;
+      &--visible {
+        visibility:visible;
+      }
+    }
 }

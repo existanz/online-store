@@ -2,50 +2,50 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-}
 
-.personal-info__title {
-  font-size: 16px;
-  font-family: "WorkSans-SemiBold";
-  margin-bottom: 20px;
-}
+    &__title {
+      font-size: 16px;
+      font-family: "WorkSans-SemiBold";
+      margin-bottom: 20px;
+    }
 
-.personal-info__container {
-  width: 90%;
-  margin: 0 auto;
-  height: 50px;
-  margin-bottom: 8px;
-}
+    &__container {
+      width: 90%;
+      margin: 0 auto;
+      height: 50px;
+      margin-bottom: 8px;
+    }
 
-.personal-info__input {
-  font-size: 16px;
-  width: 100%;
-  height: 30px;
-  padding: 0;
-  padding-left: 40px;
-  border: none;
-  outline: none;
-  background: #fff;
-  color: #4B5563;
-  display: flex;
-  align-items: center;
-  transition: .3s;
-  margin-bottom: 3px;
+    &__input {
+      font-size: 16px;
+      width: 100%;
+      height: 30px;
+      padding: 0;
+      padding-left: 40px;
+      border: none;
+      outline: none;
+      background: #fff;
+      color: #4B5563;
+      display: flex;
+      align-items: center;
+      transition: .3s;
+      margin-bottom: 3px;
+    
+      &:focus::-webkit-input-placeholder {
+        color: transparent;
+      }
+      
+      &:focus::-moz-placeholder {
+        color: transparent;
+      }
+    
+      &:focus:-ms-input-placeholder {
+        color: transparent;
+      }
+    }
 
-  &:focus::-webkit-input-placeholder {
-    color: transparent;
-  }
-  
-  &:focus::-moz-placeholder {
-    color: transparent;
-  }
-
-  &:focus:-ms-input-placeholder {
-    color: transparent;
-  }
-}
-
-.personal-info__error {
-  font-size: 14px;
-  text-align: center;
+    &__error {
+      font-size: 14px;
+      text-align: center;
+    }
 }

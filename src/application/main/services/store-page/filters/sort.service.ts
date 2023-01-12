@@ -1,10 +1,14 @@
 import { ProductsData } from '../../../../shared/models/response-data';
 import { State } from '../../../../shared/services/state.service';
 
-export abstract class SortService {
-  static currentSort: string;
+class SortService {
+  public currentSort: string;
 
-  static sort(type: string) {
+  constructor() {
+    this.currentSort = 'default';
+  }
+
+  public sort(type: string) {
     if (type === this.currentSort) return State.current;
     let newState: ProductsData[] | null = State.current;
 
@@ -33,19 +37,22 @@ export abstract class SortService {
     return newState;
   }
 
-  private static priceDecreaseSort() {
+  private priceDecreaseSort() {
     return State.current.sort((a, b) => a.price - b.price);
   }
 
-  private static priceIncreaseSort() {
+  private priceIncreaseSort() {
     return State.current.sort((a, b) => b.price - a.price);
   }
 
-  private static priceAZSort() {
+  private priceAZSort() {
     return State.current.sort((a, b) => a.title.charCodeAt(0) - b.title.charCodeAt(0));
   }
 
-  private static priceZASort() {
+  private priceZASort() {
     return State.current.sort((a, b) => b.title.charCodeAt(0) - a.title.charCodeAt(0));
   }
 }
+
+const sortService = new SortService();
+export default sortService;

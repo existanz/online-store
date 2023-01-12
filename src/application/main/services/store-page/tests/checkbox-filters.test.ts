@@ -1,4 +1,4 @@
-import { CheckboxFilterService } from '../filters/checkbox-filters.service';
+import checkboxFilterService from '../filters/checkbox-filters.service';
 
 export const product1 = {
   id: 1,
@@ -58,7 +58,7 @@ export const data = [product1, product2, product3];
 
 describe('test Checkbox', () => {
   it('Метод должен форматировать текст - dddssdSSSd => Dddssdsssd и сортировать по названию в алфавитном порядке ', () => {
-    expect(CheckboxFilterService.pickCategory(data)).toEqual([
+    expect(checkboxFilterService.pickCategory(data)).toEqual([
       { name: 'Amrthdsones', count: 1 },
       { name: 'Smartphones', count: 1 },
       { name: 'Smartpsones', count: 1 }

@@ -5,9 +5,9 @@ import { FormElement } from '../../../shared/components/base-elements/form-eleme
 import { ButtonElement } from '../../../shared/components/base-elements/button-element';
 import { PersonalInfo } from './personal-info/personal-info';
 import { CardInfo } from './card-info/card-info';
-import { ModalService } from '../../services/modal.service';
+import modalService from '../../services/modal.service';
 import { BlueButton } from '../../../shared/components/buttons/blue-button';
-import { Validation } from '../../services/validation.service';
+import validation from '../../services/validation.service';
 
 export class ModalPage extends Page {
   private container: DOMElement;
@@ -38,10 +38,10 @@ export class ModalPage extends Page {
         e.stopPropagation();
       }
       if (e.target === this.node) {
-        ModalService.removeModal();
+        modalService.removeModal();
       }
     });
-    this.close.node.addEventListener('click', () => ModalService.removeModal());
+    this.close.node.addEventListener('click', () => modalService.removeModal());
 
     this.form = new FormElement(this.container.node, {
       tagName: 'form',
@@ -68,6 +68,6 @@ export class ModalPage extends Page {
 
     this.personalInfo = new PersonalInfo(this.personalInfoContainer.node);
     this.cardInfo = new CardInfo(this.cardInfoContainer.node);
-    Validation.addListeners(this);
+    validation.addListeners(this);
   }
 }

@@ -3,8 +3,9 @@ import { DOMElement } from '../../../../../shared/components/base-elements/dom-e
 import { InputElement } from '../../../../../shared/components/base-elements/input-element';
 import { ProductsData } from '../../../../../shared/models/response-data';
 import { State } from '../../../../../shared/services/state.service';
-import CartService from '../../../../services/cart-page/cart.service';
-import PaginationService from '../../../../services/cart-page/pagination.service';
+import cartService from '../../../../services/cart-page/cart.service';
+import paginationService from '../../../../services/cart-page/pagination.service';
+import { CartList } from '../list/cart-list';
 import './pagination.scss';
 
 export class Pagination extends DOMElement {
@@ -44,13 +45,13 @@ export class Pagination extends DOMElement {
       tagName: 'input',
       type: 'number',
       classList: ['pagination__input'],
-      value: PaginationService.productsPerPage.toString(),
+      value: paginationService.productsPerPage.toString(),
     });
 
     this.productOnPage.node.addEventListener('input', (e) => {
-      PaginationService.productsPerPage = parseInt((e.target as HTMLInputElement).value);
-      CartService.container.render();
-      window.location.hash = '#cart?prodPerPage=' + PaginationService.productsPerPage;
+      paginationService.productsPerPage = parseInt((e.target as HTMLInputElement).value);
+      (cartService.container as CartList).render();
+      this.setHash();
     });
 
     this.leftButton = new ButtonElement(this.paginationContainer.node, {
@@ -59,7 +60,8 @@ export class Pagination extends DOMElement {
     });
 
     this.leftButton.node.addEventListener('click', () => {
-      PaginationService.curPage--;
+      paginationService.curPage--;
+      this.setHash();
       this.render();
     });
 
@@ -68,7 +70,7 @@ export class Pagination extends DOMElement {
       classList: ['pagination__current-page'],
       type: 'number',
       readonly: true,
-      value: PaginationService.curPage.toString(),
+      value: paginationService.curPage.toString(),
     });
 
     this.rightButton = new ButtonElement(this.paginationContainer.node, {
@@ -77,20 +79,23 @@ export class Pagination extends DOMElement {
     });
 
     this.rightButton.node.addEventListener('click', () => {
-      PaginationService.curPage++;
+      paginationService.curPage++;
+      this.setHash();
       this.render();
     });
 
     this.totalPages = new DOMElement(this.paginationContainer.node, {
       tagName: 'p',
       classList: ['pagination__total-page'],
-      content: `of ${PaginationService.getMaxPage(data)}`,
+      content: `of ${paginationService.getMaxPage(data)}`,
     });
   }
-
+  private setHash() {
+    window.location.hash = `#cart?prodPerPage=${paginationService.productsPerPage}&curPage=${paginationService.curPage}`;
+  }
   public render() {
-    this.totalPages.node.textContent = `of ${PaginationService.getMaxPage(State.cart)}`;
-    this.productOnPage.value = PaginationService.productsPerPage;
-    this.currentPage.value = PaginationService.curPage;
+    this.totalPages.node.textContent = `of ${paginationService.getMaxPage(State.cart)}`;
+    this.productOnPage.value = paginationService.productsPerPage;
+    this.currentPage.value = paginationService.curPage;
   }
 }

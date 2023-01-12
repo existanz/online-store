@@ -5,11 +5,11 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-}
 
-.not-found-page__title {
-  font-family: "WorkSans-SemiBold";
-  font-size: 20px;
+    &__title {
+      font-family: "WorkSans-SemiBold";
+      font-size: 20px;
+    }
 }
 
 .not-found-page-items {

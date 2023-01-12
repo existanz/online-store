@@ -4,7 +4,7 @@ import { Page } from '../../../shared/components/page';
 import { CartItems } from '../../components/cart-page/items/items';
 import { Summary } from '../../components/cart-page/summary/summary';
 import { State } from '../../../shared/services/state.service';
-import CartService from '../../services/cart-page/cart.service';
+import cartService from '../../services/cart-page/cart.service';
 
 export class CartPage extends Page {
   private itemsContainer: DOMElement;
@@ -24,13 +24,13 @@ export class CartPage extends Page {
       tagName: 'div',
       classList: ['cart-page__summary'],
     });
-    CartService.cartItems = new CartItems(this.itemsContainer.node, State.cart);
+    cartService.cartItems = new CartItems(this.itemsContainer.node, State.cart);
     this.summary = new Summary(this.summaryContainer.node);
     this.node.addEventListener('click', () => this.render());
   }
 
   public render() {
-    CartService.cartItems.render();
+    (cartService.cartItems as CartItems).render();
     this.summary.render();
   }
 }

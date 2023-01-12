@@ -2,7 +2,7 @@ import './header-cart.scss';
 import { DOMElement } from '../../../../shared/components/base-elements/dom-element';
 import { LinkElement } from '../../../../shared/components/base-elements/link-element';
 import { SVG } from '../../../../shared/components/svg-icons';
-import CartService from '../../../../main/services/cart-page/cart.service';
+import cartService from '../../../../main/services/cart-page/cart.service';
 
 export class Cart extends LinkElement {
   private counter: DOMElement;
@@ -20,7 +20,7 @@ export class Cart extends LinkElement {
     this.counter = new DOMElement(this.node, {
       tagName: 'div',
       classList: ['cart-counter__count'],
-      content: '0',
+      content: cartService.getTotalCount().toString(),
     });
 
     this.text = new DOMElement(this.node, {
@@ -32,15 +32,14 @@ export class Cart extends LinkElement {
   }
 
   private setCount(): void {
-    this.counter.node.innerText = `${CartService.getTotalCount()}`;
+    this.counter.node.innerText = `${cartService.getTotalCount()}`;
   }
 
   public updateCount(): void {
+    console.log('update');
     this.setCount();
-    if (this.counter.node.innerText === '0') {
-      this.counter.node.classList.add('cart-counter__count--hidden');
-    } else {
-      this.counter.node.classList.remove('cart-counter__count--hidden');
-    }
+    this.counter.node.innerText === '0'
+      ? this.counter.node.classList.add('cart-counter__count--hidden')
+      : this.counter.node.classList.remove('cart-counter__count--hidden');
   }
 }

@@ -2,7 +2,7 @@ import './gallary.scss';
 import { DOMElement } from '../../../../shared/components/base-elements/dom-element';
 import { ImageElement } from '../../../../shared/components/base-elements/image-element';
 import { ProductsData } from '../../../../shared/models/response-data';
-import { GallaryService } from '../../../services/product-page/gallary.service';
+import gallaryService from '../../../services/product-page/gallary.service';
 
 export class Gallary extends DOMElement {
   private gallaryList: DOMElement;
@@ -25,7 +25,7 @@ export class Gallary extends DOMElement {
 
     this.element = null;
     this.image = null;
-    this.images = GallaryService.checkUniqueImg(data.images);
+    this.images = gallaryService.checkUniqueImg(data.images);
     this.render(this.images);
 
     this.mainImage = new DOMElement(this.node, {
@@ -52,7 +52,7 @@ export class Gallary extends DOMElement {
         classList: ['gallary__small-image'],
         src: item,
       });
-      this.element.node.addEventListener('click', (e) => GallaryService.changePhoto(e, this.mainImagePic));
+      this.element.node.addEventListener('click', (e) => gallaryService.changePhoto(e, this.mainImagePic));
     });
   }
 }

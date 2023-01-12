@@ -2,7 +2,7 @@ import './checkbox-filter.scss';
 import { DOMElement } from '../../../../../shared/components/base-elements/dom-element';
 import { InputElement } from '../../../../../shared/components/base-elements/input-element';
 import { CheckboxOptions } from '../../../../../shared/models/store-page';
-import { CheckboxFilterService } from '../../../../services/store-page/filters/checkbox-filters.service';
+import checkboxFilterService from '../../../../services/store-page/filters/checkbox-filters.service';
 
 export class CheckboxFilter extends DOMElement {
   private title: DOMElement;
@@ -52,7 +52,7 @@ export class CheckboxFilter extends DOMElement {
         tagName: 'input',
         type: 'checkbox',
         classList: ['checkbox-filter__checkbox'],
-        checked: CheckboxFilterService.isChecked(checkboxOptions.title, checkboxOptions.data[i].name),
+        checked: checkboxFilterService.isChecked(checkboxOptions.title, checkboxOptions.data[i].name),
       });
 
       this.customCheckbox = new DOMElement(this.label.node, {

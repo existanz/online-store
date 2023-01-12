@@ -2,7 +2,7 @@ import CartService from '../../main/services/cart-page/cart.service';
 import { ResponseData, ProductsData } from '../models/response-data';
 import LocalStorageSvc from './local-storage.service';
 
-export abstract class State {
+export class State {
   static allData: ProductsData[];
   static current: ProductsData[];
   static cart: ProductsData[];
