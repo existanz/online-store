@@ -2,7 +2,7 @@
     "name": "online-store",
     "version": "0.0.1",
     "description": "Online store task from RS School",
-    "main": "webpack.base.config.js",
+    "main": "webpack.config.js",
     "scripts": {
         "start": "webpack serve --open --config ./webpack.config.js --env mode=dev",
         "build": "webpack --config ./webpack.config.js --env mode=prod",
