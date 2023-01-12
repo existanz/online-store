@@ -145,14 +145,16 @@ class CartService {
     (this.container as CartList).node.innerHTML = '';
     if (paginationService.getCurPageProducts(State.cart).length == 0 && paginationService.curPage > 1)
       paginationService.curPage--;
-      paginationService.getCurPageProducts(State.cart).map(
-      (product, index) =>
-        new CartItem(
-          (this.container as CartList).node,
-          product,
-          index + paginationService.productsPerPage * (paginationService.curPage - 1)
-        )
-    );
+    paginationService
+      .getCurPageProducts(State.cart)
+      .map(
+        (product, index) =>
+          new CartItem(
+            (this.container as CartList).node,
+            product,
+            index + paginationService.productsPerPage * (paginationService.curPage - 1)
+          )
+      );
   }
 }
 

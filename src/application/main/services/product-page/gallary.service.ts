@@ -1,7 +1,7 @@
 import { ImageElement } from '../../../shared/components/base-elements/image-element';
 
-export class GallaryService {
-  static checkUniqueImg(images: string[]): string[] {
+class GallaryService {
+  checkUniqueImg(images: string[]): string[] {
     const duplicateImages = [
       'https://i.dummyjson.com/data/products/1/2.jpg',
       'https://i.dummyjson.com/data/products/1/thumbnail.jpg',
@@ -21,10 +21,13 @@ export class GallaryService {
     return images.filter((image) => !duplicateImages.includes(image));
   }
 
-  static changePhoto(event: Event, container: ImageElement) {
+  changePhoto(event: Event, container: ImageElement) {
     if (event.target) {
       const src: string = (event.target as HTMLImageElement).getAttribute('src') as string;
       container.node.setAttribute('src', src);
     }
   }
 }
+
+const gallaryService = new GallaryService();
+export default gallaryService;

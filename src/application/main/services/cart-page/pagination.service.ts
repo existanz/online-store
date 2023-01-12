@@ -40,5 +40,5 @@ class PaginationService {
   }
 }
 
-const paginationService = new PaginationService()
+const paginationService = new PaginationService();
 export default paginationService;
