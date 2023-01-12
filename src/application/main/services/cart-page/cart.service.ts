@@ -1,4 +1,4 @@
-import { HeaderService } from '../../../core/services/header.service';
+import headerService from '../../../core/services/header.service';
 import { ProductsData } from '../../../shared/models/response-data';
 import LocalStorageSvc from '../../../shared/services/local-storage.service';
 import { State } from '../../../shared/services/state.service';
@@ -133,7 +133,7 @@ export default class CartService {
     this.totalCount = 0;
     this.totalSum = 0;
     this.save();
-    HeaderService.update();
+    headerService.update();
   }
 
   public static render() {

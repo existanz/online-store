@@ -3,7 +3,7 @@ import { DOMElement } from '../../../shared/components/base-elements/dom-element
 import { Logo } from './header-logo/header-logo';
 import { TotalPrice } from './header-total-price/header-total-price';
 import { Cart } from './header-cart/header-cart';
-import { HeaderService } from '../../services/header.service';
+import headerService from '../../services/header.service';
 
 export class Header extends DOMElement {
   private container: DOMElement;
@@ -36,13 +36,13 @@ export class Header extends DOMElement {
     });
 
     this.logo = new Logo(this.headerLogo.node);
-    HeaderService.price = new TotalPrice(this.headerTotalPrice.node);
-    HeaderService.cart = new Cart(this.headerCart.node);
+    headerService.price = new TotalPrice(this.headerTotalPrice.node);
+    headerService.cart = new Cart(this.headerCart.node);
     this.render();
   }
 
   public render() {
-    HeaderService.cart.updateCount();
-    HeaderService.price.updatePrice();
+    headerService.cart?.updateCount();
+    headerService.price?.updatePrice();
   }
 }
