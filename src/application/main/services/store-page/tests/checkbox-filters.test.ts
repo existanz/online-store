@@ -18,13 +18,12 @@ export const product1 = {
     'https://i.dummyjson.com/data/products/1/4.jpg',
     'https://i.dummyjson.com/data/products/1/thumbnail.jpg',
   ],
-}
+};
 
 export const product2 = {
   id: 2,
   title: 'iPhone X',
-  description:
-    'SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...',
+  description: 'SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...',
   price: 899,
   discountPercentage: 17.94,
   rating: 4.44,
@@ -38,7 +37,7 @@ export const product2 = {
     'https://i.dummyjson.com/data/products/2/3.jpg',
     'https://i.dummyjson.com/data/products/2/thumbnail.jpg',
   ],
-}
+};
 
 export const product3 = {
   id: 3,
@@ -52,7 +51,7 @@ export const product3 = {
   category: 'smartphones',
   thumbnail: 'https://i.dummyjson.com/data/products/3/thumbnail.jpg',
   images: ['https://i.dummyjson.com/data/products/3/1.jpg'],
-}
+};
 
 export const data = [product1, product2, product3];
 
@@ -61,7 +60,7 @@ describe('test Checkbox', () => {
     expect(checkboxFilterService.pickCategory(data)).toEqual([
       { name: 'Amrthdsones', count: 1 },
       { name: 'Smartphones', count: 1 },
-      { name: 'Smartpsones', count: 1 }
+      { name: 'Smartpsones', count: 1 },
     ]);
   });
 });
