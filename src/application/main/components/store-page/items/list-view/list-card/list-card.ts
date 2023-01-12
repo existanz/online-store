@@ -3,7 +3,7 @@ import { DOMElement } from '../../../../../../shared/components/base-elements/do
 import { ImageElement } from '../../../../../../shared/components/base-elements/image-element';
 import { ProductsData } from '../../../../../../shared/models/response-data';
 import { ButtonElement } from '../../../../../../shared/components/base-elements/button-element';
-import CartService from '../../../../../services/cart-page/cart.service';
+import cartService from '../../../../../services/cart-page/cart.service';
 
 export class ListCard extends DOMElement {
   private photo: ImageElement;
@@ -22,12 +22,12 @@ export class ListCard extends DOMElement {
       classList: ['list-card'],
     });
 
-    this.hasInCart = CartService.idInCart(product) >= 0;
+    this.hasInCart = cartService.idInCart(product) >= 0;
 
     this.node.addEventListener('click', (el) => {
       if (el.target == this.button.node) {
-        if (this.hasInCart) CartService.removePositionFromCart(product);
-        else CartService.addToCart(product);
+        if (this.hasInCart) cartService.removePositionFromCart(product);
+        else cartService.addToCart(product);
         this.updateButton(product);
       } else {
         location.hash = '#product?idProd=' + product?.id;
@@ -84,7 +84,7 @@ export class ListCard extends DOMElement {
   }
 
   private updateButton(product: ProductsData) {
-    this.hasInCart = CartService.idInCart(product) >= 0;
+    this.hasInCart = cartService.idInCart(product) >= 0;
     if (this.hasInCart) this.button.node.innerText = 'Remove from bug';
     else this.button.node.innerText = 'Add to bug';
   }

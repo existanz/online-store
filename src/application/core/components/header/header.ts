@@ -38,7 +38,6 @@ export class Header extends DOMElement {
     this.logo = new Logo(this.headerLogo.node);
     headerService.price = new TotalPrice(this.headerTotalPrice.node);
     headerService.cart = new Cart(this.headerCart.node);
-    this.render();
   }
 
   public render() {
