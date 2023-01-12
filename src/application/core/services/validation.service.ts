@@ -1,5 +1,5 @@
 import CartService from '../../main/services/cart-page/cart.service';
-import { ViewService } from '../../main/services/store-page/change-view.service';
+import viewService from '../../main/services/store-page/change-view.service';
 import { DOMElement } from '../../shared/components/base-elements/dom-element';
 import { SVG } from '../../shared/components/svg-icons';
 import { ProductsData } from '../../shared/models/response-data';
@@ -51,7 +51,7 @@ class Validation {
         window.location.hash = '#store';
         CartService.clearCart();
         const state = State.getCurrent();
-        ViewService.view.render(state);
+        viewService.view.render(state);
         modalService.clearModal();
         modalService.removeMessage();
         this.clearState();

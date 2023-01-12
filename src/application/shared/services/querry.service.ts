@@ -1,8 +1,8 @@
-import { ViewService } from '../../main/services/store-page/change-view.service';
+import viewService from '../../main/services/store-page/change-view.service';
 import checkboxFilterService from '../../main/services/store-page/filters/checkbox-filters.service';
 import rangeFilterService from '../../main/services/store-page/filters/range-filters.service';
 import searchService from '../../main/services/store-page/filters/search.service';
-import { SortService } from '../../main/services/store-page/filters/sort.service';
+import sortService from '../../main/services/store-page/filters/sort.service';
 import { UpdateData } from '../../main/services/store-page/update-view.service';
 import { StoreQuerry } from '../models/querry';
 import { State } from './state.service';
@@ -50,8 +50,8 @@ export class Querry {
 
     Querry.setStoreQuerry('search', [searchService.searchState]);
 
-    Querry.setStoreQuerry('view', [ViewService.currentView]);
-    Querry.setStoreQuerry('sort', [SortService.currentSort]);
+    Querry.setStoreQuerry('view', [viewService.currentView]);
+    Querry.setStoreQuerry('sort', [sortService.currentSort]);
   }
 
   static async loadStateFromQuerry() {
@@ -86,11 +86,11 @@ export class Querry {
     }
 
     if (this.store.sort) {
-      SortService.currentSort = this.store.sort[0];
+      sortService.currentSort = this.store.sort[0];
     }
 
     if (this.store.view) {
-      ViewService.currentView = this.store.view[0] as 'grid' | 'list';
+      viewService.currentView = this.store.view[0] as 'grid' | 'list';
     }
 
     let newState = UpdateData.update();
@@ -99,7 +99,7 @@ export class Querry {
     if (searchService.searchState) {
       newState = searchService.search(searchService.searchState);
     }
-    SortService.sort(SortService.currentSort);
+    sortService.sort(sortService.currentSort);
     State.current = newState;
   }
 }

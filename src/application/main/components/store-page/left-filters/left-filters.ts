@@ -12,7 +12,7 @@ import { State } from '../../../../shared/services/state.service';
 import searchService from '../../../services/store-page/filters/search.service';
 import resetService from '../../../services/store-page/filters/reset.service';
 import copyService from '../../../services/store-page/filters/copy.service';
-import { ViewService } from '../../../services/store-page/change-view.service';
+import viewService from '../../../services/store-page/change-view.service';
 import { Querry } from '../../../../shared/services/querry.service';
 import { RangeSliderInterFace } from '../../../../shared/models/store-page';
 
@@ -97,7 +97,7 @@ export class LeftFilters extends DOMElement {
         this.checkboxCategory.render(categoryData);
       }
 
-      ViewService.view.render(newState);
+      viewService.view.render(newState);
       UpdateData.updateProductCounter();
       this.updateMinMaxPrice();
       this.updateMinMaxStock();
@@ -130,7 +130,7 @@ export class LeftFilters extends DOMElement {
         this.checkboxBrand.render(brandData);
       }
 
-      ViewService.view.render(newState);
+      viewService.view.render(newState);
       UpdateData.updateProductCounter();
 
       this.updateMinMaxPrice();
@@ -146,7 +146,7 @@ export class LeftFilters extends DOMElement {
       if (searchService.searchState) {
         newState = searchService.search(searchService.searchState);
       }
-      ViewService.view.render(newState);
+      viewService.view.render(newState);
       UpdateData.updateProductCounter();
 
       const brandData = {
@@ -174,7 +174,7 @@ export class LeftFilters extends DOMElement {
       if (searchService.searchState) {
         newState = searchService.search(searchService.searchState);
       }
-      ViewService.view.render(newState);
+      viewService.view.render(newState);
       UpdateData.updateProductCounter();
 
       const brandData = {

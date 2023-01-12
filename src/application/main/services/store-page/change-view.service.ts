@@ -2,23 +2,32 @@ import { State } from '../../../shared/services/state.service';
 import { GridView } from '../../components/store-page/items/grid-view/grid-view';
 import { ListView } from '../../components/store-page/items/list-view/list-view';
 
-export class ViewService {
-  static currentView: 'grid' | 'list' = 'grid';
-  static container: HTMLElement;
-  static view: GridView | ListView = new GridView(ViewService.container, State.current);
+class ViewService {
+  public currentView: 'grid' | 'list';
+  public container: HTMLElement | null;
+  public view: GridView | ListView;
 
-  static getViewState() {
+  constructor() {
+    this.currentView = 'grid';
+    this.container = null;
+    this.view = new GridView(this.container, State.current);
+  }
+
+  getViewState() {
     return this.currentView;
   }
 
-  static setViewState(value: 'grid' | 'list') {
+  setViewState(value: 'grid' | 'list') {
     if (this.currentView !== value) {
       this.currentView = value;
-      this.container.innerHTML = '';
+      (this.container as HTMLElement).innerHTML = '';
       this.view =
         this.currentView === 'grid'
-          ? new GridView(ViewService.container, State.current)
-          : new ListView(ViewService.container, State.current);
+          ? new GridView(this.container, State.current)
+          : new ListView(this.container, State.current);
     }
   }
 }
+
+const viewService = new ViewService();
+export default viewService;

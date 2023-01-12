@@ -3,13 +3,13 @@ import { DOMElement } from '../../../../shared/components/base-elements/dom-elem
 import { ToggleGrid } from './toggle-grid/toggle-grid';
 import { Search } from './search/search';
 import { SelectSort } from './select-sort/select-sort';
-import { SortService } from '../../../services/store-page/filters/sort.service';
+import sortService from '../../../services/store-page/filters/sort.service';
 import searchService from '../../../services/store-page/filters/search.service';
 import rangeFilterService from '../../../services/store-page/filters/range-filters.service';
 import { UpdateData } from '../../../services/store-page/update-view.service';
 import checkboxFilterService from '../../../services/store-page/filters/checkbox-filters.service';
 import { LeftFilters } from '../left-filters/left-filters';
-import { ViewService } from '../../../services/store-page/change-view.service';
+import viewService from '../../../services/store-page/change-view.service';
 import { Querry } from '../../../../shared/services/querry.service';
 
 export class TopFilters extends DOMElement {
@@ -56,9 +56,9 @@ export class TopFilters extends DOMElement {
         (e.target as HTMLElement).closest('.select-sort__input') &&
         (e.target as HTMLInputElement).value !== 'default'
       ) {
-        const newState = SortService.sort((e.target as HTMLInputElement).value);
+        const newState = sortService.sort((e.target as HTMLInputElement).value);
         if (newState) {
-          ViewService.view.render(newState);
+          viewService.view.render(newState);
           Querry.updateQuerry();
         }
       }
@@ -72,7 +72,7 @@ export class TopFilters extends DOMElement {
         newState = UpdateData.updatePrice();
         newState = UpdateData.update();
         newState = searchService.search((e.target as HTMLInputElement).value);
-        ViewService.view.render(newState);
+        viewService.view.render(newState);
 
         const brandData = {
           title: 'Brand',

@@ -6,7 +6,7 @@ import { LeftFilters } from '../../components/store-page/left-filters/left-filte
 import { GridView } from '../../components/store-page/items/grid-view/grid-view';
 import { ListView } from '../../components/store-page/items/list-view/list-view';
 import { ProductsData } from '../../../shared/models/response-data';
-import { ViewService } from '../../services/store-page/change-view.service';
+import viewService from '../../services/store-page/change-view.service';
 
 export class StorePage extends Page {
   private storeTopFilters: DOMElement;
@@ -34,11 +34,11 @@ export class StorePage extends Page {
       classList: ['store-page__store-items'],
     });
 
-    ViewService.container = this.storeItems.node;
-    ViewService.view =
-      ViewService.getViewState() === 'grid'
-        ? new GridView(ViewService.container, data)
-        : new ListView(ViewService.container, data);
+    viewService.container = this.storeItems.node;
+    viewService.view =
+      viewService.getViewState() === 'grid'
+        ? new GridView(viewService.container, data)
+        : new ListView(viewService.container, data);
 
     this.leftFilters = new LeftFilters(this.storeAsideFilters.node, data);
     this.topFilters = new TopFilters(this.storeTopFilters.node, this.leftFilters);
