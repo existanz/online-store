@@ -5,7 +5,7 @@ import { Search } from './search/search';
 import { SelectSort } from './select-sort/select-sort';
 import { SortService } from '../../../services/store-page/filters/sort.service';
 import { SearchService } from '../../../services/store-page/filters/search.service';
-import { RangeFilterService } from '../../../services/store-page/filters/range-filters.service';
+import rangeFilterService from '../../../services/store-page/filters/range-filters.service';
 import { UpdateData } from '../../../services/store-page/update-view.service';
 import checkboxFilterService from '../../../services/store-page/filters/checkbox-filters.service';
 import { LeftFilters } from '../left-filters/left-filters';
@@ -66,8 +66,8 @@ export class TopFilters extends DOMElement {
 
     this.node.addEventListener('input', (e: Event) => {
       if ((e.target as HTMLElement).closest('.search__input')) {
-        RangeFilterService.pickData(e, 'price');
-        RangeFilterService.pickData(e, 'stock');
+        rangeFilterService.pickData(e, 'price');
+        rangeFilterService.pickData(e, 'stock');
         let newState = UpdateData.updateStock();
         newState = UpdateData.updatePrice();
         newState = UpdateData.update();

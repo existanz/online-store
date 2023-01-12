@@ -6,7 +6,7 @@ import { WhiteButton } from '../../../../shared/components/buttons/white-button'
 import { BlueButton } from '../../../../shared/components/buttons/blue-button';
 import { ProductsData } from '../../../../shared/models/response-data';
 import checkboxFilterService from '../../../services/store-page/filters/checkbox-filters.service';
-import { RangeFilterService } from '../../../services/store-page/filters/range-filters.service';
+import rangeFilterService from '../../../services/store-page/filters/range-filters.service';
 import { UpdateData } from '../../../services/store-page/update-view.service';
 import { State } from '../../../../shared/services/state.service';
 import { SearchService } from '../../../services/store-page/filters/search.service';
@@ -14,6 +14,7 @@ import { ResetService } from '../../../services/store-page/filters/reset.service
 import copyService from '../../../services/store-page/filters/copy.service';
 import { ViewService } from '../../../services/store-page/change-view.service';
 import { Querry } from '../../../../shared/services/querry.service';
+import { RangeSliderInterFace } from '../../../../shared/models/store-page';
 
 export class LeftFilters extends DOMElement {
   public totalProducts: DOMElement;
@@ -48,12 +49,12 @@ export class LeftFilters extends DOMElement {
 
     this.rangePrice = new RangeFilter(this.node, {
       title: 'price',
-      data: RangeFilterService.priceState,
+      data: rangeFilterService.priceState as RangeSliderInterFace,
     });
 
     this.rangeStock = new RangeFilter(this.node, {
       title: 'stock',
-      data: RangeFilterService.stockState,
+      data: rangeFilterService.stockState as RangeSliderInterFace,
     });
 
     this.copyButton = new WhiteButton(this.node, {
@@ -73,8 +74,8 @@ export class LeftFilters extends DOMElement {
   public listen() {
     this.checkboxCategory.list.node.addEventListener('click', (e: Event) => {
       checkboxFilterService.checkCheckboxValue(e);
-      RangeFilterService.pickData(e, 'price');
-      RangeFilterService.pickData(e, 'stock');
+      rangeFilterService.pickData(e, 'price');
+      rangeFilterService.pickData(e, 'stock');
       let newState = UpdateData.updateStock();
       newState = UpdateData.updatePrice();
       newState = UpdateData.update();
@@ -106,8 +107,8 @@ export class LeftFilters extends DOMElement {
 
     this.checkboxBrand.list.node.addEventListener('click', (e: Event) => {
       checkboxFilterService.checkCheckboxValue(e);
-      RangeFilterService.pickData(e, 'price');
-      RangeFilterService.pickData(e, 'stock');
+      rangeFilterService.pickData(e, 'price');
+      rangeFilterService.pickData(e, 'stock');
       let newState = UpdateData.updateStock();
       newState = UpdateData.updatePrice();
       newState = UpdateData.update();
@@ -139,7 +140,7 @@ export class LeftFilters extends DOMElement {
     });
 
     this.rangePrice.node.addEventListener('input', (e: Event) => {
-      RangeFilterService.pickData(e, 'price');
+      rangeFilterService.pickData(e, 'price');
       let newState = UpdateData.update();
       newState = UpdateData.updatePrice();
       if (SearchService.searchState) {
@@ -167,7 +168,7 @@ export class LeftFilters extends DOMElement {
     this.rangeStock.node.addEventListener('change', Querry.updateQuerry);
 
     this.rangeStock.node.addEventListener('input', (e: Event) => {
-      RangeFilterService.pickData(e, 'stock');
+      rangeFilterService.pickData(e, 'stock');
       let newState = UpdateData.update();
       newState = UpdateData.updateStock();
       if (SearchService.searchState) {
@@ -193,8 +194,8 @@ export class LeftFilters extends DOMElement {
 
     this.resetButton.node.addEventListener('click', () => {
       let newState = ResetService.reset();
-      RangeFilterService.priceState = RangeFilterService.pickPrice(newState);
-      RangeFilterService.stockState = RangeFilterService.pickStock(newState);
+      rangeFilterService.priceState = rangeFilterService.pickPrice(newState);
+      rangeFilterService.stockState = rangeFilterService.pickStock(newState);
       newState = UpdateData.updateStock();
       newState = UpdateData.updatePrice();
       newState = UpdateData.update();
@@ -222,20 +223,20 @@ export class LeftFilters extends DOMElement {
   }
 
   public updateMinMaxPrice() {
-    RangeFilterService.priceState = RangeFilterService.pickPrice(State.current);
-    (this.rangePrice.rangeInputMin.node as HTMLInputElement).value = RangeFilterService.priceState.min.toString();
-    (this.rangePrice.rangeInputMax.node as HTMLInputElement).value = RangeFilterService.priceState.max.toString();
+    rangeFilterService.priceState = rangeFilterService.pickPrice(State.current);
+    (this.rangePrice.rangeInputMin.node as HTMLInputElement).value = rangeFilterService.priceState.min.toString();
+    (this.rangePrice.rangeInputMax.node as HTMLInputElement).value = rangeFilterService.priceState.max.toString();
 
-    (this.rangePrice.inputMin.node as HTMLInputElement).value = RangeFilterService.priceState.min.toString();
-    (this.rangePrice.inputMax.node as HTMLInputElement).value = RangeFilterService.priceState.max.toString();
+    (this.rangePrice.inputMin.node as HTMLInputElement).value = rangeFilterService.priceState.min.toString();
+    (this.rangePrice.inputMax.node as HTMLInputElement).value = rangeFilterService.priceState.max.toString();
   }
 
   public updateMinMaxStock() {
-    RangeFilterService.stockState = RangeFilterService.pickStock(State.current);
-    (this.rangeStock.rangeInputMin.node as HTMLInputElement).value = RangeFilterService.stockState.min.toString();
-    (this.rangeStock.rangeInputMax.node as HTMLInputElement).value = RangeFilterService.stockState.max.toString();
+    rangeFilterService.stockState = rangeFilterService.pickStock(State.current);
+    (this.rangeStock.rangeInputMin.node as HTMLInputElement).value = rangeFilterService.stockState.min.toString();
+    (this.rangeStock.rangeInputMax.node as HTMLInputElement).value = rangeFilterService.stockState.max.toString();
 
-    (this.rangeStock.inputMin.node as HTMLInputElement).value = RangeFilterService.stockState.min.toString();
-    (this.rangeStock.inputMax.node as HTMLInputElement).value = RangeFilterService.stockState.max.toString();
+    (this.rangeStock.inputMin.node as HTMLInputElement).value = rangeFilterService.stockState.min.toString();
+    (this.rangeStock.inputMax.node as HTMLInputElement).value = rangeFilterService.stockState.max.toString();
   }
 }

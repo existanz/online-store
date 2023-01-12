@@ -1,6 +1,7 @@
+import { RangeSliderInterFace } from '../../../shared/models/store-page';
 import { State } from '../../../shared/services/state.service';
 import checkboxFilterService from './filters/checkbox-filters.service';
-import { RangeFilterService } from './filters/range-filters.service';
+import rangeFilterService from './filters/range-filters.service';
 
 export class UpdateData {
   static update() {
@@ -23,14 +24,20 @@ export class UpdateData {
 
   static updatePrice() {
     State.current = State.current.filter((item) => {
-      return item.price >= RangeFilterService.priceState.min && item.price <= RangeFilterService.priceState.max;
+      return (
+        item.price >= (rangeFilterService.priceState as RangeSliderInterFace).min &&
+        item.price <= (rangeFilterService.priceState as RangeSliderInterFace).max
+      );
     });
     return State.current;
   }
 
   static updateStock() {
     State.current = State.current.filter((item) => {
-      return item.stock >= RangeFilterService.stockState.min && item.stock <= RangeFilterService.stockState.max;
+      return (
+        item.stock >= (rangeFilterService.stockState as RangeSliderInterFace).min &&
+        item.stock <= (rangeFilterService.stockState as RangeSliderInterFace).max
+      );
     });
     return State.current;
   }

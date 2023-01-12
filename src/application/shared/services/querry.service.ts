@@ -1,6 +1,6 @@
 import { ViewService } from '../../main/services/store-page/change-view.service';
 import checkboxFilterService from '../../main/services/store-page/filters/checkbox-filters.service';
-import { RangeFilterService } from '../../main/services/store-page/filters/range-filters.service';
+import rangeFilterService from '../../main/services/store-page/filters/range-filters.service';
 import { SearchService } from '../../main/services/store-page/filters/search.service';
 import { SortService } from '../../main/services/store-page/filters/sort.service';
 import { UpdateData } from '../../main/services/store-page/update-view.service';
@@ -36,16 +36,16 @@ export class Querry {
     Querry.setStoreQuerry('brand', checkboxFilterService.checkedBrands);
     Querry.setStoreQuerry('category', checkboxFilterService.checkedCategories);
 
-    RangeFilterService.stockState = RangeFilterService.pickStock(State.current);
+    rangeFilterService.stockState = rangeFilterService.pickStock(State.current);
     Querry.setStoreQuerry('stock', [
-      RangeFilterService.stockState.min.toString(),
-      RangeFilterService.stockState.max.toString(),
+      rangeFilterService.stockState.min.toString(),
+      rangeFilterService.stockState.max.toString(),
     ]);
 
-    RangeFilterService.priceState = RangeFilterService.pickPrice(State.current);
+    rangeFilterService.priceState = rangeFilterService.pickPrice(State.current);
     Querry.setStoreQuerry('price', [
-      RangeFilterService.priceState.min.toString(),
-      RangeFilterService.priceState.max.toString(),
+      rangeFilterService.priceState.min.toString(),
+      rangeFilterService.priceState.max.toString(),
     ]);
 
     Querry.setStoreQuerry('search', [SearchService.searchState]);
@@ -66,16 +66,16 @@ export class Querry {
     checkboxFilterService.checkedCategories = this.store.category ? this.store.category : [];
     checkboxFilterService.checkedBrands = this.store.brand ? this.store.brand : [];
 
-    RangeFilterService.priceState = RangeFilterService.pickPrice(State.allData);
+    rangeFilterService.priceState = rangeFilterService.pickPrice(State.allData);
     if (this.store.price) {
-      RangeFilterService.priceState = {
+      rangeFilterService.priceState = {
         min: Number(this.store.price[0]),
         max: Number(this.store.price[1]),
       };
     }
-    RangeFilterService.stockState = RangeFilterService.pickStock(State.allData);
+    rangeFilterService.stockState = rangeFilterService.pickStock(State.allData);
     if (this.store.stock) {
-      RangeFilterService.stockState = {
+      rangeFilterService.stockState = {
         min: Number(this.store.stock[0]),
         max: Number(this.store.stock[1]),
       };
