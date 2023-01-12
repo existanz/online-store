@@ -9,8 +9,8 @@ import checkboxFilterService from '../../../services/store-page/filters/checkbox
 import rangeFilterService from '../../../services/store-page/filters/range-filters.service';
 import { UpdateData } from '../../../services/store-page/update-view.service';
 import { State } from '../../../../shared/services/state.service';
-import { SearchService } from '../../../services/store-page/filters/search.service';
-import { ResetService } from '../../../services/store-page/filters/reset.service';
+import searchService from '../../../services/store-page/filters/search.service';
+import resetService from '../../../services/store-page/filters/reset.service';
 import copyService from '../../../services/store-page/filters/copy.service';
 import { ViewService } from '../../../services/store-page/change-view.service';
 import { Querry } from '../../../../shared/services/querry.service';
@@ -79,8 +79,8 @@ export class LeftFilters extends DOMElement {
       let newState = UpdateData.updateStock();
       newState = UpdateData.updatePrice();
       newState = UpdateData.update();
-      if (SearchService.searchState) {
-        newState = SearchService.search(SearchService.searchState);
+      if (searchService.searchState) {
+        newState = searchService.search(searchService.searchState);
       }
       const brandData = {
         title: 'Brand',
@@ -112,8 +112,8 @@ export class LeftFilters extends DOMElement {
       let newState = UpdateData.updateStock();
       newState = UpdateData.updatePrice();
       newState = UpdateData.update();
-      if (SearchService.searchState) {
-        newState = SearchService.search(SearchService.searchState);
+      if (searchService.searchState) {
+        newState = searchService.search(searchService.searchState);
       }
       const categoryData = {
         title: 'Category',
@@ -143,8 +143,8 @@ export class LeftFilters extends DOMElement {
       rangeFilterService.pickData(e, 'price');
       let newState = UpdateData.update();
       newState = UpdateData.updatePrice();
-      if (SearchService.searchState) {
-        newState = SearchService.search(SearchService.searchState);
+      if (searchService.searchState) {
+        newState = searchService.search(searchService.searchState);
       }
       ViewService.view.render(newState);
       UpdateData.updateProductCounter();
@@ -171,8 +171,8 @@ export class LeftFilters extends DOMElement {
       rangeFilterService.pickData(e, 'stock');
       let newState = UpdateData.update();
       newState = UpdateData.updateStock();
-      if (SearchService.searchState) {
-        newState = SearchService.search(SearchService.searchState);
+      if (searchService.searchState) {
+        newState = searchService.search(searchService.searchState);
       }
       ViewService.view.render(newState);
       UpdateData.updateProductCounter();
@@ -193,7 +193,7 @@ export class LeftFilters extends DOMElement {
     });
 
     this.resetButton.node.addEventListener('click', () => {
-      let newState = ResetService.reset();
+      let newState = resetService.reset();
       rangeFilterService.priceState = rangeFilterService.pickPrice(newState);
       rangeFilterService.stockState = rangeFilterService.pickStock(newState);
       newState = UpdateData.updateStock();

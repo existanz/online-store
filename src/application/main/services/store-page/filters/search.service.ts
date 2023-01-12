@@ -1,9 +1,13 @@
 import { State } from '../../../../shared/services/state.service';
 
-export class SearchService {
-  static searchState: string;
+class SearchService {
+  public searchState: string;
 
-  static search(value: string) {
+  constructor() {
+    this.searchState = '';
+  }
+
+  public search(value: string) {
     this.searchState = value.toLowerCase().trim();
     State.current = State.current.filter(
       (item) =>
@@ -17,3 +21,6 @@ export class SearchService {
     return State.current;
   }
 }
+
+const searchService = new SearchService();
+export default searchService;

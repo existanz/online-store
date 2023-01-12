@@ -1,7 +1,7 @@
 import { ViewService } from '../../main/services/store-page/change-view.service';
 import checkboxFilterService from '../../main/services/store-page/filters/checkbox-filters.service';
 import rangeFilterService from '../../main/services/store-page/filters/range-filters.service';
-import { SearchService } from '../../main/services/store-page/filters/search.service';
+import searchService from '../../main/services/store-page/filters/search.service';
 import { SortService } from '../../main/services/store-page/filters/sort.service';
 import { UpdateData } from '../../main/services/store-page/update-view.service';
 import { StoreQuerry } from '../models/querry';
@@ -48,7 +48,7 @@ export class Querry {
       rangeFilterService.priceState.max.toString(),
     ]);
 
-    Querry.setStoreQuerry('search', [SearchService.searchState]);
+    Querry.setStoreQuerry('search', [searchService.searchState]);
 
     Querry.setStoreQuerry('view', [ViewService.currentView]);
     Querry.setStoreQuerry('sort', [SortService.currentSort]);
@@ -82,7 +82,7 @@ export class Querry {
     }
 
     if (this.store.search) {
-      SearchService.searchState = this.store.search[0];
+      searchService.searchState = this.store.search[0];
     }
 
     if (this.store.sort) {
@@ -96,8 +96,8 @@ export class Querry {
     let newState = UpdateData.update();
     newState = UpdateData.updatePrice();
     newState = UpdateData.updateStock();
-    if (SearchService.searchState) {
-      newState = SearchService.search(SearchService.searchState);
+    if (searchService.searchState) {
+      newState = searchService.search(searchService.searchState);
     }
     SortService.sort(SortService.currentSort);
     State.current = newState;

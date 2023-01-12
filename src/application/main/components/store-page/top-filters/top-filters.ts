@@ -4,7 +4,7 @@ import { ToggleGrid } from './toggle-grid/toggle-grid';
 import { Search } from './search/search';
 import { SelectSort } from './select-sort/select-sort';
 import { SortService } from '../../../services/store-page/filters/sort.service';
-import { SearchService } from '../../../services/store-page/filters/search.service';
+import searchService from '../../../services/store-page/filters/search.service';
 import rangeFilterService from '../../../services/store-page/filters/range-filters.service';
 import { UpdateData } from '../../../services/store-page/update-view.service';
 import checkboxFilterService from '../../../services/store-page/filters/checkbox-filters.service';
@@ -71,7 +71,7 @@ export class TopFilters extends DOMElement {
         let newState = UpdateData.updateStock();
         newState = UpdateData.updatePrice();
         newState = UpdateData.update();
-        newState = SearchService.search((e.target as HTMLInputElement).value);
+        newState = searchService.search((e.target as HTMLInputElement).value);
         ViewService.view.render(newState);
 
         const brandData = {
