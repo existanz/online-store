@@ -1,7 +1,8 @@
 import { ProductsData } from '../../shared/models/response-data';
 import { State } from '../../shared/services/state.service';
 import { ModalPage } from '../components/modal/modal';
-import { Validation, ValidationState } from './validation.service';
+import { ValidationState } from './validation.service';
+import validation from './validation.service';
 
 class ModalService {
   public modal: ModalPage;
@@ -12,7 +13,7 @@ class ModalService {
 
   appendModal() {
     if (this.checkHash()) window.location.hash = '#cart';
-    Validation.isEmptyCart(State.cart) ? this.addDisableButton() : this.addValidButton();
+    validation.isEmptyCart(State.cart) ? this.addDisableButton() : this.addValidButton();
     document.body.append(this.modal.node);
   }
 
@@ -59,23 +60,23 @@ class ModalService {
     this.modal.submit.node.innerText = 'Submit';
     this.modal.submit.node.style.opacity = '1';
     this.modal.submit.node.addEventListener('click', () => {
-      const state = Validation.getState();
-      Validation.checkAllValidity(state, this.modal.cardInfo.cardContainer.node);
+      const state = validation.getState();
+      validation.checkAllValidity(state, this.modal.cardInfo.cardContainer.node);
     });
   }
 
   public appendErrors(state: ValidationState) {
     this.removeMessage();
-    if (!state.name) Validation.createValidationMessage(this.modal.personalInfo.nameContainer.node, '✖ Invalid');
-    if (!state.phone) Validation.createValidationMessage(this.modal.personalInfo.phoneContainer.node, '✖ Invalid');
-    if (!state.address) Validation.createValidationMessage(this.modal.personalInfo.addressContainer.node, '✖ Invalid');
-    if (!state.email) Validation.createValidationMessage(this.modal.personalInfo.emailContainer.node, '✖ Invalid');
+    if (!state.name) validation.createValidationMessage(this.modal.personalInfo.nameContainer.node, '✖ Invalid');
+    if (!state.phone) validation.createValidationMessage(this.modal.personalInfo.phoneContainer.node, '✖ Invalid');
+    if (!state.address) validation.createValidationMessage(this.modal.personalInfo.addressContainer.node, '✖ Invalid');
+    if (!state.email) validation.createValidationMessage(this.modal.personalInfo.emailContainer.node, '✖ Invalid');
     let message = '';
     if (!state.cardNumber) message = message + 'card number ';
     if (!state.mounth) message = message + 'thru ';
     if (!state.cvv) message = message + 'cvv ';
     if (message.length) message = '✖ Invalid in ' + message;
-    Validation.createValidationMessage(this.modal.cardInfo.cardContainer.node, message);
+    validation.createValidationMessage(this.modal.cardInfo.cardContainer.node, message);
   }
 }
 
