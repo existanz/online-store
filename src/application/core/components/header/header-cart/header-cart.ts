@@ -36,7 +36,7 @@ export class Cart extends LinkElement {
   }
 
   public updateCount(): void {
-    console.log('update')
+    console.log('update');
     this.setCount();
     this.counter.node.innerText === '0'
       ? this.counter.node.classList.add('cart-counter__count--hidden')
