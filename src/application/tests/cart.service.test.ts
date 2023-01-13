@@ -46,3 +46,19 @@ describe('PromoCodes testing', () => {
       expect(cartService.isActivePromo('EPAM')).toBe(true);
     });
 });
+
+describe('Goods in cart testing', () => {
+  it('add product to cart', () => {
+    const id = MOCK_PRODUCTS[0].id;
+    expect(id).toBe(1);
+  }),
+    it('remove product from cart', () => {
+      expect('TODO').toBe('true');
+    }),
+    it('remove all products same type', () => {
+      expect('TODO').toBe('true');
+    }),
+    it('clear cart', () => {
+      expect('TODO').toBe('true');
+    });
+});
