@@ -7,7 +7,7 @@ import { CartItem } from '../../components/cart-page/items/list/cart-item';
 import { CartList } from '../../components/cart-page/items/list/cart-list';
 import paginationService from './pagination.service';
 
-class CartService {
+export class CartService {
   public container: CartList | null;
   public cartItems: CartItems | null;
   public countsCart: number[] = [];
