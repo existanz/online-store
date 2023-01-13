@@ -2,6 +2,9 @@ import cartService from '../main/services/cart-page/cart.service';
 import products from './test.json';
 jest.mock('../main/services/cart-page/cart.service');
 
+//const mockCartService = jest.fn();
+//console.log(mockCartService);
+
 cartService.activePromo = [];
 cartService.activatePromo('rs');
 console.log(cartService.activePromo);
