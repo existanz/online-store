@@ -2,7 +2,7 @@ import { ProductsData } from '../../../../shared/models/response-data';
 import { RangeSliderInterFace } from '../../../../shared/models/store-page';
 import { State } from '../../../../shared/services/state.service';
 
-export class RangeFilterService {
+class RangeFilterService {
   public priceState: RangeSliderInterFace | null;
   public stockState: RangeSliderInterFace | null;
 
@@ -72,4 +72,6 @@ export class RangeFilterService {
 }
 
 const rangeFilterService = new RangeFilterService();
+const MOCK_RANGE_FILTER_SERVICE = new RangeFilterService();
+export { MOCK_RANGE_FILTER_SERVICE };
 export default rangeFilterService;
