@@ -1,6 +1,6 @@
-import checkboxFilterService from '../filters/checkbox-filters.service';
+import checkboxFilterService from '../main/services/store-page/filters/checkbox-filters.service';
 
-export const product1 = {
+const MOCK_PRODUCT_1 = {
   id: 1,
   title: 'iPhone 9',
   description: 'An apple mobile which is nothing like apple',
@@ -20,7 +20,7 @@ export const product1 = {
   ],
 };
 
-export const product2 = {
+const MOCK_PRODUCT_2 = {
   id: 2,
   title: 'iPhone X',
   description: 'SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...',
@@ -39,7 +39,7 @@ export const product2 = {
   ],
 };
 
-export const product3 = {
+const MOCK_PRODUCT_3 = {
   id: 3,
   title: 'Samsung Universe 9',
   description: "Samsung's new variant which goes beyond Galaxy to the Universe",
@@ -53,11 +53,11 @@ export const product3 = {
   images: ['https://i.dummyjson.com/data/products/3/1.jpg'],
 };
 
-export const data = [product1, product2, product3];
+export const MOCK_DATA = [MOCK_PRODUCT_1, MOCK_PRODUCT_2, MOCK_PRODUCT_3];
 
 describe('test Checkbox', () => {
-  it('Метод должен форматировать текст - dddssdSSSd => Dddssdsssd и сортировать по названию в алфавитном порядке ', () => {
-    expect(checkboxFilterService.pickCategory(data)).toEqual([
+  it('Метод должен форматировать текст - dddssdSSSd => Dddssdsssd и сортировать по названию в алфавитном порядке', () => {
+    expect(checkboxFilterService.pickCategory(MOCK_DATA)).toEqual([
       { name: 'Amrthdsones', count: 1 },
       { name: 'Smartphones', count: 1 },
       { name: 'Smartpsones', count: 1 },

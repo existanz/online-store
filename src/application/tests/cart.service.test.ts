@@ -1,11 +1,7 @@
 import { CartService } from '../main/services/cart-page/cart.service';
 import MOCK_PRODUCTS from './mock.products';
-//jest.mock('../main/services/cart-page/cart.service');
 
-//const mockCartService = jest.fn();
-//console.log(mockCartService);
 const cartService = new CartService();
-//console.log(cartService);
 
 describe('PromoCodes testing', () => {
   it('activate promo', () => {

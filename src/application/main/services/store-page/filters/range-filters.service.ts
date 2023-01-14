@@ -2,7 +2,7 @@ import { ProductsData } from '../../../../shared/models/response-data';
 import { RangeSliderInterFace } from '../../../../shared/models/store-page';
 import { State } from '../../../../shared/services/state.service';
 
-class RangeFilterService {
+export class RangeFilterService {
   public priceState: RangeSliderInterFace | null;
   public stockState: RangeSliderInterFace | null;
 
