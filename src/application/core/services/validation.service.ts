@@ -9,7 +9,7 @@ import modalService from './modal.service';
 
 export type ValidationState = Record<string, boolean>;
 
-class Validation {
+export class Validation {
   public state = {
     name: false,
     phone: false,
@@ -113,24 +113,16 @@ class Validation {
   private validateName(e: Event, element: HTMLElement) {
     const value = (e.target as HTMLInputElement).value;
 
-    const count: boolean = value.split(' ').length > 1;
-    const words: boolean = /^[a-zA-Z]+$/.test(value.split(' ').join('').trim().toLowerCase());
-    const length: boolean = value.split(' ').filter((item) => item.trim().length < 3).length === 0;
-
-    const message = count && words && length ? '✓ Valid' : '✖ Invalid';
-    this.state.name = count && words && length;
+    const message = this.validateNameFuntion(value) ? '✓ Valid' : '✖ Invalid';
+    this.state.name = this.validateNameFuntion(value);
     this.createValidationMessage(element, message);
   }
 
   private validateNumber(e: Event, element: HTMLElement) {
     const value = (e.target as HTMLInputElement).value;
 
-    const firstNumber: boolean = value.split('')[0] === '+';
-    const numbers: boolean = /^\d+$/.test(value.slice(1));
-    const length: boolean = value.slice(1).trim().length > 8;
-
-    const message = firstNumber && numbers && length ? '✓ Valid' : '✖ Invalid';
-    this.state.phone = firstNumber && numbers && length;
+    const message = this.validateNumberFuntion(value) ? '✓ Valid' : '✖ Invalid';
+    this.state.phone = this.validateNumberFuntion(value);
     this.createValidationMessage(element, message);
   }
 
@@ -143,23 +135,20 @@ class Validation {
   private validateAdress(e: Event, element: HTMLElement) {
     const value = (e.target as HTMLInputElement).value;
 
-    const count: boolean = value.split(' ').length > 2;
-    const length: boolean = value.split(' ').filter((item) => item.trim().length < 5).length === 0;
-
-    const message = count && length ? '✓ Valid' : '✖ Invalid';
-    this.state.address = count && length;
+    const message = this.validateAdressFuntion(value) ? '✓ Valid' : '✖ Invalid';
+    this.state.address = this.validateAdressFuntion(value);
     this.createValidationMessage(element, message);
   }
 
   private validateEmail(e: Event, element: HTMLElement) {
+    const value = (e.target as HTMLInputElement).value;
     const specialChars = '[`!#$%^&*()_+-=[]{};\':"\\|,<>/?~]/';
-    const tempInput = (e.target as HTMLInputElement).value;
-    const secondPart = tempInput.split('@').at(-1);
+    const secondPart = value.split('@').at(-1);
     const domain = secondPart?.split('.').at(-1);
     let message: string;
     if (
-      !tempInput.includes('@') ||
-      tempInput.indexOf('@') !== tempInput.lastIndexOf('@') ||
+      !value.includes('@') ||
+      value.indexOf('@') !== value.lastIndexOf('@') ||
       specialChars.split('').some((specialChar) => secondPart?.includes(specialChar)) ||
       !secondPart?.includes('.') ||
       secondPart.indexOf('.') !== secondPart.lastIndexOf('.') ||
@@ -245,6 +234,26 @@ class Validation {
     const value = (e.target as HTMLInputElement).value;
     if (!/^\d+$/.test(value.slice(-1))) (e.target as HTMLInputElement).value = value.slice(0, -1);
     if (value.length > 3) (e.target as HTMLInputElement).value = value.slice(0, 3);
+  }
+
+  public validateNumberFuntion(value: string) {
+    const firstNumber: boolean = value.split('')[0] === '+';
+    const numbers: boolean = /^\d+$/.test(value.slice(1));
+    const length: boolean = value.slice(1).trim().length > 8;
+    return firstNumber && numbers && length;
+  }
+
+  public validateNameFuntion(value: string) {
+    const count: boolean = value.split(' ').length > 1;
+    const words: boolean = /^[a-zA-Z]+$/.test(value.split(' ').join('').trim().toLowerCase());
+    const length: boolean = value.split(' ').filter((item) => item.trim().length < 3).length === 0;
+    return count && words && length;
+  }
+
+  public validateAdressFuntion(value: string) {
+    const count: boolean = value.split(' ').length > 2;
+    const length: boolean = value.split(' ').filter((item) => item.trim().length < 5).length === 0;
+    return count && length;
   }
 }
 
