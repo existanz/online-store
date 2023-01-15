@@ -1,6 +1,6 @@
-import { CartService } from '../main/services/cart-page/cart.service';
-import { State } from '../shared/services/state.service';
-import MOCK_PRODUCTS from './mock.products';
+import { CartService } from './cart.service';
+import { State } from '../../../shared/services/state.service';
+import MOCK_PRODUCTS from '../../../../../__mocks__/mock.products';
 
 const cartService = new CartService();
 

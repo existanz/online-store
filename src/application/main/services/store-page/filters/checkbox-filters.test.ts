@@ -1,4 +1,4 @@
-import checkboxFilterService from '../main/services/store-page/filters/checkbox-filters.service';
+import checkboxFilterService from './checkbox-filters.service';
 
 const MOCK_PRODUCT_1 = {
   id: 1,
