@@ -1,4 +1,5 @@
 import { CartService } from '../main/services/cart-page/cart.service';
+import { State } from '../shared/services/state.service';
 import MOCK_PRODUCTS from './mock.products';
 
 const cartService = new CartService();
@@ -45,11 +46,39 @@ describe('PromoCodes testing', () => {
 
 describe('Goods in cart testing', () => {
   it('add product to cart', () => {
-    const id = MOCK_PRODUCTS[0].id;
-    expect(id).toBe(1);
+    State.cart = [];
+    cartService.addToCart(MOCK_PRODUCTS[0]);
+    expect(State.cart.length).toBe(1);
+    expect(State.cart[0].id).toBe(MOCK_PRODUCTS[0].id);
+    cartService.addToCart(MOCK_PRODUCTS[0]);
+    expect(State.cart.length).toBe(1);
+    expect(cartService.countsCart[0]).toBe(2);
+    cartService.addToCart(MOCK_PRODUCTS[0]);
+    expect(State.cart.length).toBe(1);
+    expect(cartService.countsCart[0]).toBe(3);
+    cartService.addToCart(MOCK_PRODUCTS[4]);
+    cartService.addToCart(MOCK_PRODUCTS[4]);
+    cartService.addToCart(MOCK_PRODUCTS[4]);
+    expect(State.cart.length).toBe(2);
+    expect(cartService.countsCart[1]).toBe(3);
+    expect(State.cart[1].id).toBe(MOCK_PRODUCTS[4].id);
   }),
+    it('dont allow to add in cart more than stock', () => {
+      for (let i = 1; i < 100; i++) cartService.addToCart(MOCK_PRODUCTS[7]);
+      expect(State.cart.length).toBe(3);
+      expect(cartService.countsCart[2]).toBe(MOCK_PRODUCTS[7].stock);
+    }),
+    it('index from cart if have', () => {
+      expect(cartService.idInCart(MOCK_PRODUCTS[0])).toBe(0);
+      expect(cartService.idInCart(MOCK_PRODUCTS[1])).toBe(-1);
+      expect(cartService.idInCart(MOCK_PRODUCTS[4])).toBe(1);
+      expect(cartService.idInCart(MOCK_PRODUCTS[8])).toBe(-1);
+      cartService.addToCart(MOCK_PRODUCTS[8]);
+      expect(cartService.idInCart(MOCK_PRODUCTS[8])).toBe(3);
+    }),
     it('remove product from cart', () => {
-      expect('TODO').toBe('true');
+      cartService.removeFromCart(MOCK_PRODUCTS[1]);
+      expect(State.cart.length).toBe(3);
     }),
     it('remove all products same type', () => {
       expect('TODO').toBe('true');
