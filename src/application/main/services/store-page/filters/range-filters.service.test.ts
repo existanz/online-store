@@ -5,7 +5,6 @@ const service = new RangeFilterService();
 
 describe('test Range-filter service', () => {
   it('Метод должен забирать из данных наибольшую и наименьшую цену', () => {
-
     service.pickPrice(MOCK_PRODUCTS);
 
     const MOCK_RESULT = {
@@ -17,7 +16,6 @@ describe('test Range-filter service', () => {
   });
 
   it('Метод должен забирать из данных наибольшее и наименьшее количество на складе', () => {
-
     service.pickStock(MOCK_PRODUCTS);
 
     const MOCK_RESULT = {
