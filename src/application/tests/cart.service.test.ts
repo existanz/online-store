@@ -1,4 +1,5 @@
 import { CartService } from '../main/services/cart-page/cart.service';
+import { State } from '../shared/services/state.service';
 import MOCK_PRODUCTS from './mock.products';
 //jest.mock('../main/services/cart-page/cart.service');
 
@@ -49,8 +50,20 @@ describe('PromoCodes testing', () => {
 
 describe('Goods in cart testing', () => {
   it('add product to cart', () => {
-    const id = MOCK_PRODUCTS[0].id;
-    expect(id).toBe(1);
+    State.cart = [];
+    cartService.addToCart(MOCK_PRODUCTS[0]);
+    expect(State.cart.length).toBe(1);
+    expect(State.cart[0].id).toBe(MOCK_PRODUCTS[0].id);
+    cartService.addToCart(MOCK_PRODUCTS[0]);
+    expect(State.cart.length).toBe(1);
+    expect(cartService.countsCart[0]).toBe(2);
+    cartService.addToCart(MOCK_PRODUCTS[0]);
+    expect(State.cart.length).toBe(1);
+    expect(cartService.countsCart[0]).toBe(3);
+    cartService.addToCart(MOCK_PRODUCTS[4]);
+    expect(State.cart.length).toBe(2);
+    expect(cartService.countsCart[1]).toBe(1);
+    expect(State.cart[1].id).toBe(MOCK_PRODUCTS[4].id);
   }),
     it('remove product from cart', () => {
       expect('TODO').toBe('true');
