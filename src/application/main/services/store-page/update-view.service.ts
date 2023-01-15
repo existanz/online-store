@@ -1,49 +1,49 @@
 import { RangeSliderInterFace } from '../../../shared/models/store-page';
-import { State } from '../../../shared/services/state.service';
+import stateService from '../../../shared/services/state.service';
 import checkboxFilterService from './filters/checkbox-filters.service';
 import rangeFilterService from './filters/range-filters.service';
 
 class UpdateData {
   public update() {
-    State.current = State.allData;
+    stateService.current = stateService.allData;
 
     if (checkboxFilterService.checkedCategories.length) {
-      State.current = State.current.filter((item) =>
+      stateService.current = stateService.current.filter((item) =>
         checkboxFilterService.checkedCategories.includes(item.category.split(' ').join('-').toLowerCase())
       );
     }
 
     if (checkboxFilterService.checkedBrands.length) {
-      State.current = State.current.filter((item) =>
+      stateService.current = stateService.current.filter((item) =>
         checkboxFilterService.checkedBrands.includes(item.brand.split(' ').join('-').toLowerCase())
       );
     }
 
-    return State.current;
+    return stateService.current;
   }
 
   public updatePrice() {
-    State.current = State.current.filter((item) => {
+    stateService.current = stateService.current.filter((item) => {
       return (
         item.price >= (rangeFilterService.priceState as RangeSliderInterFace).min &&
         item.price <= (rangeFilterService.priceState as RangeSliderInterFace).max
       );
     });
-    return State.current;
+    return stateService.current;
   }
 
   public updateStock() {
-    State.current = State.current.filter((item) => {
+    stateService.current = stateService.current.filter((item) => {
       return (
         item.stock >= (rangeFilterService.stockState as RangeSliderInterFace).min &&
         item.stock <= (rangeFilterService.stockState as RangeSliderInterFace).max
       );
     });
-    return State.current;
+    return stateService.current;
   }
 
   public updateProductCounter() {
-    (document.querySelector('.total-products') as HTMLElement).innerText = `Products: ${State.current.length}`;
+    (document.querySelector('.total-products') as HTMLElement).innerText = `Products: ${stateService.current.length}`;
   }
 }
 

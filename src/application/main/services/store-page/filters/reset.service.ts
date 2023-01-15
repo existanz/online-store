@@ -1,4 +1,4 @@
-import { State } from '../../../../shared/services/state.service';
+import stateService from '../../../../shared/services/state.service';
 import viewService from '../change-view.service';
 import checkboxFilterService from './checkbox-filters.service';
 import searchService from './search.service';
@@ -7,15 +7,15 @@ import sortService from './sort.service';
 class ResetService {
   public reset() {
     sortService.currentSort = '';
-    viewService.view.render(State.allData);
-    State.current = State.allData;
+    viewService.view.render(stateService.allData);
+    stateService.current = stateService.allData;
     checkboxFilterService.checkedCategories = [];
     checkboxFilterService.checkedBrands = [];
     (document.querySelector('.select-sort__input') as HTMLInputElement).value = '';
     (document.querySelector('.search__input') as HTMLInputElement).value = '';
     searchService.searchState = '';
     viewService.setViewState('grid');
-    return State.current;
+    return stateService.current;
   }
 }
 

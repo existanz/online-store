@@ -1,5 +1,5 @@
 import { ProductsData } from '../../../../shared/models/response-data';
-import { State } from '../../../../shared/services/state.service';
+import stateService from '../../../../shared/services/state.service';
 
 class SortService {
   public currentSort: string;
@@ -9,8 +9,8 @@ class SortService {
   }
 
   public sort(type: string) {
-    if (type === this.currentSort) return State.current;
-    let newState: ProductsData[] | null = State.current;
+    if (type === this.currentSort) return stateService.current;
+    let newState: ProductsData[] | null = stateService.current;
 
     switch (type) {
       case 'price-decrease':
@@ -38,19 +38,19 @@ class SortService {
   }
 
   private priceDecreaseSort() {
-    return State.current.sort((a, b) => a.price - b.price);
+    return stateService.current.sort((a, b) => a.price - b.price);
   }
 
   private priceIncreaseSort() {
-    return State.current.sort((a, b) => b.price - a.price);
+    return stateService.current.sort((a, b) => b.price - a.price);
   }
 
   private priceAZSort() {
-    return State.current.sort((a, b) => a.title.charCodeAt(0) - b.title.charCodeAt(0));
+    return stateService.current.sort((a, b) => a.title.charCodeAt(0) - b.title.charCodeAt(0));
   }
 
   private priceZASort() {
-    return State.current.sort((a, b) => b.title.charCodeAt(0) - a.title.charCodeAt(0));
+    return stateService.current.sort((a, b) => b.title.charCodeAt(0) - a.title.charCodeAt(0));
   }
 }
 

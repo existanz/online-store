@@ -1,6 +1,6 @@
 import { ProductsData } from '../../../../shared/models/response-data';
 import { RangeSliderInterFace } from '../../../../shared/models/store-page';
-import { State } from '../../../../shared/services/state.service';
+import stateService from '../../../../shared/services/state.service';
 
 class RangeFilterService {
   public priceState: RangeSliderInterFace | null;
@@ -34,8 +34,8 @@ class RangeFilterService {
   }
 
   public pickData(e: Event, state: string) {
-    this.priceState = this.pickPrice(State.current);
-    this.stockState = this.pickStock(State.current);
+    this.priceState = this.pickPrice(stateService.current);
+    this.stockState = this.pickStock(stateService.current);
 
     let { max: maxPrice, min: minPrice } = this.priceState;
     let { max: maxStock, min: minStock } = this.stockState;
@@ -72,6 +72,6 @@ class RangeFilterService {
 }
 
 const rangeFilterService = new RangeFilterService();
-const MOCK_RANGE_FILTER_SERVICE = new RangeFilterService();
-export { MOCK_RANGE_FILTER_SERVICE };
+const mockRangeFilterService = new RangeFilterService();
+export { mockRangeFilterService };
 export default rangeFilterService;

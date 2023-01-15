@@ -3,7 +3,7 @@ import viewService from '../../main/services/store-page/change-view.service';
 import { DOMElement } from '../../shared/components/base-elements/dom-element';
 import { SVG } from '../../shared/components/svg-icons';
 import { ProductsData } from '../../shared/models/response-data';
-import { State } from '../../shared/services/state.service';
+import stateService from '../../shared/services/state.service';
 import { ModalPage } from '../components/modal/modal';
 import modalService from './modal.service';
 
@@ -50,7 +50,7 @@ class Validation {
       setTimeout(() => {
         window.location.hash = '#store';
         CartService.clearCart();
-        const state = State.getCurrent();
+        const state = stateService.getCurrent();
         viewService.view.render(state);
         modalService.clearModal();
         modalService.removeMessage();

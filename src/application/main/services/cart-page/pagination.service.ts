@@ -1,5 +1,5 @@
 import { ProductsData } from '../../../shared/models/response-data';
-import { State } from '../../../shared/services/state.service';
+import stateService from '../../../shared/services/state.service';
 import CartService from './cart.service';
 
 class PaginationService {
@@ -20,7 +20,7 @@ class PaginationService {
   public set curPage(val: number) {
     this._curPage = val;
     if (val < 1) this._curPage = 1;
-    if (val > this.getMaxPage(State.cart)) this._curPage = this.getMaxPage(State.cart);
+    if (val > this.getMaxPage(stateService.cart)) this._curPage = this.getMaxPage(stateService.cart);
     CartService.save();
   }
 

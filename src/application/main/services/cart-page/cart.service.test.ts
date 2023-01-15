@@ -1,5 +1,5 @@
 import { CartService } from './cart.service';
-import { State } from '../../../shared/services/state.service';
+import stateService from '../../../shared/services/state.service';
 import MOCK_PRODUCTS from '../../../../../__mocks__/mock.products';
 
 const cartService = new CartService();
@@ -46,27 +46,27 @@ describe('PromoCodes testing', () => {
 
 describe('Goods in cart testing', () => {
   it('add product to cart', () => {
-    State.cart = [];
+    stateService.cart = [];
     cartService.addToCart(MOCK_PRODUCTS[0]); //cart{0: 1}
-    expect(State.cart.length).toBe(1);
-    expect(State.cart[0].id).toBe(MOCK_PRODUCTS[0].id);
+    expect(stateService.cart.length).toBe(1);
+    expect(stateService.cart[0].id).toBe(MOCK_PRODUCTS[0].id);
     cartService.addToCart(MOCK_PRODUCTS[0]); //cart{0: 2}
-    expect(State.cart.length).toBe(1);
+    expect(stateService.cart.length).toBe(1);
     expect(cartService.countsCart[0]).toBe(2);
     cartService.addToCart(MOCK_PRODUCTS[0]); //cart{0: 3}
-    expect(State.cart.length).toBe(1);
+    expect(stateService.cart.length).toBe(1);
     expect(cartService.countsCart[0]).toBe(3);
     cartService.addToCart(MOCK_PRODUCTS[4]); //cart{0: 3, 4: 1}
     cartService.addToCart(MOCK_PRODUCTS[4]); //cart{0: 3, 4: 2}
     cartService.addToCart(MOCK_PRODUCTS[4]); //cart{0: 3, 4: 3}
     cartService.addToCart(MOCK_PRODUCTS[4]); //cart{0: 3, 4: 4}
-    expect(State.cart.length).toBe(2);
+    expect(stateService.cart.length).toBe(2);
     expect(cartService.countsCart[1]).toBe(4);
-    expect(State.cart[1].id).toBe(MOCK_PRODUCTS[4].id);
+    expect(stateService.cart[1].id).toBe(MOCK_PRODUCTS[4].id);
   }),
     it('dont allow to add in cart more than stock', () => {
       for (let i = 1; i < 100; i++) cartService.addToCart(MOCK_PRODUCTS[7]); //cart {0: 3, 4: 4, 7: 68}
-      expect(State.cart.length).toBe(3);
+      expect(stateService.cart.length).toBe(3);
       expect(cartService.countsCart[2]).toBe(MOCK_PRODUCTS[7].stock);
     }),
     it('index from cart if have', () => {
@@ -79,38 +79,38 @@ describe('Goods in cart testing', () => {
     }),
     it('remove product from cart', () => {
       cartService.removeFromCart(MOCK_PRODUCTS[1]); //cart {0: 3, 4: 4, 7: 68, 8: 1}
-      expect(State.cart.length).toBe(4);
+      expect(stateService.cart.length).toBe(4);
       expect(cartService.idInCart(MOCK_PRODUCTS[1])).toBe(-1);
       cartService.removeFromCart(MOCK_PRODUCTS[0]); //cart {0: 2, 4: 4, 7: 68, 8: 1}
-      expect(State.cart.length).toBe(4);
+      expect(stateService.cart.length).toBe(4);
       expect(cartService.idInCart(MOCK_PRODUCTS[0])).toBe(0);
       expect(cartService.countsCart[0]).toBe(2);
       cartService.removeFromCart(MOCK_PRODUCTS[0]); //cart {0: 1, 4: 4, 7: 68, 8: 1}
-      expect(State.cart.length).toBe(4);
+      expect(stateService.cart.length).toBe(4);
       expect(cartService.idInCart(MOCK_PRODUCTS[0])).toBe(0);
       expect(cartService.countsCart[0]).toBe(1);
       cartService.removeFromCart(MOCK_PRODUCTS[0]); //cart {4: 4, 7: 68, 8: 1}
-      expect(State.cart.length).toBe(3);
+      expect(stateService.cart.length).toBe(3);
       expect(cartService.idInCart(MOCK_PRODUCTS[0])).toBe(-1);
       cartService.removeFromCart(MOCK_PRODUCTS[7]); //cart {4: 4, 7: 67, 8: 1}
-      expect(State.cart.length).toBe(3);
+      expect(stateService.cart.length).toBe(3);
       expect(cartService.idInCart(MOCK_PRODUCTS[7])).toBe(1);
       expect(cartService.countsCart[1]).toBe(67);
     }),
     it('remove all products same type', () => {
       cartService.removePositionFromCart(MOCK_PRODUCTS[7]); //cart {4: 4, 8: 1}
-      expect(State.cart.length).toBe(2);
+      expect(stateService.cart.length).toBe(2);
       expect(cartService.idInCart(MOCK_PRODUCTS[7])).toBe(-1);
       cartService.removePositionFromCart(MOCK_PRODUCTS[0]); //cart {4: 4, 8: 1}
-      expect(State.cart.length).toBe(2);
+      expect(stateService.cart.length).toBe(2);
       expect(cartService.idInCart(MOCK_PRODUCTS[0])).toBe(-1);
       cartService.removePositionFromCart(MOCK_PRODUCTS[8]); //cart {4: 4}
-      expect(State.cart.length).toBe(1);
+      expect(stateService.cart.length).toBe(1);
       expect(cartService.idInCart(MOCK_PRODUCTS[8])).toBe(-1);
     }),
     it('clear cart', () => {
       cartService.clearCart(); //cart {}
-      expect(State.cart.length).toBe(0);
+      expect(stateService.cart.length).toBe(0);
       expect(cartService.getTotalSum()).toBe(0);
       expect(cartService.getTotalCount()).toBe(0);
     });

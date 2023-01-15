@@ -1,7 +1,7 @@
 import headerService from '../../../core/services/header.service';
 import { ProductsData } from '../../../shared/models/response-data';
 import LocalStorageSvc from '../../../shared/services/local-storage.service';
-import { State } from '../../../shared/services/state.service';
+import stateService from '../../../shared/services/state.service';
 import { CartItems } from '../../components/cart-page/items/items';
 import { CartItem } from '../../components/cart-page/items/list/cart-item';
 import { CartList } from '../../components/cart-page/items/list/cart-list';
@@ -29,7 +29,7 @@ export class CartService {
       if (idInCart >= 0) {
         this.countsCart[idInCart]++;
       } else {
-        State.cart.push(product);
+        stateService.cart.push(product);
         this.countsCart.push(1);
       }
       this.totalCount++;
@@ -45,7 +45,7 @@ export class CartService {
       if (this.countsCart[idInCart] > 1) {
         this.countsCart[idInCart]--;
       } else {
-        State.cart.splice(idInCart, 1);
+        stateService.cart.splice(idInCart, 1);
         this.countsCart.splice(idInCart, 1);
       }
     }
@@ -57,14 +57,16 @@ export class CartService {
   public removePositionFromCart(product: ProductsData) {
     const idInCart = this.idInCart(product);
     if (idInCart >= 0) {
-      State.cart.splice(idInCart, 1);
+      stateService.cart.splice(idInCart, 1);
       this.countsCart.splice(idInCart, 1);
     }
-    if (State.cart.length == 0) {
+    if (stateService.cart.length == 0) {
       this.totalCount = 0;
       this.totalSum = 0;
     } else {
-      this.totalSum = State.cart.map((item, id) => item.price * this.countsCart[id]).reduce((acc, cur) => acc + cur);
+      this.totalSum = stateService.cart
+        .map((item, id) => item.price * this.countsCart[id])
+        .reduce((acc, cur) => acc + cur);
       this.totalCount = this.countsCart.reduce((acc, cur) => acc + cur);
     }
     this.save();
@@ -80,7 +82,7 @@ export class CartService {
 
   public save() {
     this.localStorageSVC.setRecord('cart', {
-      cart: State.cart,
+      cart: stateService.cart,
       counts: this.countsCart,
       promo: this.activePromo,
       prodsPerPage: paginationService.productsPerPage,
@@ -93,7 +95,7 @@ export class CartService {
     if (this.localStorageSVC.getRecordObj('cart')) {
       Object.assign(cartLoad, this.localStorageSVC.getRecordObj('cart'));
       cartLoad.cart.forEach((product: ProductsData, id) => {
-        State.cart.push(State.getProductByID(product.id));
+        stateService.cart.push(stateService.getProductByID(product.id));
         this.totalSum += product.price * cartLoad.counts[id];
       });
       this.countsCart = cartLoad.counts;
@@ -105,7 +107,7 @@ export class CartService {
   }
 
   public idInCart(product: ProductsData) {
-    const idInCart = State.cart.indexOf(product);
+    const idInCart = stateService.cart.indexOf(product);
     return idInCart;
   }
 
@@ -133,7 +135,7 @@ export class CartService {
   }
 
   public clearCart() {
-    State.cart = [];
+    stateService.cart = [];
     this.countsCart = [];
     this.totalCount = 0;
     this.totalSum = 0;
@@ -143,10 +145,10 @@ export class CartService {
 
   public render() {
     (this.container as CartList).node.innerHTML = '';
-    if (paginationService.getCurPageProducts(State.cart).length == 0 && paginationService.curPage > 1)
+    if (paginationService.getCurPageProducts(stateService.cart).length == 0 && paginationService.curPage > 1)
       paginationService.curPage--;
     paginationService
-      .getCurPageProducts(State.cart)
+      .getCurPageProducts(stateService.cart)
       .map(
         (product, index) =>
           new CartItem(

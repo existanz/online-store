@@ -1,5 +1,5 @@
 import { ProductsData } from '../../shared/models/response-data';
-import { State } from '../../shared/services/state.service';
+import stateService from '../../shared/services/state.service';
 import { ModalPage } from '../components/modal/modal';
 import { ValidationState } from './validation.service';
 import validation from './validation.service';
@@ -13,12 +13,12 @@ export class ModalService {
 
   public appendModal() {
     if (this.checkHash()) window.location.hash = '#cart';
-    validation.isEmptyCart(State.cart) ? this.addDisableButton() : this.addValidButton();
+    validation.isEmptyCart(stateService.cart) ? this.addDisableButton() : this.addValidButton();
     document.body.append(this.modal.node);
   }
 
   public checkUnique(product: ProductsData) {
-    const result = State.cart.filter((item) => item.id === product.id);
+    const result = stateService.cart.filter((item) => item.id === product.id);
     return result.length === 0;
   }
 

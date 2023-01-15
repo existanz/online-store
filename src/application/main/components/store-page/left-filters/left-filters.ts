@@ -8,12 +8,12 @@ import { ProductsData } from '../../../../shared/models/response-data';
 import checkboxFilterService from '../../../services/store-page/filters/checkbox-filters.service';
 import rangeFilterService from '../../../services/store-page/filters/range-filters.service';
 import updateData from '../../../services/store-page/update-view.service';
-import { State } from '../../../../shared/services/state.service';
+import stateService from '../../../../shared/services/state.service';
 import searchService from '../../../services/store-page/filters/search.service';
 import resetService from '../../../services/store-page/filters/reset.service';
 import copyService from '../../../services/store-page/filters/copy.service';
 import viewService from '../../../services/store-page/change-view.service';
-import { Querry } from '../../../../shared/services/querry.service';
+import querryService from '../../../../shared/services/querry.service';
 import { RangeSliderInterFace } from '../../../../shared/models/store-page';
 
 export class LeftFilters extends DOMElement {
@@ -34,7 +34,7 @@ export class LeftFilters extends DOMElement {
     this.totalProducts = new DOMElement(this.node, {
       tagName: 'div',
       classList: ['total-products'],
-      content: `Products: ${State.current.length}`,
+      content: `Products: ${stateService.current.length}`,
     });
 
     this.checkboxCategory = new CheckboxFilter(this.node, {
@@ -102,7 +102,7 @@ export class LeftFilters extends DOMElement {
       this.updateMinMaxPrice();
       this.updateMinMaxStock();
 
-      Querry.updateQuerry();
+      querryService.updateQuerry();
     });
 
     this.checkboxBrand.list.node.addEventListener('click', (e: Event) => {
@@ -136,7 +136,7 @@ export class LeftFilters extends DOMElement {
       this.updateMinMaxPrice();
       this.updateMinMaxStock();
 
-      Querry.updateQuerry();
+      querryService.updateQuerry();
     });
 
     this.rangePrice.node.addEventListener('input', (e: Event) => {
@@ -164,8 +164,8 @@ export class LeftFilters extends DOMElement {
       this.updateMinMaxStock();
     });
 
-    this.rangePrice.node.addEventListener('change', Querry.updateQuerry);
-    this.rangeStock.node.addEventListener('change', Querry.updateQuerry);
+    this.rangePrice.node.addEventListener('change', querryService.updateQuerry);
+    this.rangeStock.node.addEventListener('change', querryService.updateQuerry);
 
     this.rangeStock.node.addEventListener('input', (e: Event) => {
       rangeFilterService.pickData(e, 'stock');
@@ -223,7 +223,7 @@ export class LeftFilters extends DOMElement {
   }
 
   public updateMinMaxPrice() {
-    rangeFilterService.priceState = rangeFilterService.pickPrice(State.current);
+    rangeFilterService.priceState = rangeFilterService.pickPrice(stateService.current);
     (this.rangePrice.rangeInputMin.node as HTMLInputElement).value = rangeFilterService.priceState.min.toString();
     (this.rangePrice.rangeInputMax.node as HTMLInputElement).value = rangeFilterService.priceState.max.toString();
 
@@ -232,7 +232,7 @@ export class LeftFilters extends DOMElement {
   }
 
   public updateMinMaxStock() {
-    rangeFilterService.stockState = rangeFilterService.pickStock(State.current);
+    rangeFilterService.stockState = rangeFilterService.pickStock(stateService.current);
     (this.rangeStock.rangeInputMin.node as HTMLInputElement).value = rangeFilterService.stockState.min.toString();
     (this.rangeStock.rangeInputMax.node as HTMLInputElement).value = rangeFilterService.stockState.max.toString();
 
