@@ -46,5 +46,30 @@ describe('validation personal info', () => {
     expect(MOCK_VALIDATE_NAME('dsadad dasdasd')).toBe(true);
     expect(MOCK_VALIDATE_NAME('dsadad')).toBe(false);
     expect(MOCK_VALIDATE_NAME('dsadad 123123123')).toBe(false);
-  })
+  });
+
+  it('валидация номера телефона: 9 цифр, должен начинаться с "+", должен состоять из цифр', () => {
+    expect(MOCK_VALIDATE_NUMBER('dsadad dasdasd')).toBe(false);
+    expect(MOCK_VALIDATE_NUMBER('6464564645645645')).toBe(false);
+    expect(MOCK_VALIDATE_NUMBER('123213123 12312312')).toBe(false);
+    expect(MOCK_VALIDATE_NUMBER('+12321312312312312')).toBe(true);
+    expect(MOCK_VALIDATE_NUMBER('123213123 12312312')).toBe(false);
+  });
+
+  it('валидация адреса: 3 слова, больше 5 символов каждое', () => {
+    expect(MOCK_VALIDATE_ADRESS('dsadad dasdasd sdsadsad')).toBe(true);
+    expect(MOCK_VALIDATE_ADRESS('6464564645645645')).toBe(false);
+    expect(MOCK_VALIDATE_ADRESS('123213123 12312312')).toBe(false);
+    expect(MOCK_VALIDATE_ADRESS('+12321312312312312')).toBe(false);
+    expect(MOCK_VALIDATE_ADRESS('123213123 12312312')).toBe(false);
+    expect(MOCK_VALIDATE_ADRESS('123213123 12312312')).toBe(false);
+    expect(MOCK_VALIDATE_ADRESS('123213123 12312312')).toBe(false);
+  });
+
+  it('валидация почты: не должно быть спец. символов, @ и . встречается только 1 раз, длина домена больше 3', () => {
+    expect(MOCK_VALIDATE_EMAIL('sdad@asdasd@asdsd.com')).toBe(false);
+    expect(MOCK_VALIDATE_EMAIL('dsasd@mail.rue')).toBe(true);
+    expect(MOCK_VALIDATE_EMAIL('123213123 12312312')).toBe(false);
+    expect(MOCK_VALIDATE_EMAIL('@da.1')).toBe(false);
+  });
 });
