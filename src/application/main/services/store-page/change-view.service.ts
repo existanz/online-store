@@ -10,7 +10,7 @@ class ViewService {
   constructor() {
     this.currentView = 'grid';
     this.container = null;
-    this.view = new GridView(this.container, stateService.current);
+    this.view = new GridView(this.container);
   }
 
   getViewState() {

@@ -1,6 +1,7 @@
-// import { ProductsData } from "../../../../shared/models/response-data";
 import MOCK_PRODUCTS from '../../../../../../__mocks__/mock.products';
-import { mockRangeFilterService } from './range-filters.service';
+import { ProductsData } from '../../../../shared/models/response-data';
+import stateService from '../../../../shared/services/state.service';
+import { RangeFilterService } from './range-filters.service';
 
 // const mockPickPrice = jest.fn((data: ProductsData[]) => {
 //   return {
@@ -22,24 +23,30 @@ import { mockRangeFilterService } from './range-filters.service';
 //   }
 // })
 
+const service = new RangeFilterService();
+
 describe('test Range-filter service', () => {
   it('Метод должен забирать из данных наибольшую и наименьшую цену', () => {
-    mockRangeFilterService.pickPrice(MOCK_PRODUCTS);
+
+    service.pickPrice(MOCK_PRODUCTS);
 
     const MOCK_RESULT = {
       min: 280,
       max: 1749,
     };
 
-    expect(mockRangeFilterService.priceState).toEqual(MOCK_RESULT);
+    expect(service.priceState).toEqual(MOCK_RESULT);
   });
 
-  // it('Метод должен забирать из данных наибольшее и наименьшее количество на складе', () => {
-  //   expect(mockPrickStock(MOCK_PRODUCTS)).toEqual(
-  //     {
-  //       min: 32,
-  //       max: 123,
-  //     }
-  //   );
-  // });
+  it('Метод должен забирать из данных наибольшее и наименьшее количество на складе', () => {
+
+    service.pickStock(MOCK_PRODUCTS);
+
+    const MOCK_RESULT = {
+      min: 32,
+      max: 123,
+    };
+
+    expect(service.stockState).toEqual(MOCK_RESULT);
+  });
 });

@@ -7,7 +7,7 @@ import { NotFoundPage } from '../../../../pages/not-found/not-found';
 export class GridView extends DOMElement {
   private notFoundPage: NotFoundPage;
 
-  constructor(parentNode: HTMLElement | null, data: ProductsData[] | null) {
+  constructor(parentNode: HTMLElement | null, data?: ProductsData[] | null) {
     super(parentNode, {
       tagName: 'div',
       classList: ['grid-view'],
