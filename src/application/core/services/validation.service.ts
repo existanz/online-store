@@ -110,7 +110,7 @@ export class Validation {
     });
   }
 
-  private validateName(e: Event, element: HTMLElement) {
+  public validateName(e: Event, element: HTMLElement) {
     const value = (e.target as HTMLInputElement).value;
 
     const message = this.validateNameFuntion(value) ? '✓ Valid' : '✖ Invalid';
@@ -118,7 +118,7 @@ export class Validation {
     this.createValidationMessage(element, message);
   }
 
-  private validateNumber(e: Event, element: HTMLElement) {
+  public validateNumber(e: Event, element: HTMLElement) {
     const value = (e.target as HTMLInputElement).value;
 
     const message = this.validateNumberFuntion(value) ? '✓ Valid' : '✖ Invalid';
@@ -126,13 +126,13 @@ export class Validation {
     this.createValidationMessage(element, message);
   }
 
-  private formatNumber(e: Event) {
+  public formatNumber(e: Event) {
     const value = (e.target as HTMLInputElement).value;
     if (value.length === 1 && value !== '+') (e.target as HTMLInputElement).value = value.slice(0, -1);
     if (!/^\d+$/.test(value.slice(-1)) && value.length > 1) (e.target as HTMLInputElement).value = value.slice(0, -1);
   }
 
-  private validateAdress(e: Event, element: HTMLElement) {
+  public validateAdress(e: Event, element: HTMLElement) {
     const value = (e.target as HTMLInputElement).value;
 
     const message = this.validateAdressFuntion(value) ? '✓ Valid' : '✖ Invalid';
@@ -140,7 +140,7 @@ export class Validation {
     this.createValidationMessage(element, message);
   }
 
-  private validateEmail(e: Event, element: HTMLElement) {
+  public validateEmail(e: Event, element: HTMLElement) {
     const value = (e.target as HTMLInputElement).value;
     const specialChars = '[`!#$%^&*()_+-=[]{};\':"\\|,<>/?~]/';
     const secondPart = value.split('@').at(-1);
@@ -164,7 +164,7 @@ export class Validation {
     this.createValidationMessage(element, message);
   }
 
-  private validateCardNumber(e: Event, element: HTMLElement) {
+  public validateCardNumber(e: Event, element: HTMLElement) {
     const value = (e.target as HTMLInputElement).value;
 
     const message = value.length === 16 ? '✓ Valid number' : '✖ Invalid number';
@@ -172,7 +172,7 @@ export class Validation {
     this.state.cardNumber = value.length === 16;
   }
 
-  private formatCardNumber(e: Event, cardType: HTMLElement) {
+  public formatCardNumber(e: Event, cardType: HTMLElement) {
     const value = (e.target as HTMLInputElement).value;
     if (!/^\d+$/.test(value.slice(-1))) (e.target as HTMLInputElement).value = value.slice(0, -1);
 
@@ -202,7 +202,7 @@ export class Validation {
     if (value.length > 16) (e.target as HTMLInputElement).value = value.slice(0, 16);
   }
 
-  private validateMounthYear(e: Event, element: HTMLElement) {
+  public validateMounthYear(e: Event, element: HTMLElement) {
     const value = (e.target as HTMLInputElement).value.split('');
 
     const mounth = Number([value[0], value[1]].join('')) < 13;
@@ -213,14 +213,14 @@ export class Validation {
     this.state.mounth = mounth && length;
   }
 
-  private formatMounthYear(e: Event) {
+  public formatMounthYear(e: Event) {
     const value = (e.target as HTMLInputElement).value;
     if (!/^\d+$/.test(value.slice(-1))) (e.target as HTMLInputElement).value = value.slice(0, -1);
     if (value.length > 5) (e.target as HTMLInputElement).value = value.slice(0, 5);
     if (value.length == 3) (e.target as HTMLInputElement).value = [value[0], value[1], '/', value[3]].join('');
   }
 
-  private validateCvv(e: Event, element: HTMLElement) {
+  public validateCvv(e: Event, element: HTMLElement) {
     const value = (e.target as HTMLInputElement).value.split('');
 
     const length = value.length === 3;
@@ -230,7 +230,7 @@ export class Validation {
     this.state.cvv = length;
   }
 
-  private formatCvv(e: Event) {
+  public formatCvv(e: Event) {
     const value = (e.target as HTMLInputElement).value;
     if (!/^\d+$/.test(value.slice(-1))) (e.target as HTMLInputElement).value = value.slice(0, -1);
     if (value.length > 3) (e.target as HTMLInputElement).value = value.slice(0, 3);

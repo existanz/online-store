@@ -1,6 +1,7 @@
 import './personal-info.scss';
 import { DOMElement } from '../../../../shared/components/base-elements/dom-element';
 import { InputElement } from '../../../../shared/components/base-elements/input-element';
+import validation from '../../../services/validation.service';
 
 export class PersonalInfo extends DOMElement {
   private title: DOMElement;
@@ -41,6 +42,10 @@ export class PersonalInfo extends DOMElement {
       placeholder: 'Name',
     });
 
+    this.nameInput.node.addEventListener('change', (e: Event) => {
+      validation.validateName(e, this.nameContainer.node);
+    });
+
     this.phoneContainer = new DOMElement(this.node, {
       tagName: 'div',
       classList: ['personal-info__container'],
@@ -52,6 +57,11 @@ export class PersonalInfo extends DOMElement {
       classList: ['personal-info__input'],
       placeholder: 'Phone',
     });
+
+    this.phoneInput.node.addEventListener('change', (e: Event) =>
+      validation.validateNumber(e, this.phoneContainer.node)
+    );
+    this.phoneInput.node.addEventListener('input', (e: Event) => validation.formatNumber(e));
 
     this.addressContainer = new DOMElement(this.node, {
       tagName: 'div',
@@ -65,6 +75,10 @@ export class PersonalInfo extends DOMElement {
       placeholder: 'Address',
     });
 
+    this.addressInput.node.addEventListener('change', (e: Event) =>
+      validation.validateAdress(e, this.addressContainer.node)
+    );
+
     this.emailContainer = new DOMElement(this.node, {
       tagName: 'div',
       classList: ['personal-info__container'],
@@ -76,5 +90,9 @@ export class PersonalInfo extends DOMElement {
       classList: ['personal-info__input'],
       placeholder: 'Email',
     });
+
+    this.emailInput.node.addEventListener('change', (e: Event) =>
+      validation.validateEmail(e, this.emailContainer.node)
+    );
   }
 }
