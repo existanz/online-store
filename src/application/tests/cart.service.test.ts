@@ -61,12 +61,28 @@ describe('Goods in cart testing', () => {
     expect(State.cart.length).toBe(1);
     expect(cartService.countsCart[0]).toBe(3);
     cartService.addToCart(MOCK_PRODUCTS[4]);
+    cartService.addToCart(MOCK_PRODUCTS[4]);
+    cartService.addToCart(MOCK_PRODUCTS[4]);
     expect(State.cart.length).toBe(2);
-    expect(cartService.countsCart[1]).toBe(1);
+    expect(cartService.countsCart[1]).toBe(3);
     expect(State.cart[1].id).toBe(MOCK_PRODUCTS[4].id);
   }),
+    it('dont allow to add in cart more than stock', () => {
+      for (let i = 1; i < 100; i++) cartService.addToCart(MOCK_PRODUCTS[7]);
+      expect(State.cart.length).toBe(3);
+      expect(cartService.countsCart[2]).toBe(MOCK_PRODUCTS[7].stock);
+    }),
+    it('index from cart if have', () => {
+      expect(cartService.idInCart(MOCK_PRODUCTS[0])).toBe(0);
+      expect(cartService.idInCart(MOCK_PRODUCTS[1])).toBe(-1);
+      expect(cartService.idInCart(MOCK_PRODUCTS[4])).toBe(1);
+      expect(cartService.idInCart(MOCK_PRODUCTS[8])).toBe(-1);
+      cartService.addToCart(MOCK_PRODUCTS[8]);
+      expect(cartService.idInCart(MOCK_PRODUCTS[8])).toBe(3);
+    }),
     it('remove product from cart', () => {
-      expect('TODO').toBe('true');
+      cartService.removeFromCart(MOCK_PRODUCTS[1]);
+      expect(State.cart.length).toBe(3);
     }),
     it('remove all products same type', () => {
       expect('TODO').toBe('true');
