@@ -102,9 +102,20 @@ describe('Goods in cart testing', () => {
       expect(cartService.countsCart[1]).toBe(67);
     }),
     it('remove all products same type', () => {
-      expect('TODO').toBe('true');
+      cartService.removePositionFromCart(MOCK_PRODUCTS[7]); //cart {4: 4, 8: 1}
+      expect(State.cart.length).toBe(2);
+      expect(cartService.idInCart(MOCK_PRODUCTS[7])).toBe(-1);
+      cartService.removePositionFromCart(MOCK_PRODUCTS[0]); //cart {4: 4, 8: 1}
+      expect(State.cart.length).toBe(2);
+      expect(cartService.idInCart(MOCK_PRODUCTS[0])).toBe(-1);
+      cartService.removePositionFromCart(MOCK_PRODUCTS[8]); //cart {4: 4}
+      expect(State.cart.length).toBe(1);
+      expect(cartService.idInCart(MOCK_PRODUCTS[8])).toBe(-1);
     }),
     it('clear cart', () => {
-      expect('TODO').toBe('true');
+      cartService.clearCart(); //cart {}
+      expect(State.cart.length).toBe(0);
+      expect(cartService.getTotalSum()).toBe(0);
+      expect(cartService.getTotalCount()).toBe(0);
     });
 });
