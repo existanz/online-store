@@ -5,10 +5,10 @@ import searchService from '../../main/services/store-page/filters/search.service
 import sortService from '../../main/services/store-page/filters/sort.service';
 import updateData from '../../main/services/store-page/update-view.service';
 import { StoreQuerry } from '../models/querry';
-import { State } from './state.service';
+import stateService from './state.service';
 
-export class Querry {
-  static store: StoreQuerry = {
+class Querry {
+  public store: StoreQuerry = {
     category: null,
     brand: null,
     price: null,
@@ -18,43 +18,43 @@ export class Querry {
     sort: null,
   };
 
-  static setStoreQuerry(param: keyof StoreQuerry, value: string[]) {
-    Querry.store[param] = value;
+  public setStoreQuerry(param: keyof StoreQuerry, value: string[]) {
+    this.store[param] = value;
     const querry: string[] = [];
     let key: keyof StoreQuerry;
-    for (key in Querry.store) {
-      if (Querry.store[key]) {
-        if (Querry.store[key]?.length) {
-          querry.push(`${key}=${Querry.store[key]?.join(',')}`);
+    for (key in this.store) {
+      if (this.store[key]) {
+        if (this.store[key]?.length) {
+          querry.push(`${key}=${this.store[key]?.join(',')}`);
         }
       }
     }
     window.location.hash = querry.length ? '#store?' + querry.join('%') : '#store';
   }
 
-  static updateQuerry() {
-    Querry.setStoreQuerry('brand', checkboxFilterService.checkedBrands);
-    Querry.setStoreQuerry('category', checkboxFilterService.checkedCategories);
+  public updateQuerry() {
+    this.setStoreQuerry('brand', checkboxFilterService.checkedBrands);
+    this.setStoreQuerry('category', checkboxFilterService.checkedCategories);
 
-    rangeFilterService.stockState = rangeFilterService.pickStock(State.current);
-    Querry.setStoreQuerry('stock', [
+    rangeFilterService.stockState = rangeFilterService.pickStock(stateService.current);
+    this.setStoreQuerry('stock', [
       rangeFilterService.stockState.min.toString(),
       rangeFilterService.stockState.max.toString(),
     ]);
 
-    rangeFilterService.priceState = rangeFilterService.pickPrice(State.current);
-    Querry.setStoreQuerry('price', [
+    rangeFilterService.priceState = rangeFilterService.pickPrice(stateService.current);
+    this.setStoreQuerry('price', [
       rangeFilterService.priceState.min.toString(),
       rangeFilterService.priceState.max.toString(),
     ]);
 
-    Querry.setStoreQuerry('search', [searchService.searchState]);
+    this.setStoreQuerry('search', [searchService.searchState]);
 
-    Querry.setStoreQuerry('view', [viewService.currentView]);
-    Querry.setStoreQuerry('sort', [sortService.currentSort]);
+    this.setStoreQuerry('view', [viewService.currentView]);
+    this.setStoreQuerry('sort', [sortService.currentSort]);
   }
 
-  static async loadStateFromQuerry() {
+  public async loadStateFromQuerry() {
     const querry = window.location.hash.split('?')[1];
     if (querry) {
       querry.split('%').reduce((obj, item) => {
@@ -66,14 +66,14 @@ export class Querry {
     checkboxFilterService.checkedCategories = this.store.category ? this.store.category : [];
     checkboxFilterService.checkedBrands = this.store.brand ? this.store.brand : [];
 
-    rangeFilterService.priceState = rangeFilterService.pickPrice(State.allData);
+    rangeFilterService.priceState = rangeFilterService.pickPrice(stateService.allData);
     if (this.store.price) {
       rangeFilterService.priceState = {
         min: Number(this.store.price[0]),
         max: Number(this.store.price[1]),
       };
     }
-    rangeFilterService.stockState = rangeFilterService.pickStock(State.allData);
+    rangeFilterService.stockState = rangeFilterService.pickStock(stateService.allData);
     if (this.store.stock) {
       rangeFilterService.stockState = {
         min: Number(this.store.stock[0]),
@@ -100,6 +100,9 @@ export class Querry {
       newState = searchService.search(searchService.searchState);
     }
     sortService.sort(sortService.currentSort);
-    State.current = newState;
+    stateService.current = newState;
   }
 }
+
+const querryService = new Querry();
+export default querryService;

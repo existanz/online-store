@@ -2,8 +2,8 @@ import { Header } from './core/components/header/header';
 import { Footer } from './core/components/footer/footer';
 import { Main } from './core/components/main-container/main-container';
 import { Router } from './main/router/router';
-import { State } from './shared/services/state.service';
-import { Querry } from './shared/services/querry.service';
+import stateService from './shared/services/state.service';
+import querryService from './shared/services/querry.service';
 
 class App {
   private header: Header;
@@ -22,8 +22,8 @@ class App {
   }
 
   public async start() {
-    await State.load();
-    Querry.loadStateFromQuerry();
+    await stateService.load();
+    querryService.loadStateFromQuerry();
     this.router = new Router(this.main.container);
     this.header.render();
   }

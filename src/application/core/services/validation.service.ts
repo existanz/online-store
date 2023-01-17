@@ -3,13 +3,13 @@ import viewService from '../../main/services/store-page/change-view.service';
 import { DOMElement } from '../../shared/components/base-elements/dom-element';
 import { SVG } from '../../shared/components/svg-icons';
 import { ProductsData } from '../../shared/models/response-data';
-import { State } from '../../shared/services/state.service';
+import stateService from '../../shared/services/state.service';
 import { ModalPage } from '../components/modal/modal';
 import modalService from './modal.service';
 
 export type ValidationState = Record<string, boolean>;
 
-class Validation {
+export class Validation {
   public state = {
     name: false,
     phone: false,
@@ -50,7 +50,7 @@ class Validation {
       setTimeout(() => {
         window.location.hash = '#store';
         CartService.clearCart();
-        const state = State.getCurrent();
+        const state = stateService.getCurrent();
         viewService.view.render(state);
         modalService.clearModal();
         modalService.removeMessage();
@@ -110,56 +110,45 @@ class Validation {
     });
   }
 
-  private validateName(e: Event, element: HTMLElement) {
+  public validateName(e: Event, element: HTMLElement) {
     const value = (e.target as HTMLInputElement).value;
 
-    const count: boolean = value.split(' ').length > 1;
-    const words: boolean = /^[a-zA-Z]+$/.test(value.split(' ').join('').trim().toLowerCase());
-    const length: boolean = value.split(' ').filter((item) => item.trim().length < 3).length === 0;
-
-    const message = count && words && length ? '✓ Valid' : '✖ Invalid';
-    this.state.name = count && words && length;
+    const message = this.validateNameFuntion(value) ? '✓ Valid' : '✖ Invalid';
+    this.state.name = this.validateNameFuntion(value);
     this.createValidationMessage(element, message);
   }
 
-  private validateNumber(e: Event, element: HTMLElement) {
+  public validateNumber(e: Event, element: HTMLElement) {
     const value = (e.target as HTMLInputElement).value;
 
-    const firstNumber: boolean = value.split('')[0] === '+';
-    const numbers: boolean = /^\d+$/.test(value.slice(1));
-    const length: boolean = value.slice(1).trim().length > 8;
-
-    const message = firstNumber && numbers && length ? '✓ Valid' : '✖ Invalid';
-    this.state.phone = firstNumber && numbers && length;
+    const message = this.validateNumberFuntion(value) ? '✓ Valid' : '✖ Invalid';
+    this.state.phone = this.validateNumberFuntion(value);
     this.createValidationMessage(element, message);
   }
 
-  private formatNumber(e: Event) {
+  public formatNumber(e: Event) {
     const value = (e.target as HTMLInputElement).value;
     if (value.length === 1 && value !== '+') (e.target as HTMLInputElement).value = value.slice(0, -1);
     if (!/^\d+$/.test(value.slice(-1)) && value.length > 1) (e.target as HTMLInputElement).value = value.slice(0, -1);
   }
 
-  private validateAdress(e: Event, element: HTMLElement) {
+  public validateAdress(e: Event, element: HTMLElement) {
     const value = (e.target as HTMLInputElement).value;
 
-    const count: boolean = value.split(' ').length > 2;
-    const length: boolean = value.split(' ').filter((item) => item.trim().length < 5).length === 0;
-
-    const message = count && length ? '✓ Valid' : '✖ Invalid';
-    this.state.address = count && length;
+    const message = this.validateAdressFuntion(value) ? '✓ Valid' : '✖ Invalid';
+    this.state.address = this.validateAdressFuntion(value);
     this.createValidationMessage(element, message);
   }
 
-  private validateEmail(e: Event, element: HTMLElement) {
+  public validateEmail(e: Event, element: HTMLElement) {
+    const value = (e.target as HTMLInputElement).value;
     const specialChars = '[`!#$%^&*()_+-=[]{};\':"\\|,<>/?~]/';
-    const tempInput = (e.target as HTMLInputElement).value;
-    const secondPart = tempInput.split('@').at(-1);
+    const secondPart = value.split('@').at(-1);
     const domain = secondPart?.split('.').at(-1);
     let message: string;
     if (
-      !tempInput.includes('@') ||
-      tempInput.indexOf('@') !== tempInput.lastIndexOf('@') ||
+      !value.includes('@') ||
+      value.indexOf('@') !== value.lastIndexOf('@') ||
       specialChars.split('').some((specialChar) => secondPart?.includes(specialChar)) ||
       !secondPart?.includes('.') ||
       secondPart.indexOf('.') !== secondPart.lastIndexOf('.') ||
@@ -175,7 +164,7 @@ class Validation {
     this.createValidationMessage(element, message);
   }
 
-  private validateCardNumber(e: Event, element: HTMLElement) {
+  public validateCardNumber(e: Event, element: HTMLElement) {
     const value = (e.target as HTMLInputElement).value;
 
     const message = value.length === 16 ? '✓ Valid number' : '✖ Invalid number';
@@ -183,7 +172,7 @@ class Validation {
     this.state.cardNumber = value.length === 16;
   }
 
-  private formatCardNumber(e: Event, cardType: HTMLElement) {
+  public formatCardNumber(e: Event, cardType: HTMLElement) {
     const value = (e.target as HTMLInputElement).value;
     if (!/^\d+$/.test(value.slice(-1))) (e.target as HTMLInputElement).value = value.slice(0, -1);
 
@@ -213,7 +202,7 @@ class Validation {
     if (value.length > 16) (e.target as HTMLInputElement).value = value.slice(0, 16);
   }
 
-  private validateMounthYear(e: Event, element: HTMLElement) {
+  public validateMounthYear(e: Event, element: HTMLElement) {
     const value = (e.target as HTMLInputElement).value.split('');
 
     const mounth = Number([value[0], value[1]].join('')) < 13;
@@ -224,14 +213,14 @@ class Validation {
     this.state.mounth = mounth && length;
   }
 
-  private formatMounthYear(e: Event) {
+  public formatMounthYear(e: Event) {
     const value = (e.target as HTMLInputElement).value;
     if (!/^\d+$/.test(value.slice(-1))) (e.target as HTMLInputElement).value = value.slice(0, -1);
     if (value.length > 5) (e.target as HTMLInputElement).value = value.slice(0, 5);
     if (value.length == 3) (e.target as HTMLInputElement).value = [value[0], value[1], '/', value[3]].join('');
   }
 
-  private validateCvv(e: Event, element: HTMLElement) {
+  public validateCvv(e: Event, element: HTMLElement) {
     const value = (e.target as HTMLInputElement).value.split('');
 
     const length = value.length === 3;
@@ -241,10 +230,30 @@ class Validation {
     this.state.cvv = length;
   }
 
-  private formatCvv(e: Event) {
+  public formatCvv(e: Event) {
     const value = (e.target as HTMLInputElement).value;
     if (!/^\d+$/.test(value.slice(-1))) (e.target as HTMLInputElement).value = value.slice(0, -1);
     if (value.length > 3) (e.target as HTMLInputElement).value = value.slice(0, 3);
+  }
+
+  public validateNumberFuntion(value: string) {
+    const firstNumber: boolean = value.split('')[0] === '+';
+    const numbers: boolean = /^\d+$/.test(value.slice(1));
+    const length: boolean = value.slice(1).trim().length > 8;
+    return firstNumber && numbers && length;
+  }
+
+  public validateNameFuntion(value: string) {
+    const count: boolean = value.split(' ').length > 1;
+    const words: boolean = /^[a-zA-Z]+$/.test(value.split(' ').join('').trim().toLowerCase());
+    const length: boolean = value.split(' ').filter((item) => item.trim().length < 3).length === 0;
+    return count && words && length;
+  }
+
+  public validateAdressFuntion(value: string) {
+    const count: boolean = value.split(' ').length > 2;
+    const length: boolean = value.split(' ').filter((item) => item.trim().length < 5).length === 0;
+    return count && length;
   }
 }
 

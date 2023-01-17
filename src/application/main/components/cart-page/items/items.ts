@@ -1,6 +1,6 @@
 import { DOMElement } from '../../../../shared/components/base-elements/dom-element';
 import { ProductsData } from '../../../../shared/models/response-data';
-import { State } from '../../../../shared/services/state.service';
+import stateService from '../../../../shared/services/state.service';
 import cartService from '../../../services/cart-page/cart.service';
 import './items.scss';
 import { CartList } from './list/cart-list';
@@ -27,7 +27,7 @@ export class CartItems extends DOMElement {
   }
 
   public render() {
-    if (State.cart.length == 0) this.emptyBag.node.classList.add('cart-items__empty--visible');
+    if (stateService.cart.length == 0) this.emptyBag.node.classList.add('cart-items__empty--visible');
     else this.emptyBag.node.classList.remove('cart-items__empty--visible');
     this.pagination.render();
     (cartService.container as CartList).render();

@@ -1,6 +1,7 @@
 import './card-info.scss';
 import { DOMElement } from '../../../../shared/components/base-elements/dom-element';
 import { InputElement } from '../../../../shared/components/base-elements/input-element';
+import validation from '../../../services/validation.service';
 
 export class CardInfo extends DOMElement {
   private title: DOMElement;
@@ -47,6 +48,13 @@ export class CardInfo extends DOMElement {
       placeholder: 'Card number',
     });
 
+    this.number.node.addEventListener('change', (e: Event) => {
+      validation.validateCardNumber(e, this.cardContainer.node);
+    });
+    this.number.node.addEventListener('input', (e: Event) => {
+      validation.formatCardNumber(e, this.cardName.node);
+    });
+
     this.cardDetails = new DOMElement(this.cardContainer.node, {
       tagName: 'div',
       classList: ['card-info__detils'],
@@ -59,11 +67,25 @@ export class CardInfo extends DOMElement {
       placeholder: 'Valid thru',
     });
 
+    this.cardMounthYear.node.addEventListener('change', (e: Event) => {
+      validation.validateMounthYear(e, this.cardContainer.node);
+    });
+    this.cardMounthYear.node.addEventListener('input', (e: Event) => {
+      validation.formatMounthYear(e);
+    });
+
     this.cvv = new InputElement(this.cardDetails.node, {
       tagName: 'input',
       type: 'number',
       classList: ['card-info__input'],
       placeholder: 'CVV',
+    });
+
+    this.cvv.node.addEventListener('change', (e: Event) => {
+      validation.validateCvv(e, this.cardContainer.node);
+    });
+    this.cvv.node.addEventListener('input', (e: Event) => {
+      validation.formatCvv(e);
     });
   }
 }

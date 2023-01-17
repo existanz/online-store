@@ -3,7 +3,7 @@ import { DOMElement } from '../../../../../shared/components/base-elements/dom-e
 import { ButtonElement } from '../../../../../shared/components/base-elements/button-element';
 import { SVG } from '../../../../../shared/components/svg-icons';
 import viewService from '../../../../services/store-page/change-view.service';
-import { Querry } from '../../../../../shared/services/querry.service';
+import querryService from '../../../../../shared/services/querry.service';
 
 export class ToggleGrid extends DOMElement {
   public toggleGridItemGrid: ButtonElement;
@@ -32,12 +32,12 @@ export class ToggleGrid extends DOMElement {
   private listen() {
     this.toggleGridItemGrid.node.addEventListener('click', () => {
       viewService.setViewState('grid');
-      Querry.updateQuerry();
+      querryService.updateQuerry();
     });
 
     this.toggleGridItemList.node.addEventListener('click', () => {
       viewService.setViewState('list');
-      Querry.updateQuerry();
+      querryService.updateQuerry();
     });
   }
 }

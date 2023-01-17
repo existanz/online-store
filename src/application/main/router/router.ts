@@ -3,7 +3,7 @@ import { ProductPage } from '../../main/pages/product-page/product-page';
 import { StorePage } from '../../main/pages/store-page/store-page';
 import { CartPage } from '../../main/pages/cart-page/cart-page';
 import RouterService from '../services/router.service';
-import { State } from '../../shared/services/state.service';
+import stateService from '../../shared/services/state.service';
 import PaginationService from '../services/cart-page/pagination.service';
 
 export class Router {
@@ -19,8 +19,8 @@ export class Router {
   constructor(parentNode: HTMLElement) {
     this.parentNode = parentNode;
 
-    this.store = new StorePage('store-page', State.current);
-    this.product = new ProductPage('product-page', State.allData[0]);
+    this.store = new StorePage('store-page', stateService.current);
+    this.product = new ProductPage('product-page', stateService.allData[0]);
     this.notFoundPage = new NotFoundPage('not-found-page');
     this.cart = new CartPage('cart-page');
 
@@ -40,7 +40,7 @@ export class Router {
         this.parentNode.append(this.store.node);
         break;
       case 'product':
-        this.product = new ProductPage('product-page', State.getProductByID(this.routerService.getProdId()));
+        this.product = new ProductPage('product-page', stateService.getProductByID(this.routerService.getProdId()));
         this.parentNode.append(this.product.node);
         break;
       case 'cart':

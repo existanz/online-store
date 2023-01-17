@@ -1,36 +1,36 @@
 import { ProductsData } from '../../shared/models/response-data';
-import { State } from '../../shared/services/state.service';
+import stateService from '../../shared/services/state.service';
 import { ModalPage } from '../components/modal/modal';
 import { ValidationState } from './validation.service';
 import validation from './validation.service';
 
-class ModalService {
+export class ModalService {
   public modal: ModalPage;
 
   constructor() {
     this.modal = new ModalPage('modal');
   }
 
-  appendModal() {
+  public appendModal() {
     if (this.checkHash()) window.location.hash = '#cart';
-    validation.isEmptyCart(State.cart) ? this.addDisableButton() : this.addValidButton();
+    validation.isEmptyCart(stateService.cart) ? this.addDisableButton() : this.addValidButton();
     document.body.append(this.modal.node);
   }
 
-  checkUnique(product: ProductsData) {
-    const result = State.cart.filter((item) => item.id === product.id);
+  public checkUnique(product: ProductsData) {
+    const result = stateService.cart.filter((item) => item.id === product.id);
     return result.length === 0;
   }
 
-  private checkHash() {
+  public checkHash() {
     return window.location.hash.slice(1).split('?')[0] !== 'cart';
   }
 
-  removeModal() {
+  public removeModal() {
     this.modal.node.remove();
   }
 
-  clearModal() {
+  public clearModal() {
     this.modal.personalInfo.nameInput.value = '';
     this.modal.personalInfo.phoneInput.value = '';
     this.modal.personalInfo.addressInput.value = '';
@@ -41,11 +41,11 @@ class ModalService {
     this.modal.cardInfo.cvv.value = '';
   }
 
-  removeMessage() {
+  public removeMessage() {
     Array.from(document.querySelectorAll('.personal-info__error')).forEach((item) => item.remove());
   }
 
-  removeSumbitMessage() {
+  public removeSumbitMessage() {
     Array.from(this.modal.cardInfo.node.querySelectorAll('.personal-info__error')).forEach((item) => item.remove());
   }
 

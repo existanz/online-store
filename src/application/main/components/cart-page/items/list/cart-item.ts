@@ -2,7 +2,7 @@ import { ButtonElement } from '../../../../../shared/components/base-elements/bu
 import { DOMElement } from '../../../../../shared/components/base-elements/dom-element';
 import { ImageElement } from '../../../../../shared/components/base-elements/image-element';
 import { ProductsData } from '../../../../../shared/models/response-data';
-import { State } from '../../../../../shared/services/state.service';
+import stateService from '../../../../../shared/services/state.service';
 import CartService from '../../../../services/cart-page/cart.service';
 import viewService from '../../../../services/store-page/change-view.service';
 
@@ -31,7 +31,7 @@ export class CartItem extends DOMElement {
           CartService.addToCart(product);
         } else if (el.target == this.minus.node) {
           CartService.removeFromCart(product);
-          viewService.view.render(State.current);
+          viewService.view.render(stateService.current);
         } else {
           location.href = '#product?idProd=' + product.id;
         }

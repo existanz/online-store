@@ -3,7 +3,7 @@ import './range-filter.scss';
 import { RangeSliderOptions } from '../../../../../shared/models/store-page';
 import { DOMElement } from '../../../../../shared/components/base-elements/dom-element';
 import { InputElement } from '../../../../../shared/components/base-elements/input-element';
-import { State } from '../../../../../shared/services/state.service';
+import stateService from '../../../../../shared/services/state.service';
 
 export class RangeFilter extends DOMElement {
   private title: DOMElement;
@@ -170,7 +170,7 @@ export class RangeFilter extends DOMElement {
   }
 
   private pickMinMax() {
-    const data = State.allData;
+    const data = stateService.allData;
     return {
       max: data.reduce((x, y) => Math.max(x, y[this.value]), 0),
       min: data.reduce(

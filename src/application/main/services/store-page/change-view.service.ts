@@ -1,4 +1,4 @@
-import { State } from '../../../shared/services/state.service';
+import stateService from '../../../shared/services/state.service';
 import { GridView } from '../../components/store-page/items/grid-view/grid-view';
 import { ListView } from '../../components/store-page/items/list-view/list-view';
 
@@ -10,7 +10,7 @@ class ViewService {
   constructor() {
     this.currentView = 'grid';
     this.container = null;
-    this.view = new GridView(this.container, State.current);
+    this.view = new GridView(this.container);
   }
 
   getViewState() {
@@ -23,8 +23,8 @@ class ViewService {
       (this.container as HTMLElement).innerHTML = '';
       this.view =
         this.currentView === 'grid'
-          ? new GridView(this.container, State.current)
-          : new ListView(this.container, State.current);
+          ? new GridView(this.container, stateService.current)
+          : new ListView(this.container, stateService.current);
     }
   }
 }

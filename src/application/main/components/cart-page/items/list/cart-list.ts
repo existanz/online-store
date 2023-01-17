@@ -1,6 +1,6 @@
 import { DOMElement } from '../../../../../shared/components/base-elements/dom-element';
 import { CartItem } from './cart-item';
-import { State } from '../../../../../shared/services/state.service';
+import stateService from '../../../../../shared/services/state.service';
 import './cart-list.scss';
 import PaginationService from '../../../../services/cart-page/pagination.service';
 
@@ -17,9 +17,9 @@ export class CartList extends DOMElement {
 
   public render() {
     this.node.innerHTML = '';
-    if (PaginationService.getCurPageProducts(State.cart).length == 0 && PaginationService.curPage > 1)
+    if (PaginationService.getCurPageProducts(stateService.cart).length == 0 && PaginationService.curPage > 1)
       PaginationService.curPage--;
-    PaginationService.getCurPageProducts(State.cart).map(
+    PaginationService.getCurPageProducts(stateService.cart).map(
       (product, index) =>
         new CartItem(this.node, product, index + PaginationService.productsPerPage * (PaginationService.curPage - 1))
     );
