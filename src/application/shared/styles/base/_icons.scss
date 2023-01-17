@@ -1,0 +1,58 @@
+.bamboo {
+  width: 10px;
+	height: 21px;
+	transition: .3s;
+  fill: #fff;
+
+     @include tablets {
+      height: 13px;
+     }
+}
+
+.social-icon {
+  transition: .3s;
+  fill: #fff;
+}
+
+.facebook {
+  width: 8px;
+  height: 16px;
+}
+
+.twitter {
+  width: 16px;
+  height: 14px;
+}
+
+.insta {
+  width: 16px;
+  height: 16px;
+}
+
+.youtube {
+  width: 18px;
+  height: 14px;
+}
+
+.dollar {
+  width: 10px;
+  height: 20px;
+  fill: #333B41;
+}
+
+.radio-dollar {
+  width: 12px;
+  height: 25px;
+  transition: .3s;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: -12px;
+  transition: .3s;
+
+  @include phones {
+    width: 6px;
+    height: 12px;
+    left: -7px;
+  }
+}

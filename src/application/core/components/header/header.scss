@@ -1,0 +1,17 @@
+.header {
+  height: 100px;
+  padding-top: 30px;
+
+  &__container {
+    display: flex;
+    align-items: center;
+  }
+
+  &__logo {
+    flex: .7;
+  }
+
+  &__total-price {
+    flex: .3;
+  }
+}

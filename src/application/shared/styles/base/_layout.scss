@@ -1,0 +1,93 @@
+*{
+  box-sizing: border-box;
+}
+
+html {
+  @include font-regular();
+	font-size: 16px;
+}
+
+html,body {
+  min-height: 100vh;
+}
+
+body {
+    font-size: 16px;
+    position: relative;
+    color: $font-color;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: flex;
+    flex-direction: column;
+}
+
+//если закомменчено, значит вынесено в другой блок для наглядной реализации функционала
+// .wrapper {
+//     position: relative;
+//     width: 100%;
+//     // min-width: rem(940px) + rem(20px);
+//     min-height: 100%;
+//     overflow: hidden;
+// }
+
+.container {
+		width: 100%;
+    max-width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    // flex-direction: column;
+		position: relative;
+    padding: 0 1%;
+  }
+
+h1,h2,h3,h4,h5,h6 {
+    margin-top: 0;
+    font-weight: normal;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    li {
+        list-style: none;
+     }
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+footer {
+    position: relative;
+    width: 100%;
+}
+
+button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+		color: inherit;
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+    -webkit-appearance: none; margin: 0px;
+        }
+
+a {
+  text-decoration: none;
+  color: $font-color;
+}
+
+fieldset {
+  padding: 0;
+  margin: 0;
+  border: none;
+}

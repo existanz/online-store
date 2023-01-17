@@ -1,0 +1,21 @@
+//fonts
+
+$font-size: 16px;
+$font-color: #111827;
+
+$font-bold: "WorkSans-SemiBold";
+$font-regular: "WorkSans-Regular";
+
+
+//colors
+
+$gray: #767474;
+$gray-smoky: #ABABAB;
+$light-gray: #F3F4F6;
+$frosted-glass-white: #FDFDFF;
+
+//z-index
+
+$z-index-10minus: -10; // .offer__title // все подложки под карточки и инпуты
+$z-index-10: 10; // input-donate, стрелки
+$z-index-20: 20; // input-donate

@@ -1,0 +1,33 @@
+.white-button {
+  width: 100%;
+  margin: 0 auto;
+  border: 2px solid #111827;
+  color: #111827;
+  height: 65px;
+  padding: 0;
+  font-size: 18px;
+  transition: .5s;
+
+    &:hover {
+      background: #111827;
+      color: #fff;
+    }
+}
+
+.blue-button {
+  width: 100%;
+  margin: 0 auto;
+  background: #111827;
+  color: #fff;
+  height: 65px;
+  padding: 0;
+  font-size: 18px;
+  border: 2px solid transparent;
+  transition: .5s;
+
+  &:hover {
+    border: 2px solid #111827;
+    color: #111827;
+    background: transparent;
+  }
+}

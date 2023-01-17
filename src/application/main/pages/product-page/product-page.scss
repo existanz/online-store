@@ -1,0 +1,18 @@
+.product-page {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  margin: 50px 0 30px;
+  gap: 15px;
+  justify-content: space-between;
+
+    &__breadcrumbs {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    &__gallary,
+    &__description {
+      width: 48%;
+    }
+}

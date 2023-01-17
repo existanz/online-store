@@ -1,0 +1,62 @@
+.footer {
+  height: 70px;
+  color: #fff;
+  background-color: #111827;
+  font-size: 14px;
+
+    &__container {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      align-items: center;
+    }
+
+    &__shcool-logo {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      opacity: .85;
+      transition: .3s;
+    
+        &:hover {
+          opacity: 1;
+        }
+    }
+    
+    &__year {
+      margin: 0 auto;
+      opacity: .9;
+    }
+}
+
+.footer-links{
+  display: flex;
+  justify-content: space-between;
+
+    &__item {
+      display: flex;
+      align-items: center;
+    
+        &:hover {
+          .footer-links__text {
+            opacity: 1;
+          }
+    
+          .github-icon {
+            opacity: 1;
+          }
+        }
+    }
+
+    &__text {
+      color: #fff;
+      margin-left: 10px;
+      opacity: .85;
+      transition: .3s;
+    }
+}
+
+.github-icon {
+  fill: #fff;
+  opacity: .85;
+  transition: .3s;
+}

@@ -1,0 +1,10 @@
+.logo-link {
+  font-family: "WorkSans-SemiBold";
+  font-size: 20px;
+  padding: 10px;
+  transition: opacity .3s;
+
+    &:hover {
+      opacity: .55;
+    }
+}
